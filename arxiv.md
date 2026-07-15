@@ -60,8 +60,78 @@ One row per major effort. Detail and scoring live in Table 1 (§7) and §5. Devi
 
 **Bottom line for an investor or bank executive.** There is a real $p\text{-}^{11}\text{B}$ ecosystem—not vapor—but **nobody has a utility-scale clean plant yet**. The hard problems are shared: radiation losses, ash handling, materials under extreme load, and proving net electricity (not just fusion reactions on a detector). Betting is about which *matrix cell* you think can close those gaps first—not about a single “winner gadget.”
 
+### 1.3.1 Executive map: architecture branches, a “mixin,” and the milestone ladder
+Read this page like a diligence cheat sheet. **First diagram** splits the catalog by the major keys from §1.2 (time → confinement family → named path). One 2024 physics idea—compressed degenerate boron [91]—is drawn as a **mixin**: it can attach to the pulsed laser / HEDP branch only, not to magnetic or Orbitron-class cores (§3.2). **Second diagram** drops years down the page as an *indicative* ladder: key-concept proof → $Q\gtrsim 1$ (engineering breakeven; some pitches say $Q>0$) → commercial-grade prototype → grid plant. Dates are **editorial judgments** from public roadmaps and physics gaps in this survey—not bank-grade forecasts, and **no path has closed $p\text{-}^{11}\text{B}$ plant $Q>1$ yet**.
+
+```mermaid
+flowchart TB
+  G["Goal: grid electricity<br/>clean fuel end-state ≈ p–¹¹B"]
+
+  G --> T{"Key 1 — Time"}
+  T -->|Continuous / quasi-steady| M["Key 2 — Magnetic / open-field"]
+  T -->|Pulsed shots| P["Key 2 — Pulsed drivers"]
+
+  M --> M1["ST torus — ENN"]
+  M --> M2["Beam-driven FRC — TAE"]
+  M --> M3["Rotating multi-chamber mirror — Pale Blue / CHARM"]
+  M --> M4["Sister: stellarator D–T — Thea<br/>not p–¹¹B-clean"]
+
+  P --> P1["Laser / HEDP ICF"]
+  P --> P2["DPF pinch — LPPFusion"]
+  P --> P3["MEC / IEC — Avalanche Orbitron<br/>JIHT NVD"]
+  P --> P4["Sister: pulsed FRC D–³He — Helion / PFS<br/>not p–¹¹B-clean"]
+
+  P1 --> L1["HB11"]
+  P1 --> L2["Marvel / Blue Laser / Anubal"]
+  P1 --> L3["CN HEDP / XJTU + PROBONO lasers"]
+
+  MX[["Mixin 2024 — compressed<br/>degenerate boron catcher<br/>§3.2 / ref 91"]]
+  MX -.->|optional target upgrade| L1
+  MX -.->|optional target upgrade| L2
+  MX -.->|optional target upgrade| L3
+```
+
+```mermaid
+gantt
+  title Indicative milestone ladder by architecture family (mid-2026 survey view — not a forecast)
+  dateFormat YYYY
+  axisFormat %Y
+
+  section Laser / HEDP (+ optional 91 mixin)
+  Key concept proof α yields           :done, lh1, 2015, 2024
+  Toward driver Q>0 / Q≳1              :active, lh2, 2025, 2036
+  Commercial-grade prototype           :lh3, 2034, 2042
+  Grid / full commercialization        :lh4, 2042, 2055
+
+  section Magnetic ST — ENN
+  Key concept / ST H–B campaigns       :done, en1, 2020, 2028
+  Toward engineering Q≳1               :active, en2, 2028, 2035
+  Demo / commercial-grade prototype    :en3, 2033, 2040
+  Grid / full commercialization        :en4, 2038, 2050
+
+  section Magnetic FRC — TAE
+  Key concept Norman + LHD α           :done, ta1, 2017, 2025
+  Toward plant Q≳1 / Da Vinci class    :active, ta2, 2025, 2035
+  Commercial-grade prototype           :ta3, 2032, 2040
+  Grid / full commercialization        :ta4, 2038, 2050
+
+  section Open-field CHARM — Pale Blue
+  Key concept theory + IP              :done, pb1, 2021, 2026
+  Hardware proof of differential cells :active, pb2, 2026, 2034
+  Toward Q≳1 / prototype               :pb3, 2032, 2042
+  Grid / full commercialization        :pb4, 2040, 2055
+
+  section Compact MEC — Avalanche
+  Key concept Orbitron hardware        :done, av1, 2022, 2026
+  D–T learning / Q≳1 claim path        :active, av2, 2025, 2030
+  p–¹¹B pack / commercial prototype    :av3, 2030, 2038
+  Grid-scale modules optional          :av4, 2035, 2045
+```
+
+**How to use the ladder.** “Key concept proof” = alphas or confinement validated at lab scale (already true in pieces for several rows). “$Q\gtrsim 1$” = fusion energy comparable to driver / recirculating plant power—still **open** for $p\text{-}^{11}\text{B}$ electricity everywhere in this survey. Sister-fuel programs (Thea D–T, Helion D–$^3$He) can look earlier on the same ladder *for their fuel*, but they are not the clean $p\text{-}^{11}\text{B}$ end-state (§4.1). The §3.2 mixin can only shorten the **Laser / HEDP** bars if compressed-degenerate targets prove out—it does not move ENN, TAE, or CHARM.
+
 ### 1.4 How to read the rest (two paths)
-*   **Executive path (≈20 minutes):** §1 (this section) → skim §4.1 (are other fuels as clean?) → Table 1 in §7 → §10 patent/legal footprint if diligence matters → §11 conclusion. Skip the equations. Optional: one company page in §5 that matches a pitch you just heard.
+*   **Executive path (≈20 minutes):** §1 (this section, including the §1.3.1 maps) → skim §4.1 (are other fuels as clean?) → Table 1 in §7 → §10 patent/legal footprint if diligence matters → §11 conclusion. Skip the equations. Optional: one company page in §5 that matches a pitch you just heard.
 *   **Physicist / plant-engineer path:** continue in order. §1.5–§1.6 set nuclear data and the scoring rubric. §2–§3 are the Rider bottleneck and proposed loopholes (prose density intentionally closer to Liu et al.’s China overview [12]). §4–§5 map confinement and score each full-reactor path on the same gates—including compact MEC/IEC (§5.8). §6 is speculative muon kinetics. §8 is software access. §9 materials. §10 IP.
 
 ### 1.5 Nuclear data uncertainties
@@ -147,6 +217,16 @@ In magnetized toroidal plasmas, a related but distinct idea is to maintain a **v
 
 ### 3.2 Quantum Degeneracy
 At extreme solid-state densities, the electron population can become quantum degenerate. Under Fermi-Dirac statistics, the lowest energy states are completely occupied. Because of the Pauli Exclusion Principle, hot ions cannot transfer their kinetic energy to the cold electrons because the electrons have no vacant higher-energy quantum states to occupy. This drastically reduces the $P_{i\to e}$ relaxation rate while leaving the nuclear fusion rate unaffected. Complementary laser–plasma theory identifies a **preformed boron plasma** as a practical lever: electron degeneracy can cut proton energy loss (order $\sim 40\%$ yield gain), while reduced resistivity suppresses collective electromagnetic stopping and enables deeper proton penetration (further $1\text{--}2$ orders of magnitude in predicted alpha yield) [21].
+
+**2024 cross-cutting upgrade (not a new reactor brand).** Liu, Wu, Sheng, Zhao, Hoffmann, He, Zhang et al. (*Phys. Rev. Research* **6**, 013323) sketch a sharper beam-target improvement: inject a MeV proton beam into **quasi-isentropically compressed, quantum-degenerate boron**, so stopping per unit density collapses and fusion yield climbs by orders of magnitude; $F>1$ (fusion energy out over proton-beam energy in) is estimated to need $\sim 1.8\times 10^{5}\,\rho_s$ at $\sim 880\,\mathrm{keV}$ [91]. This is a **target-state / gain module**, not a unique plant architecture—and it does **not** apply to magnetic or electrostatic cores (TAE, ENN ST, CHARM, Orbitron, NVD, DPF). Within this survey’s catalog it is a possible performance upgrade for the pulsed laser / HEDP beam-target set:
+
+| Catalog path | Why [91] could help |
+| :--- | :--- |
+| **HB11 Energy** (§5.2) | Hybrid burn already pairs compression with CPA protons; degeneracy is an explicit gain lever in related laser literature [90]. |
+| **Marvel Fusion** (§5.5) | Nanostructured laser ICF targets—compressed/degenerate catchers are a natural target-physics upgrade [8]. |
+| **Chinese HEDP / XJTU foam & related** (§5.5) | Same ZJU–SJTU–XJTU ecosystem; foam / preformed-plasma experiments are the empirical neighbors of [91]. |
+| **Blue Laser Fusion** / **Anubal Fusion** | High-rep laser–target ICF options in Table 1—same confinement family as Marvel/HB11. |
+| **PROBONO / FUSION-project laser platforms** | Multi-facility experimental venues that could test compressed-degenerate catchers [9,10]. |
 
 ### 3.3 Optically Thick Plasmas and Radiation Trapping
 Rider assumed that the plasma is optically thin, meaning all Bremsstrahlung X-rays immediately escape the reactor. Recent theoretical models, including studies from the Princeton Plasma Physics Laboratory (PPPL), indicate that if a plasma is compressed to stellar-core densities (e.g., $>100 \text{ g/cm}^3$), it becomes optically thick. Under these conditions, the Bremsstrahlung photons are reabsorbed within the plasma core, keeping it hot and preventing the radiative collapse of the fusion burn [3].
@@ -263,7 +343,7 @@ HB11 Energy is pursuing a non-thermal, laser-driven "Proton Fast Ignition" / pla
 *Figure (HB11 / laser $p\text{-}^{11}\text{B}$ experiments). In-target vs pitcher–catcher $\alpha$ flux progress (~5 orders of magnitude). From McKenzie et al. 2023 [90].*
 
 *   **F — Fuel & nuclear:** Solid room-temperature $p\text{-}^{11}\text{B}$ / boron-rich targets (no cryogenics or tritium breeding)—an ICF ops advantage stressed in [90]; Hora-lineage reactor IP [60]. Early shots used BN with $\lesssim 1\%$ H impurities; company R&D pushes **H-rich** and 2D materials (e.g. white graphene, borophene) for higher proton inventory and manufacturable micro/nano structure [90]. Residual $^{11}\mathrm{B}(\alpha,n)$ / $^{11}\mathrm{B}(p,n)^{11}\mathrm{C}$ neutrons estimated $\sim 0.1\%$ class—still shielding-relevant but far below D–T [90].
-*   **K — Kinetics / Rider:** Picosecond CPA lasers; ponderomotive **plasma-block** acceleration is argued to produce directed beams faster than ion–electron thermalization, suppressing thermal Bremsstrahlung [2,90]. Experimental geometries split **pitcher–catcher** (TNSA protons from a foil into a BN catcher; $\sim 10\%$ laser→proton conversion typical) versus **in-target** irradiation (hole-boring / RPA), with in-target historically higher $\alpha$ yields [90]. A second, more contested pillar is an alpha-driven **avalanche**: fusion-born $^4\mathrm{He}$ elastically kicks protons into the reactivity peak [2,82,90]. A third company path is **hybrid burn**: compress an HB11 target then inject a CPA proton beam so nonthermal in-flight fusion and local heating boost a thermonuclear component (Fig. 3 “Hybrid” band in [90])—capital-heavier than pure block ignition.
+*   **K — Kinetics / Rider:** Picosecond CPA lasers; ponderomotive **plasma-block** acceleration is argued to produce directed beams faster than ion–electron thermalization, suppressing thermal Bremsstrahlung [2,90]. Experimental geometries split **pitcher–catcher** (TNSA protons from a foil into a BN catcher; $\sim 10\%$ laser→proton conversion typical) versus **in-target** irradiation (hole-boring / RPA), with in-target historically higher $\alpha$ yields [90]. A second, more contested pillar is an alpha-driven **avalanche**: fusion-born $^4\mathrm{He}$ elastically kicks protons into the reactivity peak [2,82,90]. A third company path is **hybrid burn**: compress an HB11 target then inject a CPA proton beam so nonthermal in-flight fusion and local heating boost a thermonuclear component (Fig. 3 “Hybrid” band in [90])—capital-heavier than pure block ignition. The 2024 compressed-degenerate catcher sketch of §3.2 [91] is a natural add-on to that hybrid / beam-target branch (not a replacement for the dual-laser coil reactor sketch).
 *   **R — Radiation:** Nonthermal burn is meant to minimize *steady* Bremsstrahlung; H-rich stoichiometry and radiation-trapping layers are explicit levers [90]. A transient X-ray flash still loads carbon-composite / WC armor against cyclic shock. If the burn thermalizes, Rider-type $P_{Br}\gtrsim P_f$ returns in force (§2) [1,81]; Wurzel–Hsu-type $T_e \ge T_i/3$ bounds are cited as motivation for non-equilibrium [90].
 *   **A — Ash & impurities:** Pulsed; alphas leave into the collector volume each shot—no continuous ash inventory, but target debris and vapor load the chamber.
 *   **L — Lawson / $Q$:** Public laser experiments remain far from driver breakeven: peak reported $\alpha$ fluxes $\sim 10^{11}\,\mathrm{sr^{-1}}$ (PALS ns; LFEX kJ-class ps, HB11-supported) imply $\sim 0.01\%$ fusion-to-laser energy and $\sim 4$ orders below the $\sim 2\times 10^{15}$ alphas per kJ breakeven yardstick in [90]. Gain sought via nonthermal burn propagation (kinetic/rad-hydro, Rochester TriForce) [7] and the hybrid path [90]; plant $Q$ still contingent on driver efficiency, rep-rate, avalanche/hybrid multiplication, and Xie’s ICF zeroth-order caveat [40]. Company techno-econ treats the plant as an **amplifier**: recirculating fraction $f=1/(e\eta G)$, rule-of-thumb $\eta G\gtrsim 10$, and target gains $\sim 100\text{--}300$ at $\eta\sim 20\%$ (diode-pumped) to hit LCOE / H$_2$ price bands [90].
@@ -312,15 +392,16 @@ China’s ENN-led program is the most developed **spherical torus (ST) + $p\text
 ### 5.5 Chinese High-Energy-Density Beam-Target and Nanostructured Targets
 *Partial path (gates **F**/**K**/**R** experimental; not yet an integrated **L**+**M**+**T** plant).* Parallel to the ST path, Chinese HEDP groups have reported large reactivity enhancements in laser- and accelerator-driven beam-target geometries [12].
 
-*   **XG-III Intense Beam-Driven Foam Targets (Xi’an Jiaotong University):** A picosecond laser generates a TNSA proton beam that strikes a preheated, homogeneous boron-doped TAC foam plasma, yielding up to $10^{10}$ alphas per steradian per shot—among the highest laser-normalized yields reported—and exceeding classical beam-target expectations by about four orders of magnitude, with $\sim 12\%$ proton-to-$\alpha$ energy conversion and a maximum fusion probability $\sim 2.3\times 10^{-2}$ [12,27]. Enhancement is attributed to strong electric fields, non-equilibrium kinetics, and the foam plasma structure; theory emphasizes the preformed boron plasma / degeneracy mechanism of §3.2 [21].
+*   **Compressed-degenerate boron upgrade (2024 sketch):** Liu et al. [91] is **not** a separate commercial reactor; it is a possible performance module—MeV protons into quasi-isentropically compressed degenerate boron—for the laser/HEDP set listed in §3.2 (HB11, Marvel, CN HEDP/XJTU, Blue Laser/Anubal, PROBONO/FUSION lasers). Extreme $\sim 10^{5}\,\rho_s$ densities for $F>1$ remain the binding engineering ask.
+*   **XG-III Intense Beam-Driven Foam Targets (Xi’an Jiaotong University):** A picosecond laser generates a TNSA proton beam that strikes a preheated, homogeneous boron-doped TAC foam plasma, yielding up to $10^{10}$ alphas per steradian per shot—among the highest laser-normalized yields reported—and exceeding classical beam-target expectations by about four orders of magnitude, with $\sim 12\%$ proton-to-$\alpha$ energy conversion and a maximum fusion probability $\sim 2.3\times 10^{-2}$ [12,27]. Enhancement is attributed to strong electric fields, non-equilibrium kinetics, and the foam plasma structure; theory emphasizes the preformed boron plasma / degeneracy mechanism of §3.2 [21,91].
 *   **Hydrogen-Doped Solid Targets (ENN–IMP):** On IMP’s $320$ kV platform, solid H-doped boron targets ($\sim 25$ at.% H) produced an average $\sim 30\%$ higher alpha yield than pure boron over $110\text{--}240$ keV center-of-mass energy, showing that fuel-composition engineering matters even in the low-energy beam-target regime; the microscopic origin is still under study [12,28].
 *   **Nanowire Arrays and Nano-HEDM:** Femtosecond irradiation of nanowire arrays can drive Z-pinch-like compression (extreme current density and $\sim 10^6$ T-scale fields in simulation), with experiments on deuterium-doped wires confirming fusion products and alpha yields up to $\sim 1.5\times 10^7$ per shot for $p\text{-}^{11}\text{B}$-relevant setups [12]. Separately, Nano-HEDM structured targets irradiated by femtosecond petawatt lasers drive Coulomb explosions that accelerate protons to $\sim 150$ MeV and convert $\sim 10\%$ of laser energy into fast ions at near-solid density—but picosecond confinement still falls short of Lawson, so viability hinges on better confinement, not peak energy alone [12].
 
-These HEDP results sit alongside commercial laser programs (HB11, Marvel Fusion) as experimental evidence that target microstructure and pre-plasma state can move yields far from classical beam-target scaling.
+These HEDP results sit alongside commercial laser programs (HB11, Marvel Fusion, Blue Laser Fusion, Anubal) as experimental evidence that target microstructure and pre-plasma state can move yields far from classical beam-target scaling. The §3.2 / [91] compressed-degenerate catcher is the 2024 theory sketch for how those same platforms might push further toward beam-energy multiplication—still a target upgrade, not a new machine class.
 
 ![Marvel Fusion facility / device](research/figures/marvel_device.webp)
 
-*Figure (Marvel Fusion). Company imagery for nanostructured-target laser ICF path. From Marvel Fusion site; see CREDITS.*
+*Figure (Marvel Fusion). Company imagery for nanostructured-target laser ICF path. From Marvel Fusion site; see CREDITS. Candidate beneficiary of the §3.2 [91] upgrade alongside HB11 and other laser/HEDP paths.*
 
 **European consolidation (Catania 2022).** The 2nd International Workshop on Proton-Boron Fusion (Catania, 5–8 September 2022), organized by INFN-LNS and ELI Beamlines, brought together laser-driven energy concepts, diagnostics/targetry, and (separately) medical Proton-Boron Capture Therapy [41]. Company reports and invited talks from **HB11** (hybrid / non-equilibrium inertial schemes) and **Marvel Fusion** (nanostructured nonthermal targets) sat alongside accelerator-HEDP and PALS diagnostic work—the same European ecosystem that shortly afterward crystallized as COST Action CA21128 **PROBONO** [9,42]. Workshop proceedings in *JINST* highlight several energy-relevant threads beyond company roadmaps: hydrogen-rich **borane** fuels (e.g., ammonia borane $\mathrm{BNH}_6$) as laser targets claiming order-of-magnitude alpha-yield gains versus BN from much higher hydrogen loading, with proposed tape/droplet geometries for high-repetition drivers [44]; multi-diagnostic alpha characterization on hydrogenated boron-doped thin targets [45]; and the low-density alpha-avalanche simulations of §3.7 [43]. Medical PBCT contributions from the same meeting are outside the scope of this electricity-generation survey.
 
@@ -493,11 +574,11 @@ Table 1 scores principal $p\text{-}^{11}\text{B}$ (and closely related) paths on
 | **ENN** [6,12,22,38,39] | ST (MCF) | ● | ◐ | ◐ | ◐ | ◐ | ◐ | ● | ◐ | ● | Nuclear-data + EXL-50U/EHL-2; hot-ion **K** debated [38,39]; $Q>10$ $\sim 2035$ roadmap. |
 | **TAE** [5,35–37,89] | FRC | ● | ● | ● | ◐ | ◐ | ◐ | ● | ◐ | ● | LHD alphas; Norm NBI-only; ICC/**M** and plant **L** still open; Rostoker-era origin in [89]. |
 | **LHD / NIFS** [15] | Helical | ● | ◐ | — | — | ○ | — | ● | ◐ | ● | Facility demo of magnetic $p\text{-}^{11}\text{B}$ alphas; not a plant design. |
-| **HB11** [2,7,81–84,90] | Laser ICF | ● | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | Block ignition real R&D; $\sim 4$ orders below driver breakeven [90]; avalanche + spherical DEC contested (§5.2). |
-| **Marvel Fusion** [8] | Nano-ICF | ● | ● | ◐ | ◐ | ○ | ◐ | ◐ | ◐ | ◐ | CSU laser facility under construction; plant **L** early. |
-| **XJTU / CN HEDP** [12,27] | Beam-target | ● | ● | ● | — | ○ | ○ | ◐ | ◐ | ● | Record foam yields; component path, not full plant. |
-| **Blue Laser Fusion** | Laser ICF | ● | ◐ | ◐ | ◐ | ○ | ◐ | ◐ | ◐ | ○ | Nakamura lasers + INFUSE; boron fuel option. |
-| **Anubal Fusion** | Laser ICF | ◐ | ◐ | ○ | ○ | ○ | ○ | ○ | ○ | ○ | Early (2024) academic collaborations. |
+| **HB11** [2,7,81–84,90,91] | Laser ICF | ● | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | Block ignition real R&D; $\sim 4$ orders below driver breakeven [90]; avalanche + spherical DEC contested; §3.2 [91] possible hybrid/target upgrade (§5.2). |
+| **Marvel Fusion** [8,91] | Nano-ICF | ● | ● | ◐ | ◐ | ○ | ◐ | ◐ | ◐ | ◐ | CSU laser facility under construction; plant **L** early; §3.2 [91] target upgrade candidate. |
+| **XJTU / CN HEDP** [12,27,91] | Beam-target | ● | ● | ● | — | ○ | ○ | ◐ | ◐ | ● | Record foam yields; compressed-degenerate beam-target theory [91]; component path, not full plant. |
+| **Blue Laser Fusion** [91] | Laser ICF | ● | ◐ | ◐ | ◐ | ○ | ◐ | ◐ | ◐ | ○ | Nakamura lasers + INFUSE; boron fuel option; §3.2 [91] applicable in principle. |
+| **Anubal Fusion** [91] | Laser ICF | ◐ | ◐ | ○ | ○ | ○ | ○ | ○ | ○ | ○ | Early (2024) academic collaborations; §3.2 [91] applicable in principle. |
 | **PROBONO** [9,41,42] | Consortium | ● | ● | ◐ | ◐ | — | — | ● | ◐ | ● | Coordinates EU laser/plasma $p\text{-}^{11}\text{B}$ (not one reactor). |
 | **FUSION Project** [10] | Laser targets | ● | ● | ◐ | — | ○ | ○ | ◐ | ◐ | ● | PALS diagnostics/targetry. |
 | **Pale Blue / CHARM** [29–33] | Rot. mirror | ● | ● | ● | ● | ◐ | ◐ | ○ | ● | ○ | Strong **A**/**K** theory+IP; **S**-first (in-silico plant); **T**/**H** lag (§5.7). |
@@ -750,3 +831,4 @@ However, the field remains constrained by severe materials science and engineeri
 88. **Kurilenkov, Yu. K., Oginov, A. V., Tarakanov, V. P., Gus’kov, S. Yu., & Samoylov, I. S.** (2021). Proton-boron fusion in a compact scheme of plasma oscillatory confinement. *Physical Review E*, 103, 043208. https://doi.org/10.1103/PhysRevE.103.043208
 89. **Powell, C. S.** (2020). The road less traveled to fusion energy. *Nautilus*, 3 June 2020; curated republication at Imagine5: https://imagine5.com/curated/the-road-less-traveled-to-fusion-energy/ Used in §5.1 for TAE origin (Rostoker/Binderbauer/Monkhorst; *Science* 1997; private pivot), C-2→Norman device lineage, Google control software, and the 2020 Copernicus→Da Vinci roadmap snapshot (later compressed by company announcements [36,37]).
 90. **McKenzie, W., Batani, D., Mehlhorn, T. A., Margarone, D., Belloni, F., Campbell, E. M., Woodruff, S., Kirchhoff, J., Paterson, A., Pikuz, S., & Hora, H.** (2023). HB11—Understanding hydrogen-boron fusion as a new clean energy source. *Journal of Fusion Energy*, 42, 17. https://doi.org/10.1007/s10894-023-00349-9 PDF mirrored by HB11: https://hb11.energy/wp-content/uploads/2024/09/UnderstandingHydrogen-BoronFusionNewCleanEnergySource_s10894-023-00349-9.pdf ; archived in-repo: `research/UnderstandingHydrogen-BoronFusionNewCleanEnergySource_s10894-023-00349-9.pdf`. Used in §5.2 for pitcher–catcher vs in-target yields, LFEX/PALS $\sim 10^{11}\,\alpha$ records and $\sim 4$-order breakeven gap, dual-laser capacitor-coil cylinder design point, H-rich/2D targets, hybrid burn, and amplifier technoeconomics.
+91. **Liu, S. J., Wu, D., Hu, T. X., Liang, T. Y., Ning, X. C., Liang, J. H., Liu, Y. C., Liu, P., Liu, X., Sheng, Z. M., Zhao, Y. T., Hoffmann, D. H. H., He, X. T., & Zhang, J.** (2024). Proton-boron fusion scheme taking into account the effects of target degeneracy. *Physical Review Research*, 6, 013323. https://doi.org/10.1103/PhysRevResearch.6.013323 Open access; preprint lineage arXiv:2304.08357. Framed in §3.2 as a 2024 **cross-cutting target upgrade** (not a unique reactor) for HB11, Marvel, CN HEDP/XJTU, Blue Laser/Anubal, and PROBONO/FUSION laser paths; $F>1$ density threshold $\sim 1.8\times 10^{5}\,\rho_s$ at $\sim 880\,\mathrm{keV}$.
