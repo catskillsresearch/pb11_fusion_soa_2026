@@ -1,0 +1,22 @@
+# Generated from arxiv.md by scripts/build_arxiv_tex.sh (do not commit)
+arxiv.tex
+listings/
+figures/
+dist/
+00README.json
+
+# LaTeX build artifacts (`arxiv.pdf` may be committed as a readable deliverable)
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.toc
+*.lof
+*.synctex.gz
+texput.log
+
+# Python
+__pycache__/
+*.pyc
+.tmp/

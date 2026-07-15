@@ -8,8 +8,22 @@ Intended for distribution via [arXiv](https://arxiv.org/); if that is not availa
 
 ## Layout
 
-- Article source and build artifacts will live in this repository (Markdown / LaTeX as appropriate).
-- See `LICENSE` and `NOTICE` for copyright and licensing.
+- `arxiv.md` — source narrative (edit this)
+- `research/` — archived PDFs and figure credits
+- `scripts/` — arXiv TeX/PDF/dist pipeline (ported from `scott_models` / `scott1982`, without Lean)
+
+## Build (arXiv)
+
+```bash
+bash scripts/build_arxiv_tex.sh      # arxiv.md → arxiv.tex + figures/
+bash scripts/build_arxiv_pdf.sh      # compile PDF + package dist/arxiv_submit.zip
+# or, if tex already built:
+bash scripts/package_arxiv_submit.sh --skip-tex-build
+```
+
+Requires: `pandoc`, `mmdc` (mermaid-cli), ImageMagick `convert`, `latexmk` + LuaLaTeX (local), Chrome/Chromium for mermaid.
+
+Generated artifacts (`arxiv.tex`, `figures/`, `dist/`, …) are gitignored; upload `dist/arxiv_submit.zip` to arXiv (pdfLaTeX).
 
 ## License
 
@@ -25,4 +39,4 @@ This repository functions strictly as a unilateral broadcast of public work for 
 ## Regulatory and Liability Disclaimer
 
 * **Limitations:** The survey provided herein is for theoretical research and academic purposes only. It does not constitute engineering specifications, operational guidance, or advice for physical fusion systems.
-* **Liability Protection:** In accordance with Section 8 of the Apache 2.0 License, this work is provided "AS IS" without warranties of any kind. Catskills Research Company disclaims all liability for any direct, indirect, or consequential damages resulting from the use, misuse, or reliance on this survey.
+* **Liability Protection:** In accordance with Section 8 of the Apache 2.0 License, this work is provided "AS IS" without warranties of any kind. Catskills Research Company disclaims all liability for any direct, indirect, consequential damages resulting from the use, misuse, or reliance on this survey.
