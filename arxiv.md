@@ -131,7 +131,7 @@ gantt
 **How to use the ladder.** “Key concept proof” = alphas or confinement validated at lab scale (already true in pieces for several rows). “$Q\gtrsim 1$” = fusion energy comparable to driver / recirculating plant power—still **open** for $p\text{-}^{11}\text{B}$ electricity everywhere in this survey. Sister-fuel programs (Thea D–T, Helion D–$^3$He) can look earlier on the same ladder *for their fuel*, but they are not the clean $p\text{-}^{11}\text{B}$ end-state (§4.1). The §3.2 mixin can only shorten the **Laser / HEDP** bars if compressed-degenerate targets prove out—it does not move ENN, TAE, or CHARM.
 
 ### 1.4 How to read the rest (two paths)
-*   **Executive path (≈20 minutes):** §1 (this section, including the §1.3.1 maps) → skim §4.1 (are other fuels as clean?) → Table 1 in §7 → §10 patent/legal footprint if diligence matters → §11 conclusion. Skip the equations. Optional: one company page in §5 that matches a pitch you just heard.
+*   **Executive path (≈20 minutes):** §1 (this section, including the §1.3.1 maps) → skim §4.1 (are other fuels as clean?) → Table 1 in §7 → **§11.1 ranked plant-odds table** → §10 patent/legal footprint if diligence matters. Skip the equations. Optional: one company page in §5 that matches a pitch you just heard.
 *   **Physicist / plant-engineer path:** continue in order. §1.5–§1.6 set nuclear data and the scoring rubric. §2–§3 are the Rider bottleneck and proposed loopholes (prose density intentionally closer to Liu et al.’s China overview [12]). §4–§5 map confinement and score each full-reactor path on the same gates—including compact MEC/IEC (§5.8). §6 is speculative muon kinetics. §8 is software access. §9 materials. §10 IP.
 
 ### 1.5 Nuclear data uncertainties
@@ -565,7 +565,7 @@ In short: §6 is a candidate enhancement for **beam-target and laser-block archi
 ## 7. Active Global Initiatives
 **Plain-language lead-in.** One scorecard for the whole landscape. Rows are projects; columns are the §1.6 gates. Compare cells, don’t treat filled circles as “approved by DOE.”
 
-Table 1 scores principal $p\text{-}^{11}\text{B}$ (and closely related) paths on the §1.6 zeroth-order gates. Sister advanced-fuel rows (Helion, PFS) and compact MEC/IEC rows (Avalanche Orbitron; JIHT Kurilenkov NVD) are included for contrast after §4 / §4.1. Legend: **●** = publicly articulated strategy with supporting hardware, peer-reviewed analysis, or formal design review; **◐** = partial / roadmap-level / component-only; **○** = weak, absent, or not yet public; **—** = not applicable. Scores are editorial judgments for comparison, not certifications.
+Table 1 scores principal $p\text{-}^{11}\text{B}$ (and closely related) paths on the §1.6 zeroth-order gates. Sister advanced-fuel rows (Helion, PFS) and compact MEC/IEC rows (Avalanche Orbitron; JIHT Kurilenkov NVD) are included for contrast after §4 / §4.1. Legend: **●** = publicly articulated strategy with supporting hardware, peer-reviewed analysis, or formal design review; **◐** = partial / roadmap-level / component-only; **○** = weak, absent, or not yet public; **—** = not applicable. Scores are editorial judgments for comparison, not certifications. §11.1 folds these cells into a weighted **Plant Odds Score (POS★)**—with a $\kappa$ haircut for staged-fuel and imputed theory plants—and sorts each path on its own rank with indicative timelines.
 
 ### Table 1: Zeroth-order scorecard for key projects (State of the Art, 2026)
 
@@ -731,9 +731,64 @@ A survey of this type is stronger when claims about “protected IP” are pinne
 ---
 
 ## 11. Conclusion
-**For decision-makers.** Clean fusion electricity—no tritium factory, no neutron flood as the plant’s main waste story—is the goal; $p\text{-}^{11}\text{B}$ is the flagship fuel; the tidy map is **(time) × (confinement family) × (fuel end-state) × (kinetics)** (§1.2); Table 1 (§7) is the diligence scorecard. Nobody has closed a utility plant yet. The binding business risks sit in ash handling, materials, and proving net electricity—not in whether fusion reactions can be detected in a lab.
+**For decision-makers.** Clean fusion electricity—no tritium factory, no neutron flood as the plant’s main waste story—is the goal; $p\text{-}^{11}\text{B}$ is the flagship fuel; the tidy map is **(time) × (confinement family) × (fuel end-state) × (kinetics)** (§1.2); Table 1 (§7) is the diligence scorecard. Nobody has closed a utility plant yet. The binding business risks sit in ash handling, materials, and proving net electricity—not in whether fusion reactions can be detected in a lab. The ranked odds below turn that scorecard into an explicit (still editorial) horse race.
 
 **For physicists.** Read through Xie’s zeroth-order gates (§1.6), the field’s progress is uneven by design: nuclear-data and nonthermal **K**/**R** strategies have multiplied (Rider soft-windows, laser blocks, megatesla suppression, CHARM differential confinement, alpha channeling and avalanche ideas), while gates **A**, **L**, and **M**—helium ash, engineering $Q$, and materials/DEC—remain the binding constraints for every full-reactor path scored in Table 1 [12,29,33,40]. Gates **S** and **H** (in-silico / digital-twin iteration versus hardware cadence) are now explicit: open stacks (OpenMC, Bluemira, WarpX) and closed platforms (NuPlant, FusionAlpha, Omniverse) accelerate paper plants at different access costs (§8), but neither replaces experimental V&V. China’s ST program and the Princeton/ARPA-E CHARM line illustrate two different ways to attack the physics gates; neither has closed them all. Parallel Princeton/PPPL spinouts show that the same institution can field a capitalized D–T stellarator company (Thea), a government-funded D–$^3$He microreactor line (Princeton Fusion Systems), and a still-incorporating $p\text{-}^{11}\text{B}$ theory spinout (Pale Blue)—a portfolio, not a single bet [33,48,54]. Among *non*-boron advanced fuels, Helion’s D–$^3$He program is the main commercial peer, but §4.1 stresses that it is neutron-*poor*, not $p\text{-}^{11}\text{B}$-clean [77,78].
+
+### 11.1 Plant-odds metric and ranked timelines
+**What “succeed” means here.** First commercial **electricity from a $p\text{-}^{11}\text{B}$ path** with engineering $Q\gtrsim 1$ and a path to a grid-tied or modular power product—not “detect alphas in a lab,” not D–T learning hardware that *might* later burn boron, and not sister-fuel D–T / D–$^3$He success (sidebar below).
+
+**Metric (Plant Odds Score, POS★).** Map Table 1 cells as $\bullet=2$, $\circledcirc=1$, $\circ=0$; treat $—$ as $0$ for plant purposes. Base score
+
+$$\mathrm{POS} = \frac{2(K+R+A+L) + 1.5(T+H) + (F+M+S)}{28}\times 100.$$
+
+Denominator $28$ is the theoretical maximum. Then apply an end-state / maturity factor $\kappa$ and rank by
+
+$$\mathrm{POS}^\star = \kappa\times\mathrm{POS}.$$
+
+| $\kappa$ | When used |
+| :---: | :--- |
+| $1.0$ | Dedicated $p\text{-}^{11}\text{B}$ company or lab campaign (fuel end-state is boron–proton) |
+| $0.40$ | **Staged claim:** near-term program is D–T (or other); $p\text{-}^{11}\text{B}$ is design-capable / later pack only (**Avalanche**) |
+| $0.50$ | **Imputed / hypothetical plant:** theory or in-silico paper sketched as if it were a full electricity path (no company, no integrated machine) |
+| $0.35$ | Facility / consortium / beamline infrastructure (science enabler, not a plant owner) |
+
+Physics path ($K,R,A,L$) is weighted heaviest in POS; execution ($T,H$) next; **F/M/S** complete fuel commitment, materials/DEC, and digital-twin speed. POS★ is an **editorial composite from mid-2026 public evidence**, not a DOE certification or probability in percent. Each row below has a **unique rank** (ties broken by higher **L**, then higher **T**, then name). Imputed rows are labeled so they are not mistaken for funded companies.
+
+**Indicative timelines** reuse the §1.3.1 ladder language. Windows are wide on purpose; imputed rows use “if someone productized the paper” language.
+
+### Table 4: Ranked $p\text{-}^{11}\text{B}$ plant odds (editorial, mid-2026)
+
+| Rank | Path | Type | POS | $\kappa$ | POS★ | Why this rank (one line) | $Q\gtrsim 1$ window | Prototype window | Grid / product window |
+| :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :--- |
+| 1 | **TAE** (FRC) | Company | 79 | 1.0 | **79** | Deepest capital + Norm hardware + LHD $\alpha$ proof; **L**/**M** (ICC) still open | ~2030–2036 | ~2032–2040 | ~2038–2050 |
+| 2 | **Pale Blue / CHARM** | Company (early) | 68 | 1.0 | **68** | Best published **A**/**K**/**R** attack; **T**/**H** almost empty | ~2034–2042 | ~2036–2045 | ~2040–2055 |
+| 3 | **ENN** (ST) | National / company | 64 | 1.0 | **64** | National ST + nuclear-data machine; hot-ion **K** contested; clearest demo roadmap | ~2032–2038 | ~2033–2040 | ~2038–2050 |
+| 4 | **JIHT NVD** | Lab | 57 | 1.0 | **57** | Real lab $p\text{-}^{11}\text{B}$ alphas in compact IEC neighborhood; not a capitalized plant | uncertain | lab-scale only | N/A as utility |
+| 5 | **XJTU / CN HEDP** | Lab (component) | 55 | 1.0 | **55** | Record beam-target yields + [91] theory; not an integrated plant | science track | — | — |
+| 6 | **HB11** | Company | 54 | 1.0 | **54** | Real laser R&D + reactor sketch; ~4 orders below driver breakeven | ~2034–2042 | ~2036–2045 | ~2042–2055 |
+| 7 | **Marvel Fusion** | Company | 54 | 1.0 | **54** | Strong nano-target **K**; plant **L** weaker than HB11’s in Table 1; CSU still standing up | ~2034–2042 | ~2036–2045 | ~2042–2055 |
+| 8 | **LPPFusion** (DPF) | Company | ~43¶ | 1.0 | **~43** | Long-running pinch; electrode life / rep-rate bind **L**/**M**; thin capital | ~2035–2045 | ~2038–2048 | ~2045–2055+ |
+| 9 | **Blue Laser Fusion** | Company | 41 | 1.0 | **41** | Patent/laser stack real; $p\text{-}^{11}\text{B}$ plant path thinner publicly | ~2036–2045 | ~2038–2048 | ~2045–2055+ |
+| 10 | **Degenerate-catcher plant** [91] | Imputed theory | 61 | 0.50 | **31** | In-silico / theory $F>1$ beam→compressed-degenerate boron; no company owns a plant | if productized ~2035–2045 | — | — |
+| 11 | **Avalanche** (Orbitron) | Company (staged) | 64 | 0.40 | **26** | Strong D–T hardware **H**/**T**; $p\text{-}^{11}\text{B}$ is design-capable later—$\kappa$ cuts plant odds for *this* fuel | ~2035–2045‡ | ~2036–2045 | ~2040–2050 (modular) |
+| 12 | **Catania $\alpha$-avalanche MCF** [43] | Imputed theory | 50 | 0.50 | **25** | Low-density multi-fluid $Q=P_f/P_{\mathrm{Brems}}>1$ scans; no machine program | speculative | — | — |
+| 13 | **Radiation-trapping regime** [3] | Imputed theory | 43 | 0.50 | **22** | Ochs–Kolmes–Fisch compressed $p\text{-}^{11}\text{B}$ radiation-trapping feasibility; paper plant only | speculative | — | — |
+| 14 | **PROBONO** | Consortium | 61 | 0.35 | **21** | EU coordination of laser/plasma $p\text{-}^{11}\text{B}$; not one reactor owner | — | — | — |
+| 15 | **FUSION Project** (INFN) | Facility / project | 48 | 0.35 | **17** | PALS-class targetry/diagnostics; science enabler | science track | — | — |
+| 16 | **Nanjing $\mu$CF** [11] | Imputed theory | 29 | 0.50 | **15** | Kinetic muon-screening proposal; speculative **L**, no hardware path | speculative | — | — |
+| 17 | **LHD / NIFS** | Facility | 39 | 0.35 | **14** | Magnetic $p\text{-}^{11}\text{B}$ $\alpha$ demo; not a plant design | — | — | — |
+| 18 | **Anubal Fusion** | Company (early) | 11 | 1.0 | **11** | Too early for plant odds | — | — | — |
+
+¶ LPPFusion POS from §5.3 narrative (not a full Table 1 row); approximate.  
+‡ Avalanche’s public near-term $Q$ story is **D–T**; the $p\text{-}^{11}\text{B}$ window above is the later pack claim after $\kappa$ is applied—do not read POS $64$ as boron–proton plant odds.
+
+**Imputed gate notes (how the paper plants were scored).** Degenerate-catcher [91]: $F{\bullet}\,K{\bullet}\,R{\bullet}\,A{\circledcirc}\,L{\circledcirc}\,M{\circledcirc}\,T{\circ}\,S{\bullet}\,H{\circ}$. Catania $\alpha$-avalanche [43]: $F{\bullet}\,K{\bullet}\,R{\circledcirc}\,A{\circledcirc}\,L{\circledcirc}\,M{\circ}\,T{\circ}\,S{\bullet}\,H{\circ}$. Radiation-trapping [3]: $F{\bullet}\,K{\bullet}\,R{\bullet}\,A{\circ}\,L{\circ}\,M{\circ}\,T{\circ}\,S{\bullet}\,H{\circ}$. Nanjing $\mu$CF uses Table 1 as published. Fisch/Ochs **alpha-channeling** papers [29–32] are **not** a separate imputed row—they are already the physics core of **Pale Blue / CHARM**.
+
+**Sidebar — sister fuels (not $p\text{-}^{11}\text{B}$-clean).** If the question is “who might put *some* advanced-fuel electrons on a bus first,” reorder: **Thea** (D–T stellarator; DOE Helios certified; Eos→Helios ~2030–2034 talk) and **Helion** (D–$^3$He; deepest non-$p\text{-}^{11}\text{B}$ private capital) outrun every boron–proton row on execution—but they fail the cleanliness brief of §1.1 / §4.1. **PFS / PFRC** sits behind them as a smaller D–$^3$He microreactor line. Do not mix those ranks into Table 4 without changing the success definition.
+
+**How a bank executive should read Table 4.** (1) **TAE** and **ENN** remain the only dedicated $p\text{-}^{11}\text{B}$ paths that combine serious hardware cadence with a named plant roadmap—still no closed **L**. (2) **Pale Blue** is the highest-upside physics long shot and the weakest company today. (3) **Avalanche** ranks much lower *for boron–proton electricity* because its public program is D–T-first; the Orbitron may still win compact hardware races on neutrons before it proves clean boron. (4) Imputed rows (ranks 10, 12–13, 16) are diligence flags for physics ideas, not investment targets until someone owns **T**/**H**. (5) Laser/HEDP names remain science-and-amplifier businesses until driver $Q$ moves by orders of magnitude—even with the §3.2 [91] mixin. (6) Any POS★ gap $<10$ points is noise; gate notes beat the integer.
+
 
 However, the field remains constrained by severe materials science and engineering barriers. Whether developers can construct high-voltage electrostatic grids that resist vacuum breakdown, electrodes that survive extreme alpha particle bombardment, switches capable of running at high repetition rates, ST divertors that tolerate Bremsstrahlung and heat fluxes without impurity poisoning, and (for CHARM) experimentally validated differential confinement and rotation remain open questions—precisely the **M**/**A**/**T**/**H** gaps the scorecard highlights. The next decade of experimental validation at facilities like Marvel Fusion's CSU laser site, TAE's Norm-to-Da Vinci path, ENN’s EXL-50U/EHL-2 sequence, Chinese HEDP platforms, Thea’s Eos stellarator, Avalanche’s Orbitron / FusionWERX program, JIHT’s NVD–IEC line, and whatever hardware follows Pale Blue Fusion’s in-silico campaign will determine if $p\text{-}^{11}\text{B}$—or its sister advanced-fuel concepts—can become a viable source of commercial electricity.
 
