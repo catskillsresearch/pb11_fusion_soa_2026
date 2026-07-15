@@ -378,29 +378,63 @@ Because the Bremsstrahlung radiation loss scales with $Z_{eff}^2$, even trace am
 
 ---
 
-## 10. Selected Patent Catalog
-A survey of this type is stronger when claims about “protected IP” are pinned to **public patent numbers** (an input to gate **T**). The table below is a *selective* catalog of granted U.S. patents (and, where grants are not yet public, disclosed applications) most relevant to entities in §§5–7. It is not a freedom-to-operate opinion: assignees, family members, and foreign counterparts change; company marketing totals (e.g., TAE’s “1,500+ granted patents”) count global families and adjacent markets beyond reactor physics. Prefer USPTO / Google Patents for current legal status.
+## 10. Selected Patent Catalog and Legal Footprint
+A survey of this type is stronger when claims about “protected IP” are pinned to **public patent numbers** (an input to gate **T**). The tables below summarize a mid-2026 Google Patents / USPTO-oriented pass over entities in Table 1 (assignee and inventor queries; not a freedom-to-operate opinion). Company marketing totals (e.g., TAE’s “1,500+ granted patents”) count global families and adjacent markets beyond reactor physics. Prefer USPTO / Google Patents for current legal status. **Method note:** broad keyword queries are noisy; reliable hits came from exact assignee strings, known inventors, and patent numbers already disclosed in primary sources. Rate limits on Google Patents prevented exhaustive family crawling in one session.
 
-### Table 2: Representative granted patents and disclosed applications
+### Table 2a: Corporate / brand legal footprint (non-patent)
 
-| Entity | Number | Title (short) | Status / notes |
+| Entity | Domain | Corp. entity (public SOS / OpenCorporates) | USPTO TM (casual) | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **Pale Blue Fusion** | `palebluefusion.com` **NXDOMAIN** | **No** “Pale Blue Fusion” entity found | No clear brand hit | Still “plan to incorporate” as of July 2025 ARPA-E slide [33]; IP sits with **Princeton** inventors/assignee so far. |
+| **Thea Energy** | Live (`thea.energy`) | Delaware / NJ operating company (2022 spinout) | Brand in commerce | Strongest Princeton-house **T** footprint. |
+| **Princeton Fusion Systems** | Live | Affiliate of Princeton Satellite Systems | — | Long-running small-business line. |
+| **TAE Technologies** | Live (`tae.com`) | Long-standing CA corp (ex Tri Alpha) | Active brand | Deepest private fusion IP portfolio in this survey. |
+| **HB11 Energy** | Live | Australian company | — | IP narrative via Hora / UJK lineage patents. |
+| **Blue Laser Fusion** | Live | CA corp | — | Rapid 2023–2025 patenting under company assignee. |
+| **Marvel Fusion** | Live | German GmbH | — | EPO filings visible; fewer US grants in English search. |
+| **LPPFusion** | Live | Lawrenceville Plasma Physics, Inc. | — | Classic DPF patent still the flagship. |
+| **Avalanche Energy** | Live | WA company | — | Public patent footprint thin vs. hardware cadence (**H**). |
+| **Anubal Fusion** | Early | — | — | No assignee hits in this pass. |
+| **ENN** | Live (CN) | ENN Energy Research Institute | — | CNIPA bilingual pass still needed for invention patents. |
+
+### Table 2b: Representative granted patents and published applications (expanded sweep)
+
+| Entity | Number | Title (short) | Assignee / notes |
 | :--- | :--- | :--- | :--- |
-| **Princeton / Thea** | **US 12,620,498 B2** | Planar coil stellarator | Granted; inventors Gates, Zhu, Hammond; assignee Trustees of Princeton University; licensed to Thea [51]. |
-| **Princeton / Thea** | **US 12,537,109 B2** | Planar coil stellarator (continuation family) | Granted; related to US 2024/0177874 A1 published application [52]. |
-| **Princeton / PFS** | **US 9,767,925 B2** | Reduce neutron production in small clean fusion reactors (PFRC / RMF$_o$) | Granted 19 Sep 2017; inventor S. A. Cohen; assignee Trustees of Princeton University [57]. |
-| **Pale Blue / Fisch group** | **US 19/083,790** | Nonthermal $p\text{-}^{11}\text{B}$ with separated reactant regions | Application filed 19 Mar 2025; disclosed on ARPA-E slide [33]; grant pending. |
-| **Pale Blue / Fisch group** | **US 19/084,168** | Positive/negative ponderomotive potentials | Filed 19 Mar 2025 [33]. |
-| **Pale Blue / Fisch group** | **US 19/175,473** | Ultra-high DC voltages in open-field-line traps | Filed 10 Apr 2025 [33]. |
-| **Pale Blue / Fisch group** | **US 63/794,470** | Differential confinement / mixing / demixing in rotating trap | Provisional filed 25 Apr 2025 [33]. |
-| **TAE Technologies** | **US 10,438,702 B2** | Systems and methods for forming and maintaining a high-performance FRC | Granted 8 Oct 2019; cornerstone of beam-driven FRC portfolio; company cites $>$1,500 granted patents globally incl. adjacent markets [58,59]. |
-| **HB11 / Hora lineage** | **US 10,410,752 B2** | Method for generating electrical energy by laser-based nuclear fusion and laser reactor | Granted 10 Sep 2019; inventor H. Hora; laser + magnetic-field HB11 reactor concept underlying HB11 Energy’s IP narrative [60]. |
-| **LPPFusion** | **US 7,482,607 B2** | Method and apparatus for producing x-rays, ion beams and nuclear fusion energy | Granted 27 Jan 2009; inventors Lerner & Blake; assignee Lawrenceville Plasma Physics; DPF / angular-momentum / X-ray conversion claims [61]. |
-| **Blue Laser Fusion** | **US 12,416,822 B1** | Laser beam extraction using DBR mirrors with piezoelectric layer | Granted 16 Sep 2025; inventors Gandrothula & Nakamura; assignee Blue Laser Fusion, Inc. [62]. |
-| **Blue Laser Fusion** | (family) | Fuel pellet with internal reflection; boron-cavity laser fusion filings | Multiple 2023–2025 U.S. applications (e.g., fuel-pellet / boron-cavity families); company claims $>$100 patents and applications internationally [63]. |
-| **Marvel Fusion** | (applications) | Nanostructured target / nonthermal ICF | Public technical status reports emphasize nanostructured targets [8]; consolidated granted-U.S. flagship numbers are less transparent in English trade sources than HB11/TAE—treat company IP claims as pending verification against EPO/USPTO families. |
-| **ENN** | (CN / institutional) | ST hydrogen-boron roadmap IP | Primary disclosures are papers and facility designs [6,22]; Chinese utility/invention patents exist in CNIPA but are not tabulated here pending bilingual claim review. |
+| **Princeton / Thea** | **US 12,620,498 B2** | Planar coil stellarator | Trustees of Princeton University; Gates, Zhu, Hammond [51]. |
+| **Princeton / Thea** | **US 12,537,109 B2** | Planar coil stellarator | Princeton University continuation family [52]. |
+| **Thea Energy** | **US 12,451,260 B2** | Planar coil stellarator including removable field shaping units | **Thea Energy, Inc.** (company-assigned grant). |
+| **Princeton / Thea** | **US 12,562,286 B2** | System and method for stellarator neutron source | Princeton University (Eos/neutron-source track). |
+| **Princeton / Thea** | **US 2024/0395446 A1** | Stellarators using arrays of permanent magnets | Princeton University published application. |
+| **Princeton / PFS** | **US 9,767,925 B2** | Reduce neutron production in small clean fusion reactors | Princeton University; Cohen [57]. |
+| **Princeton / PFS** | **US 10,923,236 B2** | System and method for small, clean, steady-state fusion reactors | Princeton University; Cohen. |
+| **Princeton / PFS** | **US 10,811,159 B2** | Fueling method for small, steady-state, aneutronic FRC fusion reactors | Princeton University. |
+| **PFS / PSS** | **US 9,822,769 B2** | High specific impulse / moderate thrust (DFD-related) | **Princeton Satellite Systems**. |
+| **PFS / PSS** | **US 10,229,756 B2** | In-space startup method for nuclear fusion rocket engines | Princeton Satellite Systems, Inc. |
+| **Pale Blue / Fisch** | **US 2025/0324504 A1** | Ultra-high DC voltages in open field line traps (minimal dissipation/damage) | **Published** 16 Oct 2025 (Appl. No. US 19/175,473); inventors Fisch, Kolmes, Mlodik, Ochs, Rax, Rubin; assignee Princeton University [33]. |
+| **Pale Blue / Fisch** | **US 19/083,790** | Nonthermal $p\text{-}^{11}\text{B}$ with separated reactant regions | Filed 19 Mar 2025; disclosed on ARPA-E slide; **not yet found as published A1** in this pass (18‑month clock) [33]. |
+| **Pale Blue / Fisch** | **US 19/084,168** | Positive/negative ponderomotive potentials | Filed 19 Mar 2025 [33]; publication pending. |
+| **Pale Blue / Fisch** | **US 63/794,470** | Differential confinement / mixing / demixing | Provisional filed 25 Apr 2025 [33]. |
+| **TAE** | **US 10,438,702 B2** | Forming and maintaining a high-performance FRC | Tae Technologies, Inc.; large AU/JP/KR/TW family [58,59]. |
+| **TAE** | **US 11,929,182 B2** / **US 2022/0277861 A1** | Improved sustainment of high-performance FRC | Tae Technologies (Binderbauer lineage). |
+| **HB11 / Hora** | **US 10,410,752 B2** | Laser-based nuclear fusion and laser reactor | UJK Management GmbH; Hora [60]. |
+| **HB11 / Hora** | **WO 2022/040329 A1** | Opto-mechanic driven laser-boron fusion… | Heinrich Hora (spacecraft/drive framing). |
+| **HB11 / Hora** | **WO 2019/101991 A1** | Clean energy from nuclear reactions in a reactor | Heinrich Hora. |
+| **LPPFusion** | **US 7,482,607 B2** | X-rays, ion beams and nuclear fusion energy (DPF) | Lawrenceville Plasma Physics, Inc. [61]. |
+| **LPPFusion** | **EP 1 989 714 B1** | Same DPF family (EU grant) | Corresponds to US 7,482,607 lineage. |
+| **Blue Laser Fusion** | **US 12,416,822 B1** | DBR mirror laser extraction with piezoelectric layer | Blue Laser Fusion, Inc. [62]. |
+| **Blue Laser Fusion** | **US 12,387,853 B1** | Synchronized light source for laser fusion | Blue Laser Fusion, Inc. |
+| **Blue Laser Fusion** | **US 12,597,527 B1** / **US 12,597,528 B1** | Fuel pellet with internal reflection; single-laser synchronized source | Blue Laser Fusion, Inc. |
+| **Blue Laser Fusion** | **US 2025/0182915 A1** | Solid target structure with low ignition temperature | Blue Laser Fusion, Inc. |
+| **Blue Laser Fusion** | **US 2024/0158106 A1** | Satellite laser fusion system and method | Blue Laser Fusion Inc. |
+| **Blue Laser Fusion** | **GB 2627855 A** / **GB 2631341 A** | Direct laser fusion; fast ignition fusion | Blue Laser Fusion Inc. (UK apps). |
+| **Marvel Fusion** | **EP 4 506 734 A1** | Method for analyzing a solid-state nuclear track detector | Marvel Fusion GmbH (diagnostics; not core nano-target grant). |
+| **ENN** | — | — | No clean English-assignee hit in this pass; CNIPA review still required [6,22]. |
+| **Avalanche / Anubal** | — | — | No clear company-assignee fusion grants found in this pass. |
 
-**How to read this for $p\text{-}^{11}\text{B}$ electricity.** Granted art is deepest for **TAE** (FRC systems), **HB11/Hora** (laser HB11 reactor), and **LPPFusion** (DPF). **Pale Blue**’s moat is real but *young* (2025 filings). **Thea** and **PFS** patents strengthen the Princeton commercialization story even where the fuel cycle is not $p\text{-}^{11}\text{B}$. Laser startups (**Blue Laser Fusion**, **Marvel**) mix granted laser-component patents with still-maturing target/reactor families.
+**Pale Blue takeaway.** The empty website is mirrored by an empty corporate/TM shelf—but **not** by empty physics IP. At least one CHARM-related application is now a **published** Princeton-owned A1 document (**US 2025/0324504 A1**); the remaining March 2025 filings should surface as publications on the ordinary ~18‑month schedule (~Sep 2026) unless abandoned. Until a Delaware/NJ entity and brand mark appear, treat “Pale Blue Fusion” as a **named spinout plan**, not a searchable corporate assignee.
+
+**How to read this for $p\text{-}^{11}\text{B}$ electricity.** Granted art is deepest for **TAE** (FRC systems), **Blue Laser Fusion** (laser/target stack under company name), **HB11/Hora**, and **LPPFusion** (DPF). **Thea** now shows both university-licensed and **company-assigned** planar-coil grants. **Pale Blue**’s moat is real, young, and still inventor/Princeton-centered. **Marvel**’s public EPO hit in this pass is diagnostics-side; core nano-ICF claims need a deeper EPO/USPTO family crawl.
 
 ---
 
