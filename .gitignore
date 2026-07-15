@@ -13,6 +13,7 @@ dist/
 *.fdb_latexmk
 *.toc
 *.lof
+*.lot
 *.synctex.gz
 texput.log
 

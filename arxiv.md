@@ -64,7 +64,7 @@ One row per major effort. Detail and scoring live in Table 1 (§7) and §5. Devi
 Read this page like a diligence cheat sheet. **First diagram** splits the catalog by the major keys from §1.2 (time → confinement family → named path). One 2024 physics idea—compressed degenerate boron [91]—is drawn as a **mixin**: it can attach to the pulsed laser / HEDP branch only, not to magnetic or Orbitron-class cores (§3.2). **Second diagram** drops years down the page as an *indicative* ladder: key-concept proof → $Q\gtrsim 1$ (engineering breakeven; some pitches say $Q>0$) → commercial-grade prototype → grid plant. Dates are **editorial judgments** from public roadmaps and physics gaps in this survey—not bank-grade forecasts, and **no path has closed $p\text{-}^{11}\text{B}$ plant $Q>1$ yet**.
 
 ```mermaid
-flowchart TB
+flowchart LR
   G["Goal: grid electricity<br/>clean fuel end-state ≈ p–¹¹B"]
 
   G --> T{"Key 1 — Time"}
@@ -195,7 +195,7 @@ Even so, aggressive hot-ion assumptions remain contested. ENN’s ST roadmap inv
 Modern $p\text{-}^{11}\text{B}$ projects are designed specifically to bypass Rider’s assumptions by operating in regimes where classical, Maxwellian thermodynamics do not apply—or, as in §2.3, to operate just far enough from equilibrium that recirculating power remains tolerable.
 
 ```mermaid
-flowchart TB
+flowchart LR
   R["Rider limit<br/>Bremsstrahlung &gt; fusion power"]
   R --> A["Near- / off-equilibrium"]
   R --> B["Non-thermal / kinetic loopholes"]
@@ -460,7 +460,7 @@ Princeton University and PPPL do not commercialize through a single exclusive ve
 | Entity | Fuel / machine | Capital signal | Federal milestone signal | Public web / brand | 2026–2030 outlook |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Thea Energy** | D–T stellarator (Eos/Helios) | $\sim\$130\,\mathrm{M}$ private | DOE Milestone Helios design certified (2026) | Live (`thea.energy`) | Build Eos; top-tier U.S. pilot-plant contender |
-| **Pale Blue Fusion** | $p\text{-}^{11}\text{B}$ CHARM mirror | ARPA-E $\sim\$1.5\,\mathrm{M}$ academic | OPEN 2021 complete; no Milestone award under brand | Not live (mid-2026) | Incorporate + seed; theory→experiment risk |
+| **Pale Blue Fusion** | $p\text{-}^{11}\text{B}$ CHARM mirror | ARPA-E $\sim\$1.5\,\mathrm{M}$ academic | OPEN 2021 complete; no Milestone award under brand | No public site (mid-2026) | Incorporate + seed; theory→experiment risk |
 | **Princeton Fusion Systems** | D–$^3$He PFRC | Mostly ARPA-E/NASA/INFUSE | OPEN/GAMOW/INFUSE awards | Live (company site) | Upgrade PFRC-2; seek PFRC-3 funding |
 
 Thea does not need a “piece” of Pale Blue to succeed, nor does Pale Blue’s delay imply Thea blockage: the IP, fuels, and machines do not overlap. What the comparison *does* show is that missing brand infrastructure is a **Pale Blue–specific T2M lag**, not a general Princeton inability to commercialize fusion.
@@ -655,7 +655,7 @@ A survey of this type is stronger when claims about “protected IP” are pinne
 
 | Entity | Domain | Corp. entity (public SOS / OpenCorporates) | USPTO TM (casual) | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| **Pale Blue Fusion** | `palebluefusion.com` **NXDOMAIN** | **No** “Pale Blue Fusion” entity found | No clear brand hit | Still “plan to incorporate” as of July 2025 ARPA-E slide [33]; IP sits with **Princeton** inventors/assignee so far. |
+| **Pale Blue Fusion** | Not registered | No “Pale Blue Fusion” entity found | No clear brand hit | Still “plan to incorporate” as of July 2025 ARPA-E slide [33]; IP sits with **Princeton** inventors/assignee so far. |
 | **Thea Energy** | Live (`thea.energy`) | Delaware / NJ operating company (2022 spinout) | Brand in commerce | Strongest Princeton-house **T** footprint. |
 | **Princeton Fusion Systems** | Live | Affiliate of Princeton Satellite Systems | — | Long-running small-business line. |
 | **TAE Technologies** | Live (`tae.com`) | Long-standing CA corp (ex Tri Alpha) | Active brand | Deepest private fusion IP portfolio in this survey. |
@@ -724,7 +724,7 @@ A survey of this type is stronger when claims about “protected IP” are pinne
 | **Helion US 11,469,003** | Thin patent-cite list; non-patent lit on D–D / $^3\mathrm{He}$ cycles; PSS fusion-rocket WO in related documents | Establishes Helion as the main D–$^3$He commercial assignee (§4.1) |
 | **Fisch / Pale Blue US 2025/0324504 A1** | Young A1: Google Patents showed **no** populated Patent Citations table yet | Too early for a *Cited by* graph |
 
-**Pale Blue takeaway.** The empty website is mirrored by an empty corporate/TM shelf—but **not** by empty physics IP. At least one CHARM-related application is now a **published** Princeton-owned A1 document (**US 2025/0324504 A1**); the remaining March 2025 filings should surface as publications on the ordinary ~18‑month schedule (~Sep 2026) unless abandoned. Until a Delaware/NJ entity and brand mark appear, treat “Pale Blue Fusion” as a **named spinout plan**, not a searchable corporate assignee. Its citation graph will fill in after examiner actions.
+**Pale Blue takeaway.** The still-forming company shelf (no public brand site or Delaware/NJ entity yet) is **not** mirrored by empty physics IP. At least one CHARM-related application is now a **published** Princeton-owned A1 document (**US 2025/0324504 A1**); the remaining March 2025 filings should surface as publications on the ordinary ~18‑month schedule (~Sep 2026) unless abandoned. Until a corporate entity and brand mark appear, treat “Pale Blue Fusion” as a **named spinout plan**, not a searchable corporate assignee. Its citation graph will fill in after examiner actions.
 
 **How to read this for $p\text{-}^{11}\text{B}$ electricity.** Granted art is deepest for **TAE** (FRC systems rooted in Rostoker/UC $p\text{-}^{11}\mathrm{B}$ filings), **Blue Laser Fusion** (laser/target stack under company name—visible from Hora *Cited by*), **HB11/Hora**, and **LPPFusion** (DPF). **Marvel**’s core nonthermal-target claim (**US 2023/0073280 A1**) appears once you follow Hora’s forward citations—assignee search alone under-weighted it. **Thea** shows both university-licensed and **company-assigned** planar-coil grants, and its Patent Citations list deliberately walks past TAE NBI, EMC2 cusp, and General Fusion compression art. **Helion** is the citation-validated D–$^3$He commercial peer (not $p\text{-}^{11}\mathrm{B}$-clean; §4.1). **Pale Blue**’s moat is real, young, and still inventor/Princeton-centered.
 
@@ -759,26 +759,47 @@ Physics path ($K,R,A,L$) is weighted heaviest in POS; execution ($T,H$) next; **
 
 ### Table 4: Ranked $p\text{-}^{11}\text{B}$ plant odds (editorial, mid-2026)
 
-| Rank | Path | Type | POS | $\kappa$ | POS★ | Why this rank (one line) | $Q\gtrsim 1$ window | Prototype window | Grid / product window |
-| :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :--- |
-| 1 | **TAE** (FRC) | Company | 79 | 1.0 | **79** | Deepest capital + Norm hardware + LHD $\alpha$ proof; **L**/**M** (ICC) still open | ~2030–2036 | ~2032–2040 | ~2038–2050 |
-| 2 | **Pale Blue / CHARM** | Company (early) | 68 | 1.0 | **68** | Best published **A**/**K**/**R** attack; **T**/**H** almost empty | ~2034–2042 | ~2036–2045 | ~2040–2055 |
-| 3 | **ENN** (ST) | National / company | 64 | 1.0 | **64** | National ST + nuclear-data machine; hot-ion **K** contested; clearest demo roadmap | ~2032–2038 | ~2033–2040 | ~2038–2050 |
-| 4 | **JIHT NVD** | Lab | 57 | 1.0 | **57** | Real lab $p\text{-}^{11}\text{B}$ alphas in compact IEC neighborhood; not a capitalized plant | uncertain | lab-scale only | N/A as utility |
-| 5 | **XJTU / CN HEDP** | Lab (component) | 55 | 1.0 | **55** | Record beam-target yields + [91] theory; not an integrated plant | science track | — | — |
-| 6 | **HB11** | Company | 54 | 1.0 | **54** | Real laser R&D + reactor sketch; ~4 orders below driver breakeven | ~2034–2042 | ~2036–2045 | ~2042–2055 |
-| 7 | **Marvel Fusion** | Company | 54 | 1.0 | **54** | Strong nano-target **K**; plant **L** weaker than HB11’s in Table 1; CSU still standing up | ~2034–2042 | ~2036–2045 | ~2042–2055 |
-| 8 | **LPPFusion** (DPF) | Company | ~43¶ | 1.0 | **~43** | Long-running pinch; electrode life / rep-rate bind **L**/**M**; thin capital | ~2035–2045 | ~2038–2048 | ~2045–2055+ |
-| 9 | **Blue Laser Fusion** | Company | 41 | 1.0 | **41** | Patent/laser stack real; $p\text{-}^{11}\text{B}$ plant path thinner publicly | ~2036–2045 | ~2038–2048 | ~2045–2055+ |
-| 10 | **Degenerate-catcher plant** [91] | Imputed theory | 61 | 0.50 | **31** | In-silico / theory $F>1$ beam→compressed-degenerate boron; no company owns a plant | if productized ~2035–2045 | — | — |
-| 11 | **Avalanche** (Orbitron) | Company (staged) | 64 | 0.40 | **26** | Strong D–T hardware **H**/**T**; $p\text{-}^{11}\text{B}$ is design-capable later—$\kappa$ cuts plant odds for *this* fuel | ~2035–2045‡ | ~2036–2045 | ~2040–2050 (modular) |
-| 12 | **Catania $\alpha$-avalanche MCF** [43] | Imputed theory | 50 | 0.50 | **25** | Low-density multi-fluid $Q=P_f/P_{\mathrm{Brems}}>1$ scans; no machine program | speculative | — | — |
-| 13 | **Radiation-trapping regime** [3] | Imputed theory | 43 | 0.50 | **22** | Ochs–Kolmes–Fisch compressed $p\text{-}^{11}\text{B}$ radiation-trapping feasibility; paper plant only | speculative | — | — |
-| 14 | **PROBONO** | Consortium | 61 | 0.35 | **21** | EU coordination of laser/plasma $p\text{-}^{11}\text{B}$; not one reactor owner | — | — | — |
-| 15 | **FUSION Project** (INFN) | Facility / project | 48 | 0.35 | **17** | PALS-class targetry/diagnostics; science enabler | science track | — | — |
-| 16 | **Nanjing $\mu$CF** [11] | Imputed theory | 29 | 0.50 | **15** | Kinetic muon-screening proposal; speculative **L**, no hardware path | speculative | — | — |
-| 17 | **LHD / NIFS** | Facility | 39 | 0.35 | **14** | Magnetic $p\text{-}^{11}\text{B}$ $\alpha$ demo; not a plant design | — | — | — |
-| 18 | **Anubal Fusion** | Company (early) | 11 | 1.0 | **11** | Too early for plant odds | — | — | — |
+| Rank | Path | Type | POS | $\kappa$ | POS★ | $Q\gtrsim 1$ | Prototype | Grid / product |
+| :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- | :--- |
+| 1 | **TAE** (FRC) | Company | 79 | 1.0 | **79** | ~2030–2036 | ~2032–2040 | ~2038–2050 |
+| 2 | **Pale Blue / CHARM** | Company (early) | 68 | 1.0 | **68** | ~2034–2042 | ~2036–2045 | ~2040–2055 |
+| 3 | **ENN** (ST) | National / company | 64 | 1.0 | **64** | ~2032–2038 | ~2033–2040 | ~2038–2050 |
+| 4 | **JIHT NVD** | Lab | 57 | 1.0 | **57** | uncertain | lab-scale only | N/A as utility |
+| 5 | **XJTU / CN HEDP** | Lab (component) | 55 | 1.0 | **55** | science track | — | — |
+| 6 | **HB11** | Company | 54 | 1.0 | **54** | ~2034–2042 | ~2036–2045 | ~2042–2055 |
+| 7 | **Marvel Fusion** | Company | 54 | 1.0 | **54** | ~2034–2042 | ~2036–2045 | ~2042–2055 |
+| 8 | **LPPFusion** (DPF) | Company | ~43¶ | 1.0 | **~43** | ~2035–2045 | ~2038–2048 | ~2045–2055+ |
+| 9 | **Blue Laser Fusion** | Company | 41 | 1.0 | **41** | ~2036–2045 | ~2038–2048 | ~2045–2055+ |
+| 10 | **Degenerate-catcher plant** [91] | Imputed theory | 61 | 0.50 | **31** | if productized ~2035–2045 | — | — |
+| 11 | **Avalanche** (Orbitron) | Company (staged) | 64 | 0.40 | **26** | ~2035–2045‡ | ~2036–2045 | ~2040–2050 (modular) |
+| 12 | **Catania $\alpha$-avalanche MCF** [43] | Imputed theory | 50 | 0.50 | **25** | speculative | — | — |
+| 13 | **Radiation-trapping regime** [3] | Imputed theory | 43 | 0.50 | **22** | speculative | — | — |
+| 14 | **PROBONO** | Consortium | 61 | 0.35 | **21** | — | — | — |
+| 15 | **FUSION Project** (INFN) | Facility / project | 48 | 0.35 | **17** | science track | — | — |
+| 16 | **Nanjing $\mu$CF** [11] | Imputed theory | 29 | 0.50 | **15** | speculative | — | — |
+| 17 | **LHD / NIFS** | Facility | 39 | 0.35 | **14** | — | — | — |
+| 18 | **Anubal Fusion** | Company (early) | 11 | 1.0 | **11** | — | — | — |
+
+**Why these ranks (one line each).**
+
+1. **TAE** — Deepest capital + Norm hardware + LHD $\alpha$ proof; **L**/**M** (ICC) still open.
+2. **Pale Blue / CHARM** — Best published **A**/**K**/**R** attack; **T**/**H** almost empty.
+3. **ENN** — National ST + nuclear-data machine; hot-ion **K** contested; clearest demo roadmap.
+4. **JIHT NVD** — Real lab $p\text{-}^{11}\text{B}$ alphas in compact IEC neighborhood; not a capitalized plant.
+5. **XJTU / CN HEDP** — Record beam-target yields + [91] theory; not an integrated plant.
+6. **HB11** — Real laser R&D + reactor sketch; ~4 orders below driver breakeven.
+7. **Marvel Fusion** — Strong nano-target **K**; plant **L** weaker than HB11’s in Table 1; CSU still standing up.
+8. **LPPFusion** — Long-running pinch; electrode life / rep-rate bind **L**/**M**; thin capital.
+9. **Blue Laser Fusion** — Patent/laser stack real; $p\text{-}^{11}\text{B}$ plant path thinner publicly.
+10. **Degenerate-catcher** [91] — In-silico / theory $F>1$ beam→compressed-degenerate boron; no company owns a plant.
+11. **Avalanche** — Strong D–T hardware **H**/**T**; $p\text{-}^{11}\text{B}$ is design-capable later—$\kappa$ cuts plant odds for *this* fuel.
+12. **Catania $\alpha$-avalanche MCF** [43] — Low-density multi-fluid $Q=P_f/P_{\mathrm{Brems}}>1$ scans; no machine program.
+13. **Radiation-trapping** [3] — Ochs–Kolmes–Fisch compressed $p\text{-}^{11}\text{B}$ radiation-trapping feasibility; paper plant only.
+14. **PROBONO** — EU coordination of laser/plasma $p\text{-}^{11}\text{B}$; not one reactor owner.
+15. **FUSION Project** — PALS-class targetry/diagnostics; science enabler.
+16. **Nanjing $\mu$CF** [11] — Kinetic muon-screening proposal; speculative **L**, no hardware path.
+17. **LHD / NIFS** — Magnetic $p\text{-}^{11}\text{B}$ $\alpha$ demo; not a plant design.
+18. **Anubal Fusion** — Too early for plant odds.
 
 ¶ LPPFusion POS from §5.3 narrative (not a full Table 1 row); approximate.  
 ‡ Avalanche’s public near-term $Q$ story is **D–T**; the $p\text{-}^{11}\text{B}$ window above is the later pack claim after $\kappa$ is applied—do not read POS $64$ as boron–proton plant odds.

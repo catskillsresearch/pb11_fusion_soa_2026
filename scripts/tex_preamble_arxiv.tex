@@ -10,7 +10,24 @@
 \usepackage{tabularx}
 \usepackage{longtable}
 \usepackage{multirow}
+\usepackage{pdflscape}
+\usepackage{caption}
 \usepackage{authblk}
+
+% Survey tables keep editorial IDs (Table 1, 2a, …) inside the caption text so
+% in-prose cross-references stay stable; suppress the automatic "Table~N" prefix.
+\captionsetup{font=small,labelfont=bf,labelsep=space}
+\newcommand{\surveycaption}[2]{%
+  \captionsetup{labelformat=empty}%
+  \caption[#1: #2]{#1: #2}%
+}
+\newcommand{\surveycaptioncont}[1]{\caption*{#1}}
+
+% Compact scorecard glyphs (● / ◐ / ○) — avoid wide text fallbacks like "(half)"
+\newcommand{\gateF}{\ensuremath{\bullet}}
+\newcommand{\gateP}{\ensuremath{\odot}}
+\newcommand{\gateW}{\ensuremath{\circ}}
+\newcommand{\gateNA}{--}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
@@ -59,9 +76,9 @@
     {—}{{\textemdash}}1
     {–}{{\textendash}}1
     {…}{{\ldots}}1
-    {●}{{\ensuremath{\bullet}}}1
-    {◐}{{\text{(half)}}}1
-    {○}{{\ensuremath{\circ}}}1
+    {●}{{\gateF{}}}1
+    {◐}{{\gateP{}}}1
+    {○}{{\gateW{}}}1
     {¹}{{\textsuperscript{1}}}1
     {²}{{\textsuperscript{2}}}1
     {³}{{\textsuperscript{3}}}1
@@ -109,9 +126,9 @@
 \newunicodechar{–}{\textendash{}}
 \newunicodechar{…}{\ldots}
 \newunicodechar{§}{\S}
-\newunicodechar{●}{\ensuremath{\bullet}}
-\newunicodechar{◐}{\text{(half)}}
-\newunicodechar{○}{\ensuremath{\circ}}
+\newunicodechar{●}{\gateF{}}
+\newunicodechar{◐}{\gateP{}}
+\newunicodechar{○}{\gateW{}}
 \newunicodechar{†}{\dag}
 \newunicodechar{‡}{\ddag}
 \newunicodechar{¶}{\P}
