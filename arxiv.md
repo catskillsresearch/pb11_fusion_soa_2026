@@ -181,7 +181,7 @@ Adapted for **electricity from $p\text{-}^{11}\text{B}$**, the gates used throug
 In 1995, Todd Rider published a rigorous mathematical analysis detailing the fundamental thermodynamic limitations of aneutronic fusion systems [1]. In the language of Table 3 (§1.7), Rider is the sharpest published form of gates **K** and **R** for steady $p\text{-}^{11}\text{B}$: the "Rider Limit" remains the primary benchmark against which all such concepts are evaluated.
 
 ### 2.1 Thermal Equilibrium ($T_i = T_e$)
-In a plasma in thermodynamic equilibrium, the fuel ions and electrons are in thermal equilibrium ($T_i = T_e = T$). The Bremsstrahlung power loss density is expressed as:
+In a plasma in thermodynamic equilibrium, the fuel **ion temperature** $T_i$ and **electron temperature** $T_e$ are equal to a common temperature $T$ ($T_i = T_e = T$). Particle velocities then follow a **Maxwellian** (Maxwell–Boltzmann) distribution set by that single $T$—the isotropic thermal “soup” of the §2 lead-in, as opposed to beams or other shaped nonthermal distributions treated later. The Bremsstrahlung power loss density is expressed as:
 
 $$P_{Br} \propto Z_{eff}^2 n_e^2 \sqrt{T_e}$$
 
