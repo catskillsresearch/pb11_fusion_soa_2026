@@ -564,9 +564,9 @@ def rebuild_table1_matrix(latex: str) -> str:
     return latex[:wrap_start] + new_table + latex[lt_end:]
 
 
-def rebuild_table10_rankings(latex: str) -> str:
-    """Table 10 as captioned landscape longtable; timelines in one column (no crushed dates)."""
-    marker = r"Table 10: Ranked"
+def rebuild_table11_rankings(latex: str) -> str:
+    """Table 11 as captioned landscape longtable; timelines in one column (no crushed dates)."""
+    marker = r"Table 11: Ranked"
     start = latex.find(marker)
     if start < 0:
         return latex
@@ -578,7 +578,7 @@ def rebuild_table10_rankings(latex: str) -> str:
         return latex
     lt_end += len(r"\end{longtable}")
     block = latex[lt_start:lt_end]
-    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 10")
+    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 11")
 
     rows: list[str] = []
     for line in block.splitlines():
@@ -618,7 +618,7 @@ def rebuild_table10_rankings(latex: str) -> str:
         "  >{\\raggedright\\arraybackslash}p{2.8cm}\n"
         "  c c c\n"
         "  >{\\raggedright\\arraybackslash}p{5.8cm}@{}}\n"
-        "\\surveycaption{Table 10}{Ranked $p\\text{-}^{11}\\text{B}$ plant odds "
+        "\\surveycaption{Table 11}{Ranked $p\\text{-}^{11}\\text{B}$ plant odds "
         "(editorial, mid-2026)}\\label{tab:plant-odds}\\\\\n"
         "\\toprule\n"
         "\\textbf{Rank} & \\textbf{Path} & \\textbf{Type} & "
@@ -626,7 +626,7 @@ def rebuild_table10_rankings(latex: str) -> str:
         "\\textbf{Timelines} \\\\\n"
         "\\midrule\n"
         "\\endfirsthead\n"
-        "\\surveycaptioncont{Table 10: Ranked plant odds (continued)}\\\\\n"
+        "\\surveycaptioncont{Table 11: Ranked plant odds (continued)}\\\\\n"
         "\\toprule\n"
         "\\textbf{Rank} & \\textbf{Path} & \\textbf{Type} & "
         "\\textbf{POS} & $\\boldsymbol{\\kappa}$ & \\textbf{POS$\\star$} & "
@@ -642,9 +642,9 @@ def rebuild_table10_rankings(latex: str) -> str:
     return latex[:wrap_start] + new_table + latex[lt_end:]
 
 
-def rebuild_table9a_footprint(latex: str) -> str:
-    """Table 9a as captioned longtable with readable column widths."""
-    marker = r"Table 9a: Corporate"
+def rebuild_table10a_footprint(latex: str) -> str:
+    """Table 10a as captioned longtable with readable column widths."""
+    marker = r"Table 10a: Corporate"
     start = latex.find(marker)
     if start < 0:
         start = latex.find("Corporate / brand legal footprint")
@@ -658,7 +658,7 @@ def rebuild_table9a_footprint(latex: str) -> str:
         return latex
     lt_end += len(r"\end{longtable}")
     block = latex[lt_start:lt_end]
-    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 9a")
+    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 10a")
 
     rows: list[str] = []
     for line in block.splitlines():
@@ -686,14 +686,14 @@ def rebuild_table9a_footprint(latex: str) -> str:
         "  >{\\raggedright\\arraybackslash}p{3.4cm}\n"
         "  >{\\raggedright\\arraybackslash}p{2.6cm}\n"
         "  >{\\raggedright\\arraybackslash}p{4.2cm}@{}}\n"
-        "\\surveycaption{Table 9a}{Corporate / brand legal footprint (non-patent)}"
+        "\\surveycaption{Table 10a}{Corporate / brand legal footprint (non-patent)}"
         "\\label{tab:legal-footprint}\\\\\n"
         "\\toprule\n"
         "\\textbf{Entity} & \\textbf{Domain} & \\textbf{Corp.\\ entity} & "
         "\\textbf{USPTO TM} & \\textbf{Notes} \\\\\n"
         "\\midrule\n"
         "\\endfirsthead\n"
-        "\\surveycaptioncont{Table 9a: Corporate / brand legal footprint (continued)}\\\\\n"
+        "\\surveycaptioncont{Table 10a: Corporate / brand legal footprint (continued)}\\\\\n"
         "\\toprule\n"
         "\\textbf{Entity} & \\textbf{Domain} & \\textbf{Corp.\\ entity} & "
         "\\textbf{USPTO TM} & \\textbf{Notes} \\\\\n"
@@ -707,9 +707,9 @@ def rebuild_table9a_footprint(latex: str) -> str:
     return latex[:wrap_start] + new_table + latex[lt_end:]
 
 
-def rebuild_table7_scorecard(latex: str) -> str:
-    """Table 7 as captioned landscape scorecard (no subsection numbering)."""
-    marker = r"Table 7: Zeroth-order scorecard"
+def rebuild_table8_scorecard(latex: str) -> str:
+    """Table 8 as captioned landscape scorecard (no subsection numbering)."""
+    marker = r"Table 8: Zeroth-order scorecard"
     start = latex.find(marker)
     if start < 0:
         return latex
@@ -722,7 +722,7 @@ def rebuild_table7_scorecard(latex: str) -> str:
         return latex
     lt_end += len(r"\end{longtable}")
     block = latex[lt_start:lt_end]
-    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 7")
+    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 8")
 
     rows: list[str] = []
     for line in block.splitlines():
@@ -750,7 +750,7 @@ def rebuild_table7_scorecard(latex: str) -> str:
         "  >{\\raggedright\\arraybackslash}p{1.55cm}\n"
         "  *{9}{c}\n"
         "  >{\\raggedright\\arraybackslash}p{8.8cm}@{}}\n"
-        "\\surveycaption{Table 7}{Zeroth-order scorecard for key projects "
+        "\\surveycaption{Table 8}{Zeroth-order scorecard for key projects "
         "(State of the Art, 2026)}\\label{tab:scorecard}\\\\\n"
         "\\toprule\n"
         "\\textbf{Project} & \\textbf{C} & "
@@ -759,7 +759,7 @@ def rebuild_table7_scorecard(latex: str) -> str:
         "\\textbf{Notes (2025--2026)} \\\\\n"
         "\\midrule\n"
         "\\endfirsthead\n"
-        "\\surveycaptioncont{Table 7: Zeroth-order scorecard (continued)}\\\\\n"
+        "\\surveycaptioncont{Table 8: Zeroth-order scorecard (continued)}\\\\\n"
         "\\toprule\n"
         "\\textbf{Project} & \\textbf{C} & "
         "\\textbf{F} & \\textbf{K} & \\textbf{R} & \\textbf{A} & "
@@ -930,9 +930,9 @@ def promote_remaining_survey_tables(latex: str) -> str:
             "Table 1",
             "Table 3",
             "Table 6",
-            "Table 7",
-            "Table 9a",
-            "Table 10",
+            "Table 8",
+            "Table 10a",
+            "Table 11",
         }:
             latex = latex[: m.start()] + latex[m.end() :]
             continue
@@ -1006,9 +1006,9 @@ def cleanup_pandoc_latex(latex: str) -> str:
     )
     latex = rebuild_table3_gates(latex)
     latex = rebuild_table6_sister_fuels(latex)
-    latex = rebuild_table7_scorecard(latex)
-    latex = rebuild_table9a_footprint(latex)
-    latex = rebuild_table10_rankings(latex)
+    latex = rebuild_table8_scorecard(latex)
+    latex = rebuild_table10a_footprint(latex)
+    latex = rebuild_table11_rankings(latex)
     latex = promote_remaining_survey_tables(latex)
     latex = re.sub(r"\n{3,}", "\n\n", latex)
     return latex
