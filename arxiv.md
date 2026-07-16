@@ -63,6 +63,7 @@ One row per major effort. Detail and scoring live in Table 1 (§7) and §5. Devi
 ### 1.3.1 Executive map: architecture branches, a “mixin,” and the milestone ladder
 Read this page like a diligence cheat sheet. **First diagram** splits the catalog by the major keys from §1.2 (time → confinement family → named path). One 2024 physics idea—compressed degenerate boron [91]—is drawn as a **mixin**: it can attach to the pulsed laser / HEDP branch only, not to magnetic or Orbitron-class cores (§3.2). **Second diagram** drops years down the page as an *indicative* ladder: key-concept proof → $Q\gtrsim 1$ (engineering breakeven; some pitches say $Q>0$) → commercial-grade prototype → grid plant. Dates are **editorial judgments** from public roadmaps and physics gaps in this survey—not bank-grade forecasts, and **no path has closed $p\text{-}^{11}\text{B}$ plant $Q>1$ yet**.
 
+<!-- mermaid-caption: Architecture branches and the compressed-degenerate boron mixin -->
 ```mermaid
 flowchart LR
   G["Goal: grid electricity<br/>clean fuel end-state ≈ p–¹¹B"]
@@ -91,9 +92,9 @@ flowchart LR
   MX -.->|optional target upgrade| L3
 ```
 
+<!-- mermaid-caption: Indicative milestone ladder by architecture family (mid-2026 survey view — not a forecast) -->
 ```mermaid
 gantt
-  title Indicative milestone ladder by architecture family (mid-2026 survey view — not a forecast)
   dateFormat YYYY
   axisFormat %Y
 
