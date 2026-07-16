@@ -100,7 +100,7 @@ def github_math_to_tex(text: str) -> str:
 def strip_html_comments(text: str) -> str:
     def repl(match: re.Match[str]) -> str:
         body = match.group(0)
-        if re.match(r"<!--\s*mermaid-caption:", body, re.IGNORECASE):
+        if re.match(r"<!--\s*mermaid-(caption|landscape)\b", body, re.IGNORECASE):
             return body
         return ""
 
@@ -130,18 +130,22 @@ def extract_abstract(text: str) -> tuple[str, str]:
     return abstract_md, body
 
 
-def render_mermaid(code: str, idx: int) -> str:
+def render_mermaid(code: str, idx: int, *, scale: float = 1.0) -> str:
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     mmd_path = FIGURES_DIR / f"figure-{idx:03d}.mmd"
+    meta_path = FIGURES_DIR / f"figure-{idx:03d}.meta"
     pdf_path = FIGURES_DIR / f"figure-{idx:03d}.pdf"
     code_stripped = code.strip() + "\n"
+    cache_key = f"scale={scale}\n{code_stripped}"
     if (
         mmd_path.is_file()
+        and meta_path.is_file()
         and pdf_path.is_file()
-        and mmd_path.read_text(encoding="utf-8") == code_stripped
+        and meta_path.read_text(encoding="utf-8") == cache_key
     ):
         return pdf_path.relative_to(ROOT).as_posix()
     mmd_path.write_text(code_stripped, encoding="utf-8")
+    meta_path.write_text(cache_key, encoding="utf-8")
 
     mmdc = shutil.which("mmdc")
     if not mmdc:
@@ -153,7 +157,18 @@ def render_mermaid(code: str, idx: int) -> str:
     chrome = find_chrome()
     if chrome:
         env["PUPPETEER_EXECUTABLE_PATH"] = chrome
-    cmd = [mmdc, "-i", str(mmd_path), "-o", str(pdf_path), "--pdfFit", "-b", "transparent"]
+    cmd = [
+        mmdc,
+        "-i",
+        str(mmd_path),
+        "-o",
+        str(pdf_path),
+        "--pdfFit",
+        "-b",
+        "transparent",
+        "-s",
+        str(scale),
+    ]
     if PUPPETEER_CONFIG.is_file():
         cmd += ["-p", str(PUPPETEER_CONFIG)]
     proc = subprocess.run(cmd, env=env, capture_output=True, text=True, check=False)
@@ -283,49 +298,82 @@ def prune_stale_assets() -> None:
             path.unlink()
 
 
-def extract_mermaid_captions(text: str) -> list[str]:
-    captions: list[str] = []
+def extract_mermaid_meta(text: str) -> list[tuple[str, bool]]:
+    """Return ``(caption, landscape)`` for each mermaid fence in document order."""
+    meta: list[tuple[str, bool]] = []
     caption_comment = re.compile(
         r"<!--\s*mermaid-caption:\s*(.+?)\s*-->", re.IGNORECASE
     )
+    landscape_comment = re.compile(r"<!--\s*mermaid-landscape\s*-->", re.IGNORECASE)
     for m in re.finditer(r"^```mermaid\s*$", text, re.MULTILINE):
-        prefix = text[: m.start()]
+        prefix_lines = text[: m.start()].splitlines()[-8:]
         explicit = None
-        for line in reversed(prefix.splitlines()[-6:]):
+        landscape = False
+        for line in reversed(prefix_lines):
             stripped = line.strip()
             if not stripped:
+                continue
+            if landscape_comment.fullmatch(stripped):
+                landscape = True
                 continue
             cm = caption_comment.fullmatch(stripped)
             if cm:
                 explicit = cm.group(1).strip().rstrip(".")
-            break
-        if explicit:
-            captions.append(f"{explicit}.")
-            continue
-        heading = None
-        for line in reversed(prefix.splitlines()):
-            hm = re.match(r"^#{2,4}\s+(.+)$", line.strip())
-            if hm:
-                heading = hm.group(1).strip()
                 break
-        if heading:
-            heading = re.sub(r"^\d+(?:\.\d+)*\.?\s+", "", heading)
-            captions.append(f"{heading}.")
+            # Stop scanning once we hit non-meta prose.
+            if not stripped.startswith("<!--"):
+                break
+        if explicit:
+            caption = f"{explicit}."
         else:
-            captions.append(f"Diagram {len(captions) + 1}.")
-    return captions
+            heading = None
+            for line in reversed(text[: m.start()].splitlines()):
+                hm = re.match(r"^#{2,4}\s+(.+)$", line.strip())
+                if hm:
+                    heading = hm.group(1).strip()
+                    break
+            if heading:
+                heading = re.sub(r"^\d+(?:\.\d+)*\.?\s+", "", heading)
+                caption = f"{heading}."
+            else:
+                caption = f"Diagram {len(meta) + 1}."
+        meta.append((caption, landscape))
+    return meta
 
 
-def figure_latex(rel_path: str, caption: str, label: str) -> str:
-    return (
-        "\\begin{figure}[htbp]\n"
+def figure_latex(
+    rel_path: str, caption: str, label: str, *, landscape: bool = False
+) -> str:
+    # Landscape: long page edge becomes \\linewidth, so wide LR charts can grow.
+    include = (
+        f"\\includegraphics[width=\\linewidth,"
+        f"height=0.82\\textheight,keepaspectratio]{{{rel_path}}}"
+        if landscape
+        else (
+            f"\\includegraphics[max width=\\linewidth,"
+            f"max totalheight=0.85\\textheight,keepaspectratio]{{{rel_path}}}"
+        )
+    )
+    body = (
+        "\\begin{figure}[p]\n"
         "\\centering\n"
-        f"\\includegraphics[max width=\\linewidth,"
-        f"max totalheight=0.85\\textheight,keepaspectratio]{{{rel_path}}}\n"
+        f"{include}\n"
         f"\\caption{{{caption}}}\n"
         f"\\label{{{label}}}\n"
         "\\end{figure}\n"
+        if landscape
+        else (
+            "\\begin{figure}[htbp]\n"
+            "\\centering\n"
+            f"{include}\n"
+            f"\\caption{{{caption}}}\n"
+            f"\\label{{{label}}}\n"
+            "\\end{figure}\n"
+        )
     )
+    if landscape:
+        return "\\begin{landscape}\n" + body + "\\end{landscape}\n"
+    return body
 
 
 def write_listing(code: str, listing_name: str) -> str:
@@ -347,7 +395,7 @@ def prune_stale_listings() -> None:
 
 
 def replace_fences(text: str) -> tuple[str, dict[str, str]]:
-    mermaid_captions = extract_mermaid_captions(text)
+    mermaid_meta = extract_mermaid_meta(text)
     placeholders: dict[str, str] = {}
     other_idx = 0
     mermaid_idx = 0
@@ -363,12 +411,14 @@ def replace_fences(text: str) -> tuple[str, dict[str, str]]:
             return f"\n\n{key}\n\n"
         if lang == "mermaid":
             key = f"FIGINCLUDE{other_idx:03d}"
-            rel_path = render_mermaid(body, mermaid_idx)
-            caption = (
-                mermaid_captions[mermaid_idx]
-                if mermaid_idx < len(mermaid_captions)
-                else f"Diagram {mermaid_idx + 1}."
+            caption, landscape = (
+                mermaid_meta[mermaid_idx]
+                if mermaid_idx < len(mermaid_meta)
+                else (f"Diagram {mermaid_idx + 1}.", False)
             )
+            # Landscape charts get a higher raster/vector scale for sharper labels.
+            scale = 2.0 if landscape else 1.25
+            rel_path = render_mermaid(body, mermaid_idx, scale=scale)
             # Escape special TeX chars lightly in captions from headings.
             caption_tex = (
                 caption.replace("\\", "\\textbackslash{}")
@@ -383,7 +433,9 @@ def replace_fences(text: str) -> tuple[str, dict[str, str]]:
             label = f"fig:mermaid-{slug}"
             mermaid_idx += 1
             other_idx += 1
-            placeholders[key] = figure_latex(rel_path, caption_tex, label)
+            placeholders[key] = figure_latex(
+                rel_path, caption_tex, label, landscape=landscape
+            )
             return f"\n\n{key}\n\n"
         key = f"CODEINCLUDE{other_idx:03d}"
         rel_path = write_listing(body, f"snippet-{other_idx:03d}.txt")
@@ -457,6 +509,59 @@ def _strip_heading_block_before(latex: str, lt_start: int, title_substr: str) ->
     if sub >= 0 and title_substr.lower() in window[sub:].lower():
         return max(0, lt_start - 800) + sub
     return lt_start
+
+
+def rebuild_table_a_matrix(latex: str) -> str:
+    """Table A as a single-page captioned float (not a page-breaking longtable)."""
+    marker = r"Table A: Four-axis"
+    start = latex.find(marker)
+    if start < 0:
+        return latex
+    lt_start = latex.find(r"\begin{longtable}", start)
+    if lt_start < 0:
+        return latex
+    lt_end = latex.find(r"\end{longtable}", lt_start)
+    if lt_end < 0:
+        return latex
+    lt_end += len(r"\end{longtable}")
+    wrap_start = _strip_heading_block_before(latex, lt_start, "Table A")
+
+    # Pull data rows from the pandoc longtable body.
+    block = latex[lt_start:lt_end]
+    rows: list[str] = []
+    for line in block.splitlines():
+        s = line.strip()
+        if s.count("&") != 2 or not s.endswith(r"\\"):
+            continue
+        if "Axis" in s and "Question" in s:
+            continue
+        if s.startswith(r"\textbf{") or s.startswith("Time") or "Confinement" in s or "Fuel" in s or "Kinetics" in s:
+            rows.append(s if s.endswith(r"\\") else s + r" \\")
+    # Keep only the four axis rows (prefer \textbf{…} forms).
+    bold_rows = [r for r in rows if r.startswith(r"\textbf{")]
+    if len(bold_rows) >= 4:
+        rows = bold_rows[:4]
+    elif len(rows) < 4:
+        return latex
+
+    # Keep caption + body together (non-float); page break is inserted before §1.2.
+    new_table = (
+        "\\begin{center}\n"
+        "\\small\n"
+        "\\surveycaptionof{Table A}{Four-axis mental matrix (how to read any pitch)}\n"
+        "\\label{tab:matrix-axes}\n"
+        "\\begin{tabularx}{\\linewidth}{@{}>{\\bfseries}l>{\\raggedright\\arraybackslash}X"
+        ">{\\raggedright\\arraybackslash}X@{}}\n"
+        "\\toprule\n"
+        "Axis & Question in plain language & Typical answers in this survey \\\\\n"
+        "\\midrule\n"
+        + "\n".join(rows)
+        + "\n"
+        "\\bottomrule\n"
+        "\\end{tabularx}\n"
+        "\\end{center}\n"
+    )
+    return latex[:wrap_start] + new_table + latex[lt_end:]
 
 
 def rebuild_table4_rankings(latex: str) -> str:
@@ -691,7 +796,7 @@ def promote_remaining_survey_tables(latex: str) -> str:
     for m in reversed(matches):
         tab_id = m.group(1).strip()
         title = m.group(2).strip()
-        if tab_id in {"Table 1", "Table 2a", "Table 4"}:
+        if tab_id in {"Table 1", "Table 2a", "Table 4", "Table A"}:
             latex = latex[: m.start()] + latex[m.end() :]
             continue
         lt_start = latex.find(r"\begin{longtable}", m.end())
@@ -744,6 +849,15 @@ def cleanup_pandoc_latex(latex: str) -> str:
         latex.replace("●", r"\gateF{}")
         .replace("◐", r"\gateP{}")
         .replace("○", r"\gateW{}")
+    )
+    latex = rebuild_table_a_matrix(latex)
+    # Start §1.2 on a fresh page so Table A caption is not orphaned at a page bottom.
+    latex = re.sub(
+        r"(\\hypertarget\{a-tidy-mental-matrix-four-axes\}\{%\s*)"
+        r"(\\subsection\{A tidy mental matrix)",
+        r"\\clearpage\n\1\2",
+        latex,
+        count=1,
     )
     latex = rebuild_table1_scorecard(latex)
     latex = rebuild_table2a_footprint(latex)
