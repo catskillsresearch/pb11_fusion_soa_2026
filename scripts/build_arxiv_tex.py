@@ -841,6 +841,71 @@ def rebuild_table3_gates(latex: str) -> str:
     return latex[:wrap_start] + new_table + latex[lt_end:]
 
 
+def rebuild_table6_sister_fuels(latex: str) -> str:
+    """Table 6 as a single-page captioned float (not a page-breaking longtable)."""
+    marker = r"Table 6: Who pursues sister"
+    start = latex.find(marker)
+    if start < 0:
+        return latex
+    lt_start = latex.find(r"\begin{longtable}", start)
+    if lt_start < 0:
+        return latex
+    lt_end = latex.find(r"\end{longtable}", lt_start)
+    if lt_end < 0:
+        return latex
+    lt_end += len(r"\end{longtable}")
+    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 6")
+
+    block = latex[lt_start:lt_end]
+    junk = re.compile(
+        r"\\(?:midrule|toprule|bottomrule|endhead|endfirsthead|endfoot|"
+        r"endlastfoot|noalign\{\})+"
+    )
+    rows: list[str] = []
+    buf: list[str] = []
+    for line in block.splitlines():
+        s = line.strip()
+        if not s:
+            continue
+        buf.append(s)
+        if not s.endswith(r"\\"):
+            continue
+        row = junk.sub("", " ".join(buf)).strip()
+        buf = []
+        if "Entity" in row and "Fuel claim" in row:
+            continue
+        if len(re.findall(r"(?<!\\)&", row)) != 3:
+            continue
+        rows.append(row)
+    if len(rows) < 5:
+        return latex
+
+    new_table = (
+        "\\clearpage\n"
+        "\\begin{center}\n"
+        "\\scriptsize\n"
+        "\\setlength{\\tabcolsep}{3pt}\n"
+        "\\renewcommand{\\arraystretch}{1.05}\n"
+        "\\surveycaptionof{Table 6}{Who pursues sister aneutronic fuels "
+        "(executive, mid-2026)}\n"
+        "\\label{tab:sister-fuels}\n"
+        "\\begin{tabularx}{\\linewidth}{@{}"
+        ">{\\bfseries\\raggedright\\arraybackslash}p{2.4cm}"
+        ">{\\raggedright\\arraybackslash}p{3.0cm}"
+        ">{\\raggedright\\arraybackslash}p{2.6cm}"
+        ">{\\raggedright\\arraybackslash}X@{}}\n"
+        "\\toprule\n"
+        "Entity & Fuel claim & Clean vs $p\\text{-}^{11}\\text{B}$? & Notes \\\\\n"
+        "\\midrule\n"
+        + "\n".join(rows)
+        + "\n"
+        "\\bottomrule\n"
+        "\\end{tabularx}\n"
+        "\\end{center}\n"
+    )
+    return latex[:wrap_start] + new_table + latex[lt_end:]
+
+
 def promote_remaining_survey_tables(latex: str) -> str:
     """Turn leftover ``\\subsection{Table …}`` + longtable into captioned longtables.
 
@@ -861,7 +926,14 @@ def promote_remaining_survey_tables(latex: str) -> str:
     for m in reversed(matches):
         tab_id = m.group(1).strip()
         title = m.group(2).strip()
-        if tab_id in {"Table 1", "Table 3", "Table 7", "Table 9a", "Table 10"}:
+        if tab_id in {
+            "Table 1",
+            "Table 3",
+            "Table 6",
+            "Table 7",
+            "Table 9a",
+            "Table 10",
+        }:
             latex = latex[: m.start()] + latex[m.end() :]
             continue
         lt_start = latex.find(r"\begin{longtable}", m.end())
@@ -933,6 +1005,7 @@ def cleanup_pandoc_latex(latex: str) -> str:
         count=1,
     )
     latex = rebuild_table3_gates(latex)
+    latex = rebuild_table6_sister_fuels(latex)
     latex = rebuild_table7_scorecard(latex)
     latex = rebuild_table9a_footprint(latex)
     latex = rebuild_table10_rankings(latex)
