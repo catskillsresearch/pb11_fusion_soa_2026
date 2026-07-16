@@ -45,9 +45,8 @@ GITHUB_INLINE_MATH = re.compile(r"\$`([^`\n]+?)`\$")
 HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 FENCE_RE = re.compile(r"^```([^\n]*)\n(.*?)^```\s*$", re.MULTILINE | re.DOTALL)
 MANUAL_SECTION_NUM = re.compile(r"^(#{1,6})[ \t]+\d+(?:\.\d+)*\.?[ \t]+", re.MULTILINE)
-MD_IMAGE_RE = re.compile(
-    r"!\[([^\]]*)\]\((research/figures/([^)\s]+))\)"
-)
+# Alt text may contain citation brackets like [89]; match via the path marker.
+MD_IMAGE_MARKER = "](research/figures/"
 
 PROSE_ASCII_FALLBACKS: tuple[tuple[str, str], ...] = (
     ("\u26a0\ufe0f", "Warning:"),
@@ -211,14 +210,69 @@ def convert_research_asset(src_name: str) -> str:
     raise RuntimeError(f"unsupported figure type: {src_name}")
 
 
-def rewrite_markdown_images(text: str) -> str:
-    def repl(match: re.Match[str]) -> str:
-        alt = match.group(1)
-        src_name = match.group(3)
-        rel = convert_research_asset(src_name)
-        return f"![{alt}]({rel})"
+def caption_md_to_latex(caption: str) -> str:
+    """Convert a one-line markdown figure caption to LaTeX (math, cite brackets, emph)."""
+    caption = caption.strip()
+    if not caption:
+        return ""
+    proc = subprocess.run(
+        ["pandoc", "-f", "markdown", "-t", "latex", "--wrap=none"],
+        input=caption,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        raise RuntimeError(f"pandoc caption failed: {proc.stderr}")
+    out = proc.stdout.strip()
+    out = re.sub(r"\s+\n\s*", " ", out)
+    out = out.replace("\n", " ")
+    return out
 
-    return MD_IMAGE_RE.sub(repl, text)
+
+def replace_markdown_images(text: str) -> tuple[str, dict[str, str]]:
+    """Turn ``![caption](research/figures/…)`` into captioned figure placeholders.
+
+    Captions may contain ``]`` (e.g. ``[89]``), so parsing keys off the path marker
+    rather than a naive ``[^\\]]*`` alt match.
+    """
+    placeholders: dict[str, str] = {}
+    parts: list[str] = []
+    pos = 0
+    idx = 0
+    while True:
+        marker_at = text.find(MD_IMAGE_MARKER, pos)
+        if marker_at < 0:
+            parts.append(text[pos:])
+            break
+        start = text.rfind("![", pos, marker_at)
+        if start < 0:
+            parts.append(text[pos : marker_at + 2])
+            pos = marker_at + 2
+            continue
+        path_start = marker_at + len("](")
+        path_end = text.find(")", path_start)
+        if path_end < 0:
+            parts.append(text[pos : marker_at + 2])
+            pos = marker_at + 2
+            continue
+        alt = text[start + 2 : marker_at]
+        src_path = text[path_start:path_end]
+        if not src_path.startswith("research/figures/"):
+            parts.append(text[pos : marker_at + 2])
+            pos = marker_at + 2
+            continue
+        src_name = src_path[len("research/figures/") :]
+        rel = convert_research_asset(src_name)
+        caption_tex = caption_md_to_latex(github_math_to_tex(alt))
+        slug = re.sub(r"[^a-z0-9]+", "-", alt.lower()).strip("-")[:48] or str(idx + 1)
+        key = f"ASSETINCLUDE{idx:03d}"
+        placeholders[key] = figure_latex(rel, caption_tex, f"fig:asset-{slug}")
+        parts.append(text[pos:start])
+        parts.append(f"\n\n{key}\n\n")
+        pos = path_end + 1
+        idx += 1
+    return "".join(parts), placeholders
 
 
 def prune_stale_assets() -> None:
@@ -782,9 +836,10 @@ def main() -> int:
     body = strip_html_comments(body)
     abstract_md, body = extract_abstract(body)
     body = strip_manual_section_numbers(body)
-    body = rewrite_markdown_images(body)
+    body, image_placeholders = replace_markdown_images(body)
     body = github_math_to_tex(body)
     body, placeholders = replace_fences(body)
+    placeholders = {**image_placeholders, **placeholders}
     prune_stale_listings()
     prune_stale_assets()
 

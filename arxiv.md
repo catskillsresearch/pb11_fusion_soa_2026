@@ -292,9 +292,7 @@ This survey’s focus is electricity from $p\text{-}^{11}\text{B}$, but that fue
 | **Lunar $^3\mathrm{He}$ miners** (e.g. LH3M, Magna Petra) | Supply chain, not reactors | N/A | Speculate on future D–$^3$He / ${}^3\mathrm{He}$–${}^3\mathrm{He}$ demand; not electricity plants. |
 | **$p$–Li / pure ${}^3\mathrm{He}$–${}^3\mathrm{He}$ startups** | — | — | **No** sustained commercial electricity programs found in this pass; appear mainly in patent claim lists and older theory papers. |
 
-![Helion Polaris](research/figures/helion_polaris.webp)
-
-*Figure (Helion Polaris). Pulsed FRC / magnetic-compression sister-fuel machine (D–$^3$He end state—not $p\text{-}^{11}\text{B}$-clean). Image from Helion Energy site; see CREDITS.*
+![Helion Polaris. Pulsed FRC / magnetic-compression sister-fuel machine (D–$^3$He end state—not $p\text{-}^{11}\text{B}$-clean). Image from Helion Energy site; see CREDITS.](research/figures/helion_polaris.webp)
 
 **Survey takeaway.** If “clean” means *charged primary products and neutron energy $\lesssim 1\%$* with *Earth-abundant fuel*, $p\text{-}^{11}\text{B}$ remains the practical flagship—and even it carries residual secondaries [77]. D–$^3$He is the only alternative with serious private capital (Helion, PFS), and it buys easier physics at the price of **not** being fully aneutronic. Pure ${}^3\mathrm{He}$–${}^3\mathrm{He}$ and $p$–Li look cleaner on paper but have essentially empty commercial benches. The rest of §§5–7 therefore continues to score *boron–proton* electricity paths; sister fuels appear only where a named company (Helion, PFS) or staged roadmap forces the comparison.
 
@@ -308,19 +306,13 @@ Several key players are actively developing $p\text{-}^{11}\text{B}$ systems gea
 ### 5.1 TAE Technologies (Magnetic Confinement - FRC)
 TAE Technologies utilizes a beam-driven **Field-Reversed Configuration (FRC)**, a magnetic confinement scheme where a spinning toroidal plasma ring is sustained by its own self-generated magnetic fields within a linear cylindrical chamber. The commercial line descends from Norman Rostoker’s and Michl Binderbauer’s mid-1990s break with tokamak/D–T orthodoxy: with Hendrik Monkhorst they argued for colliding-beam $p\text{-}^{11}\text{B}$ in an FRC tube, published in *Science* (1997), met a hostile federal-funding climate, and pivoted to private capital—first as Colliding Beam Fusion Reactor / Tri Alpha Energy, later **TAE**—building from a “sewer pipe” FRC proof-of-concept through C-2 → C-2U → **C-2W / Norman** [89]. A 2020 Nautilus profile (republished by Imagine5) remains useful documentary color on that origin story, Norman’s warehouse-scale role ($\sim 100$ ft / $\sim\$200\,\mathrm{M}$ class), Google-assisted plasma-control software, and the then-roadmap **Copernicus** (mid-$10^8\,\mathrm{K}$ scout) → **Da Vinci** ($\sim\$2\,\mathrm{B}$-class $p\text{-}^{11}\text{B}$ commercial-design plant)—timelines that later company announcements have compressed or skipped [36,37,89]. Mainstream tokamak voices in that piece already flagged the temperature leap to $p\text{-}^{11}\text{B}$ as a multi-decade risk if FRC scaling fails [89].
 
-![TAE Norman device](research/figures/tae_norman_device.jpg)
+![TAE / Norman. Warehouse-scale C-2W / Norman device. Photo courtesy of TAE Technologies; via Imagine5 curated republication of Nautilus [89].](research/figures/tae_norman_device.jpg)
 
-*Figure (TAE / Norman). Warehouse-scale C-2W / Norman device. Photo courtesy of TAE Technologies; via Imagine5 curated republication of Nautilus [89].*
-
-![TAE Norman FRC cutaway](research/figures/tae_norman_cutaway.jpg)
-
-*Figure (TAE / Norman cutaway). Linear FRC cutaway with spinning plasma core—where a future $p\text{-}^{11}\text{B}$ burn would sit. Photo courtesy of TAE Technologies; via Imagine5 / Nautilus [89].*
+![TAE / Norman cutaway. Linear FRC cutaway with spinning plasma core—where a future $p\text{-}^{11}\text{B}$ burn would sit. Photo courtesy of TAE Technologies; via Imagine5 / Nautilus [89].](research/figures/tae_norman_cutaway.jpg)
 
 Generic FRC topology (open educational diagram):
 
-![Field-reversed configuration schematic](research/figures/frc_configuration.svg)
-
-*Figure (FRC schematic). Wikimedia Commons file `Field-Reversed_Configuration.svg` (see `research/figures/CREDITS.md`).*
+![FRC schematic. Wikimedia Commons file `Field-Reversed_Configuration.svg` (see `research/figures/CREDITS.md`).](research/figures/frc_configuration.svg)
 
 *   **F — Fuel & nuclear:** Targets $p\text{-}^{11}\text{B}$ as preferred end-state fuel (Rostoker/Monkhorst motivation: cut neutron flux / tritium handling versus D–T; residual neutrons still require shielding) [79,89]; cites modern cross sections $\sim 20\%$ above the data Rider used [5].
 *   **K — Kinetics / Rider:** Injects high-energy neutral beams (NBI) tangentially into the FRC to create a non-Maxwellian, high-energy proton “tail,” raising fusion rate without a matching rise in bulk $T_e$ [5]. Company thesis (echoed since the Rostoker era): at ultra-high temperature an FRC should become *more* stable, opposite to tokamak leakiness—still an unproven scaling bet for the $\sim 3\times 10^9\,\mathrm{K}$ $p\text{-}^{11}\text{B}$ window [89].
@@ -335,13 +327,9 @@ Generic FRC topology (open educational diagram):
 ### 5.2 HB11 Energy (Inertial Confinement - Laser Block Ignition)
 HB11 Energy is pursuing a non-thermal, laser-driven "Proton Fast Ignition" / plasma-block scheme rooted in Hora’s ultrashort-pulse work [2,60]. A 2023 *Journal of Fusion Energy* company/consortium review (McKenzie, Batani, Mehlhorn, Margarone, Belloni, Campbell, Hora et al.) is the clearest single map of what HB11 itself says it is doing: CPA-enabled nonthermal initiation, experimental yield progress, a dual-laser cylindrical reactor sketch, gain pathways (avalanche, H-rich / 2D targets, hybrid burn), and a plant-as-**power-amplifier** technoeconomic loop [90].
 
-![HB11 dual-laser capacitor-coil concept](research/figures/hb11_dual_laser_coil_concept.png)
+![HB11 concept. Laser 1 drives protons through a cylindrical HB11 target; laser 2 drives a capacitor-coil for a transient multi-kT $B$. From McKenzie et al. 2023 [90].](research/figures/hb11_dual_laser_coil_concept.png)
 
-*Figure (HB11 concept). Laser 1 drives protons through a cylindrical HB11 target; laser 2 drives a capacitor-coil for a transient multi-kT $B$. From McKenzie et al. 2023 [90].*
-
-![HB11 alpha-yield progress](research/figures/hb11_alpha_yield_progress.png)
-
-*Figure (HB11 / laser $p\text{-}^{11}\text{B}$ experiments). In-target vs pitcher–catcher $\alpha$ flux progress (~5 orders of magnitude). From McKenzie et al. 2023 [90].*
+![HB11 / laser $p\text{-}^{11}\text{B}$ experiments. In-target vs pitcher–catcher $\alpha$ flux progress (~5 orders of magnitude). From McKenzie et al. 2023 [90].](research/figures/hb11_alpha_yield_progress.png)
 
 *   **F — Fuel & nuclear:** Solid room-temperature $p\text{-}^{11}\text{B}$ / boron-rich targets (no cryogenics or tritium breeding)—an ICF ops advantage stressed in [90]; Hora-lineage reactor IP [60]. Early shots used BN with $\lesssim 1\%$ H impurities; company R&D pushes **H-rich** and 2D materials (e.g. white graphene, borophene) for higher proton inventory and manufacturable micro/nano structure [90]. Residual $^{11}\mathrm{B}(\alpha,n)$ / $^{11}\mathrm{B}(p,n)^{11}\mathrm{C}$ neutrons estimated $\sim 0.1\%$ class—still shielding-relevant but far below D–T [90].
 *   **K — Kinetics / Rider:** Picosecond CPA lasers; ponderomotive **plasma-block** acceleration is argued to produce directed beams faster than ion–electron thermalization, suppressing thermal Bremsstrahlung [2,90]. Experimental geometries split **pitcher–catcher** (TNSA protons from a foil into a BN catcher; $\sim 10\%$ laser→proton conversion typical) versus **in-target** irradiation (hole-boring / RPA), with in-target historically higher $\alpha$ yields [90]. A second, more contested pillar is an alpha-driven **avalanche**: fusion-born $^4\mathrm{He}$ elastically kicks protons into the reactivity peak [2,82,90]. A third company path is **hybrid burn**: compress an HB11 target then inject a CPA proton beam so nonthermal in-flight fusion and local heating boost a thermonuclear component (Fig. 3 “Hybrid” band in [90])—capital-heavier than pure block ignition. The 2024 compressed-degenerate catcher sketch of §3.2 [91] is a natural add-on to that hybrid / beam-target branch (not a replacement for the dual-laser coil reactor sketch).
@@ -356,13 +344,9 @@ HB11 Energy is pursuing a non-thermal, laser-driven "Proton Fast Ignition" / pla
 ### 5.3 LPPFusion (Magnetized Pinch - Dense Plasma Focus)
 LPPFusion utilizes a coaxial electromagnetic accelerator to pinch plasma into an ultra-dense, self-confining plasmoid.
 
-![Dense plasma focus sheath evolution](research/figures/dpf_sheath_evolution.svg)
+![DPF schematic. Sheath evolution in a dense plasma focus. Wikimedia Commons file `Dense_plasma_focus_sheath_evolution.svg` (see CREDITS).](research/figures/dpf_sheath_evolution.svg)
 
-*Figure (DPF schematic). Sheath evolution in a dense plasma focus. Wikimedia Commons file `Dense_plasma_focus_sheath_evolution.svg` (see CREDITS).*
-
-![LPPFusion laboratory device](research/figures/lpp_ff-2_lab.jpeg)
-
-*Figure (LPPFusion). Laboratory DPF experiment hardware. Photo from LPPFusion site; see `research/figures/CREDITS.md`.*
+![LPPFusion. Laboratory DPF experiment hardware. Photo from LPPFusion site; see `research/figures/CREDITS.md`.](research/figures/lpp_ff-2_lab.jpeg)
 
 *   **F — Fuel & nuclear:** Advanced-fuel / $p\text{-}^{11}\text{B}$ focus; DPF patent US 7,482,607 B2 [61].
 *   **K — Kinetics / Rider:** Megatesla self-fields invoke **quantum magnetic suppression** of electron states (§3.4), claimed Bremsstrahlung cut up to $\sim 5\times$ [4].
@@ -376,9 +360,7 @@ LPPFusion utilizes a coaxial electromagnetic accelerator to pinch plasma into an
 ### 5.4 ENN Energy (Spherical Torus - Magnetic Confinement)
 China’s ENN-led program is the most developed **spherical torus (ST) + $p\text{-}^{11}\text{B}$** commercialization path, summarized in the 2025 FEC overview by Liu et al. [12]. It pairs fundamental beam-target / nuclear-data work with a staged ST roadmap (EXL-50U → EHL-2 → DEMO-class).
 
-![ENN HEDP + ST roadmap](research/figures/enn_roadmap_hedp_st.png)
-
-*Figure (ENN / China dual track). HEDP platforms and magnetic ST platforms feeding an ST $p\text{-}^{11}\text{B}$ path toward a clean-fusion DEMO. From Liu et al. FEC 2025 [12].*
+![ENN / China dual track. HEDP platforms and magnetic ST platforms feeding an ST $p\text{-}^{11}\text{B}$ path toward a clean-fusion DEMO. From Liu et al. FEC 2025 [12].](research/figures/enn_roadmap_hedp_st.png)
 
 *   **F — Fuel & nuclear:** First-class nuclear-data and spin-polarization program (§1.5, §3.5) [12].
 *   **K — Kinetics / Rider:** Softened $T_i/T_e$ window [16], proton–boron drifts [20], IBW-mediated NBI tails (§3.1), optional spin pol.; Comment/Response flags extreme $T_i/T_e=4$ as open R&D [38,39].
@@ -400,18 +382,14 @@ China’s ENN-led program is the most developed **spherical torus (ST) + $p\text
 
 These HEDP results sit alongside commercial laser programs (HB11, Marvel Fusion, Blue Laser Fusion, Anubal) as experimental evidence that target microstructure and pre-plasma state can move yields far from classical beam-target scaling. The §3.2 / [91] compressed-degenerate catcher is the 2024 theory sketch for how those same platforms might push further toward beam-energy multiplication—still a target upgrade, not a new machine class.
 
-![Marvel Fusion facility / device](research/figures/marvel_device.webp)
-
-*Figure (Marvel Fusion). Company imagery for nanostructured-target laser ICF path. From Marvel Fusion site; see CREDITS. Candidate beneficiary of the §3.2 [91] upgrade alongside HB11 and other laser/HEDP paths.*
+![Marvel Fusion. Company imagery for nanostructured-target laser ICF path. From Marvel Fusion site; see CREDITS. Candidate beneficiary of the §3.2 [91] upgrade alongside HB11 and other laser/HEDP paths.](research/figures/marvel_device.webp)
 
 **European consolidation (Catania 2022).** The 2nd International Workshop on Proton-Boron Fusion (Catania, 5–8 September 2022), organized by INFN-LNS and ELI Beamlines, brought together laser-driven energy concepts, diagnostics/targetry, and (separately) medical Proton-Boron Capture Therapy [41]. Company reports and invited talks from **HB11** (hybrid / non-equilibrium inertial schemes) and **Marvel Fusion** (nanostructured nonthermal targets) sat alongside accelerator-HEDP and PALS diagnostic work—the same European ecosystem that shortly afterward crystallized as COST Action CA21128 **PROBONO** [9,42]. Workshop proceedings in *JINST* highlight several energy-relevant threads beyond company roadmaps: hydrogen-rich **borane** fuels (e.g., ammonia borane $\mathrm{BNH}_6$) as laser targets claiming order-of-magnitude alpha-yield gains versus BN from much higher hydrogen loading, with proposed tape/droplet geometries for high-repetition drivers [44]; multi-diagnostic alpha characterization on hydrogenated boron-doped thin targets [45]; and the low-density alpha-avalanche simulations of §3.7 [43]. Medical PBCT contributions from the same meeting are outside the scope of this electricity-generation survey.
 
 ### 5.6 Pale Blue Fusion / Princeton–ARPA-E (CHARM Centrifugal Multi-Chamber)
 The most developed U.S. *theory-to-architecture* line for steady or quasi-steady $p\text{-}^{11}\text{B}$ is the Princeton group led by Nat Fisch, funded by ARPA-E OPEN 2021 as “Economical Proton-Boron11 Fusion” (DE-AR0001554) [33,34]. After a dense publication and patent campaign, the team has pivoted toward commercialization as **Pale Blue Fusion**—a name that doubles as branding for a clean “pale blue” Earth and as a wink at **P**roton–**B**oron [33].
 
-![CHARM multi-chamber cutaway](research/figures/paleblue_charm_cutaway.png)
-
-*Figure (Pale Blue / CHARM). Multi-chamber rotating-mirror concept: centrifugally confined cold boron regions, one-way RF walls, and a thermal proton cell. From Fisch et al. ARPA-E Fusion Annual Meeting materials (`Day2_08_Fisch.pdf`) [33].*
+![Pale Blue / CHARM. Multi-chamber rotating-mirror concept: centrifugally confined cold boron regions, one-way RF walls, and a thermal proton cell. From Fisch et al. ARPA-E Fusion Annual Meeting materials (`Day2_08_Fisch.pdf`) [33].](research/figures/paleblue_charm_cutaway.png)
 
 ```mermaid
 flowchart LR
@@ -470,9 +448,7 @@ Thea does not need a “piece” of Pale Blue to succeed, nor does Pale Blue’s
 **Plain-language lead-in.** These are the “small machine, fast iteration” bets on the confinement-family axis—not giant tori and not stadium lasers. Classical grid fusors failed gates **L**/**M**; modern **Orbitron** (magneto-electrostatic) and **NVD–IEC** designs are cousins of that family but should not be dismissed with the fusor label (§4).
 
 #### 5.8.1 Avalanche Energy (Orbitron MEC)
-![Avalanche Orbitron render](research/figures/avalanche_orbitron.jpg)
-
-*Figure (Avalanche Orbitron). Compact magneto-electrostatic machine render. Image from Avalanche Energy (`avalanchefusion.com/orbitron`); see CREDITS.*
+![Avalanche Orbitron. Compact magneto-electrostatic machine render. Image from Avalanche Energy (`avalanchefusion.com/orbitron`); see CREDITS.](research/figures/avalanche_orbitron.jpg)
 
 *   **F — Fuel & nuclear:** Near-term program is **D–T / neutron-source** learning and licensing; company design claim is that the same Orbitron core is **$p\text{-}^{11}\text{B}$-capable** for later low-shielding packs [66,87]. Score **F** as partial for this survey’s end-state until $p\text{-}^{11}\text{B}$ campaigns are public.
 *   **K — Kinetics / Rider:** Nonthermal orbiting ions in a magneto-electrostatic well—not a Maxwellian ST soup. Rider’s steady mixed-plasma assumptions are not the intended operating point; published Orbitron confinement papers are the physics anchor [66,87].
@@ -484,9 +460,7 @@ Thea does not need a “piece” of Pale Blue to succeed, nor does Pale Blue’s
 *   **T / H / S — T2M:** Live brand and site (`avalanchefusion.com`); FusionWERX test infrastructure (Richland); disclosed raise / peer-reviewed Orbitron milestones; high **H** cadence and serious open **S** (WarpX, OpenMC) [66,67,87]. Strongest compact-MEC commercial signal in Table 1; USPTO assignee crawl still thin relative to hardware—treat IP as under-indexed, not absent (§10).
 
 #### 5.8.2 JIHT / Kurilenkov NVD–IEC (laboratory cousin)
-![JIHT NVD scheme](research/figures/jiht_nvd_scheme.png)
-
-*Figure (JIHT NVD–IEC). Nanosecond vacuum-discharge / virtual-cathode scheme used for laboratory $p\text{-}^{11}\text{B}$ alphas. From Kurilenkov & Andreev, *Frontiers in Physics* (2024) [86].*
+![JIHT NVD–IEC. Nanosecond vacuum-discharge / virtual-cathode scheme used for laboratory $p\text{-}^{11}\text{B}$ alphas. From Kurilenkov & Andreev, *Frontiers in Physics* (2024) [86].](research/figures/jiht_nvd_scheme.png)
 
 *   **F — Fuel & nuclear:** Already reports laboratory $p\text{-}^{11}\text{B}$ alphas in miniature reverse-polarity **nanosecond vacuum discharge** / virtual-cathode geometry [85,86,88].
 *   **K / C:** Pulsed IEC / virtual-cathode acceleration; KARAT PIC used to scale geometry [85,86]. Same electrostatic neighborhood as Avalanche, different product thesis (lab science vs venture hardware cadence).
