@@ -334,6 +334,7 @@ def extract_mermaid_meta(text: str) -> list[tuple[str, bool]]:
                     break
             if heading:
                 heading = re.sub(r"^\d+(?:\.\d+)*\.?\s+", "", heading)
+                heading = re.sub(r"\s*\{#[^}]+\}\s*$", "", heading).strip()
                 caption = f"{heading}."
             else:
                 caption = f"Diagram {len(meta) + 1}."
@@ -497,36 +498,60 @@ def _gate_symbols(cell: str) -> str:
     return repl.get(cell, cell)
 
 
-def _strip_heading_block_before(latex: str, lt_start: int, title_substr: str) -> int:
-    """Return start index to cut from, dropping hypertarget + subsection for a Table heading."""
-    # Look back for \subsection{Table ...} or \hypertarget{table-...}
-    window = latex[max(0, lt_start - 800) : lt_start]
-    # Prefer hypertarget that mentions table
-    ht = window.rfind(r"\hypertarget{table-")
+# Specialized rebuilds skip these labels in promote_remaining_survey_tables.
+SPECIALIZED_TAB_LABELS = {
+    "tab:matrix-axes",
+    "tab:diligence-gates",
+    "tab:sister-fuels",
+    "tab:scorecard",
+    "tab:legal-footprint",
+    "tab:plant-odds",
+}
+
+
+def _locate_labeled_longtable(
+    latex: str, label: str, title_fallback: str | None = None
+) -> tuple[int, int, int] | None:
+    """Return (wrap_start, lt_start, lt_end_exclusive) for a labeled survey table."""
+    ht_marker = f"\\hypertarget{{{label}}}"
+    lab_marker = f"\\label{{{label}}}"
+    start = latex.find(ht_marker)
+    if start < 0:
+        start = latex.find(lab_marker)
+    if start < 0 and title_fallback:
+        start = latex.find(title_fallback)
+    if start < 0:
+        return None
+    lt_start = latex.find(r"\begin{longtable}", start)
+    if lt_start < 0 or lt_start - start > 1500:
+        return None
+    lt_end = latex.find(r"\end{longtable}", lt_start)
+    if lt_end < 0:
+        return None
+    lt_end += len(r"\end{longtable}")
+    # Prefer the matching hypertarget; never pull in a prior section's hypertarget.
+    wrap_start = start
+    ht = latex.rfind(ht_marker, max(0, start - 80), start + len(ht_marker) + 1)
     if ht >= 0:
-        return max(0, lt_start - 800) + ht
-    sub = window.rfind(r"\subsection{")
-    if sub >= 0 and title_substr.lower() in window[sub:].lower():
-        return max(0, lt_start - 800) + sub
-    return lt_start
+        wrap_start = ht
+    elif latex.startswith(lab_marker, start) or lab_marker in latex[start : start + 80]:
+        # Label sits on \\subsection{…}\\label{…}; back up to that subsection only.
+        window_start = max(0, start - 400)
+        window = latex[window_start:start]
+        sub = max(window.rfind(r"\subsection{"), window.rfind(r"\section{"))
+        if sub >= 0:
+            wrap_start = window_start + sub
+    return wrap_start, lt_start, lt_end
 
 
 def rebuild_table1_matrix(latex: str) -> str:
-    """Table 1 as a single-page captioned float (not a page-breaking longtable)."""
-    marker = r"Table 1: Four-axis"
-    start = latex.find(marker)
-    if start < 0:
+    """Matrix table as a single-page captioned float (not a page-breaking longtable)."""
+    loc = _locate_labeled_longtable(
+        latex, "tab:matrix-axes", "Four-axis mental matrix"
+    )
+    if not loc:
         return latex
-    lt_start = latex.find(r"\begin{longtable}", start)
-    if lt_start < 0:
-        return latex
-    lt_end = latex.find(r"\end{longtable}", lt_start)
-    if lt_end < 0:
-        return latex
-    lt_end += len(r"\end{longtable}")
-    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 1")
-
-    # Pull data rows from the pandoc longtable body.
+    wrap_start, lt_start, lt_end = loc
     block = latex[lt_start:lt_end]
     rows: list[str] = []
     for line in block.splitlines():
@@ -535,21 +560,25 @@ def rebuild_table1_matrix(latex: str) -> str:
             continue
         if "Axis" in s and "Question" in s:
             continue
-        if s.startswith(r"\textbf{") or s.startswith("Time") or "Confinement" in s or "Fuel" in s or "Kinetics" in s:
+        if (
+            s.startswith(r"\textbf{")
+            or s.startswith("Time")
+            or "Confinement" in s
+            or "Fuel" in s
+            or "Kinetics" in s
+        ):
             rows.append(s if s.endswith(r"\\") else s + r" \\")
-    # Keep only the four axis rows (prefer \textbf{…} forms).
     bold_rows = [r for r in rows if r.startswith(r"\textbf{")]
     if len(bold_rows) >= 4:
         rows = bold_rows[:4]
     elif len(rows) < 4:
         return latex
 
-    # Keep caption + body together (non-float); page break is inserted before §1.2.
+    title = "Four-axis mental matrix (how to read any pitch)"
     new_table = (
         "\\begin{center}\n"
         "\\small\n"
-        "\\surveycaptionof{Table 1}{Four-axis mental matrix (how to read any pitch)}\n"
-        "\\label{tab:matrix-axes}\n"
+        f"\\surveycaptionof{{{title}}}\\label{{tab:matrix-axes}}\n"
         "\\begin{tabularx}{\\linewidth}{@{}>{\\bfseries}l>{\\raggedright\\arraybackslash}X"
         ">{\\raggedright\\arraybackslash}X@{}}\n"
         "\\toprule\n"
@@ -564,21 +593,15 @@ def rebuild_table1_matrix(latex: str) -> str:
     return latex[:wrap_start] + new_table + latex[lt_end:]
 
 
-def rebuild_table11_rankings(latex: str) -> str:
-    """Table 11 as captioned landscape longtable; timelines in one column (no crushed dates)."""
-    marker = r"Table 11: Ranked"
-    start = latex.find(marker)
-    if start < 0:
+def rebuild_table_plant_odds(latex: str) -> str:
+    """Plant-odds rankings as captioned landscape longtable."""
+    loc = _locate_labeled_longtable(latex, "tab:plant-odds", "Ranked $p")
+    if not loc:
+        loc = _locate_labeled_longtable(latex, "tab:plant-odds", "plant odds")
+    if not loc:
         return latex
-    lt_start = latex.find(r"\begin{longtable}", start)
-    if lt_start < 0:
-        return latex
-    lt_end = latex.find(r"\end{longtable}", lt_start)
-    if lt_end < 0:
-        return latex
-    lt_end += len(r"\end{longtable}")
+    wrap_start, lt_start, lt_end = loc
     block = latex[lt_start:lt_end]
-    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 11")
 
     rows: list[str] = []
     for line in block.splitlines():
@@ -593,7 +616,6 @@ def rebuild_table11_rankings(latex: str) -> str:
         rank_plain = re.sub(r"[^\d]", "", cells[0])
         if not rank_plain:
             continue
-        # Rank Path Type POS kappa POS* Q Proto Grid → merge last three
         timelines = (
             f"$Q\\gtrsim 1$: {cells[6]}\\newline "
             f"Proto: {cells[7]}\\newline "
@@ -607,6 +629,8 @@ def rebuild_table11_rankings(latex: str) -> str:
     if len(rows) < 5:
         return latex
 
+    title = r"Ranked $p\text{-}^{11}\text{B}$ plant odds (editorial, mid-2026)"
+    cont = "Ranked plant odds (continued)"
     new_table = (
         "\\begin{landscape}\n"
         "\\footnotesize\n"
@@ -618,15 +642,14 @@ def rebuild_table11_rankings(latex: str) -> str:
         "  >{\\raggedright\\arraybackslash}p{2.8cm}\n"
         "  c c c\n"
         "  >{\\raggedright\\arraybackslash}p{5.8cm}@{}}\n"
-        "\\surveycaption{Table 11}{Ranked $p\\text{-}^{11}\\text{B}$ plant odds "
-        "(editorial, mid-2026)}\\label{tab:plant-odds}\\\\\n"
+        f"\\surveycaption{{{title}}}\\label{{tab:plant-odds}}\\\\\n"
         "\\toprule\n"
         "\\textbf{Rank} & \\textbf{Path} & \\textbf{Type} & "
         "\\textbf{POS} & $\\boldsymbol{\\kappa}$ & \\textbf{POS$\\star$} & "
         "\\textbf{Timelines} \\\\\n"
         "\\midrule\n"
         "\\endfirsthead\n"
-        "\\surveycaptioncont{Table 11: Ranked plant odds (continued)}\\\\\n"
+        f"\\surveycaptioncont{{{cont}}}\\\\\n"
         "\\toprule\n"
         "\\textbf{Rank} & \\textbf{Path} & \\textbf{Type} & "
         "\\textbf{POS} & $\\boldsymbol{\\kappa}$ & \\textbf{POS$\\star$} & "
@@ -642,23 +665,15 @@ def rebuild_table11_rankings(latex: str) -> str:
     return latex[:wrap_start] + new_table + latex[lt_end:]
 
 
-def rebuild_table10a_footprint(latex: str) -> str:
-    """Table 10a as captioned longtable with readable column widths."""
-    marker = r"Table 10a: Corporate"
-    start = latex.find(marker)
-    if start < 0:
-        start = latex.find("Corporate / brand legal footprint")
-    if start < 0:
+def rebuild_table_legal_footprint(latex: str) -> str:
+    """Corporate / brand legal footprint as captioned longtable."""
+    loc = _locate_labeled_longtable(
+        latex, "tab:legal-footprint", "Corporate / brand legal footprint"
+    )
+    if not loc:
         return latex
-    lt_start = latex.find(r"\begin{longtable}", start)
-    if lt_start < 0:
-        return latex
-    lt_end = latex.find(r"\end{longtable}", lt_start)
-    if lt_end < 0:
-        return latex
-    lt_end += len(r"\end{longtable}")
+    wrap_start, lt_start, lt_end = loc
     block = latex[lt_start:lt_end]
-    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 10a")
 
     rows: list[str] = []
     for line in block.splitlines():
@@ -677,6 +692,8 @@ def rebuild_table10a_footprint(latex: str) -> str:
     if len(rows) < 3:
         return latex
 
+    title = "Corporate / brand legal footprint (non-patent)"
+    cont = f"{title} (continued)"
     new_table = (
         "\\footnotesize\n"
         "\\setlength{\\tabcolsep}{4pt}\n"
@@ -686,14 +703,13 @@ def rebuild_table10a_footprint(latex: str) -> str:
         "  >{\\raggedright\\arraybackslash}p{3.4cm}\n"
         "  >{\\raggedright\\arraybackslash}p{2.6cm}\n"
         "  >{\\raggedright\\arraybackslash}p{4.2cm}@{}}\n"
-        "\\surveycaption{Table 10a}{Corporate / brand legal footprint (non-patent)}"
-        "\\label{tab:legal-footprint}\\\\\n"
+        f"\\surveycaption{{{title}}}\\label{{tab:legal-footprint}}\\\\\n"
         "\\toprule\n"
         "\\textbf{Entity} & \\textbf{Domain} & \\textbf{Corp.\\ entity} & "
         "\\textbf{USPTO TM} & \\textbf{Notes} \\\\\n"
         "\\midrule\n"
         "\\endfirsthead\n"
-        "\\surveycaptioncont{Table 10a: Corporate / brand legal footprint (continued)}\\\\\n"
+        f"\\surveycaptioncont{{{cont}}}\\\\\n"
         "\\toprule\n"
         "\\textbf{Entity} & \\textbf{Domain} & \\textbf{Corp.\\ entity} & "
         "\\textbf{USPTO TM} & \\textbf{Notes} \\\\\n"
@@ -707,22 +723,15 @@ def rebuild_table10a_footprint(latex: str) -> str:
     return latex[:wrap_start] + new_table + latex[lt_end:]
 
 
-def rebuild_table8_scorecard(latex: str) -> str:
-    """Table 8 as captioned landscape scorecard (no subsection numbering)."""
-    marker = r"Table 8: Zeroth-order scorecard"
-    start = latex.find(marker)
-    if start < 0:
+def rebuild_table_scorecard(latex: str) -> str:
+    """Zeroth-order scorecard as captioned landscape longtable."""
+    loc = _locate_labeled_longtable(
+        latex, "tab:scorecard", "Zeroth-order scorecard for key projects"
+    )
+    if not loc:
         return latex
-    lt_start = latex.find(r"\begin{longtable}", start)
-    if lt_start < 0:
-        # may already be rebuilt; try after landscape
-        return latex
-    lt_end = latex.find(r"\end{longtable}", lt_start)
-    if lt_end < 0:
-        return latex
-    lt_end += len(r"\end{longtable}")
+    wrap_start, lt_start, lt_end = loc
     block = latex[lt_start:lt_end]
-    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 8")
 
     rows: list[str] = []
     for line in block.splitlines():
@@ -740,6 +749,8 @@ def rebuild_table8_scorecard(latex: str) -> str:
     if not rows:
         return latex
 
+    title = "Zeroth-order scorecard for key projects (State of the Art, 2026)"
+    cont = "Zeroth-order scorecard (continued)"
     new_table = (
         "\\begin{landscape}\n"
         "\\footnotesize\n"
@@ -750,8 +761,7 @@ def rebuild_table8_scorecard(latex: str) -> str:
         "  >{\\raggedright\\arraybackslash}p{1.55cm}\n"
         "  *{9}{c}\n"
         "  >{\\raggedright\\arraybackslash}p{8.8cm}@{}}\n"
-        "\\surveycaption{Table 8}{Zeroth-order scorecard for key projects "
-        "(State of the Art, 2026)}\\label{tab:scorecard}\\\\\n"
+        f"\\surveycaption{{{title}}}\\label{{tab:scorecard}}\\\\\n"
         "\\toprule\n"
         "\\textbf{Project} & \\textbf{C} & "
         "\\textbf{F} & \\textbf{K} & \\textbf{R} & \\textbf{A} & "
@@ -759,7 +769,7 @@ def rebuild_table8_scorecard(latex: str) -> str:
         "\\textbf{Notes (2025--2026)} \\\\\n"
         "\\midrule\n"
         "\\endfirsthead\n"
-        "\\surveycaptioncont{Table 8: Zeroth-order scorecard (continued)}\\\\\n"
+        f"\\surveycaptioncont{{{cont}}}\\\\\n"
         "\\toprule\n"
         "\\textbf{Project} & \\textbf{C} & "
         "\\textbf{F} & \\textbf{K} & \\textbf{R} & \\textbf{A} & "
@@ -776,25 +786,16 @@ def rebuild_table8_scorecard(latex: str) -> str:
     return latex[:wrap_start] + new_table + latex[lt_end:]
 
 
-def rebuild_table3_gates(latex: str) -> str:
-    """Table 3 as a single-page captioned float (not a page-breaking longtable)."""
-    marker = r"Table 3: Zeroth-order diligence gates"
-    start = latex.find(marker)
-    if start < 0:
+def rebuild_table_diligence_gates(latex: str) -> str:
+    """Diligence gates as a single-page captioned float."""
+    loc = _locate_labeled_longtable(
+        latex, "tab:diligence-gates", "Zeroth-order diligence gates"
+    )
+    if not loc:
         return latex
-    lt_start = latex.find(r"\begin{longtable}", start)
-    if lt_start < 0:
-        return latex
-    lt_end = latex.find(r"\end{longtable}", lt_start)
-    if lt_end < 0:
-        return latex
-    lt_end += len(r"\end{longtable}")
-    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 3")
-
+    wrap_start, lt_start, lt_end = loc
     block = latex[lt_start:lt_end]
     rows: list[str] = []
-    # Join soft-wrapped longtable lines. Cells may contain \& (e.g. "Fuel \& nuclear"),
-    # so require exactly one *unescaped* column separator.
     junk = re.compile(
         r"\\(?:midrule|toprule|bottomrule|endhead|endfirsthead|endfoot|"
         r"endlastfoot|noalign\{\})+"
@@ -819,14 +820,13 @@ def rebuild_table3_gates(latex: str) -> str:
     if len(rows) < 8:
         return latex
 
+    title = "Zeroth-order diligence gates (p--11B plant checklist)"
     new_table = (
         "\\begin{center}\n"
         "\\scriptsize\n"
         "\\setlength{\\tabcolsep}{3pt}\n"
         "\\renewcommand{\\arraystretch}{1.0}\n"
-        "\\surveycaptionof{Table 3}{Zeroth-order diligence gates "
-        "(p--11B plant checklist)}\n"
-        "\\label{tab:diligence-gates}\n"
+        f"\\surveycaptionof{{{title}}}\\label{{tab:diligence-gates}}\n"
         "\\begin{tabularx}{\\linewidth}{@{}>{\\bfseries\\raggedright\\arraybackslash}p{2.85cm}"
         ">{\\raggedright\\arraybackslash}X@{}}\n"
         "\\toprule\n"
@@ -841,21 +841,14 @@ def rebuild_table3_gates(latex: str) -> str:
     return latex[:wrap_start] + new_table + latex[lt_end:]
 
 
-def rebuild_table6_sister_fuels(latex: str) -> str:
-    """Table 6 as a single-page captioned float (not a page-breaking longtable)."""
-    marker = r"Table 6: Who pursues sister"
-    start = latex.find(marker)
-    if start < 0:
+def rebuild_table_sister_fuels(latex: str) -> str:
+    """Sister-fuel players as a single-page captioned float."""
+    loc = _locate_labeled_longtable(
+        latex, "tab:sister-fuels", "Who pursues sister aneutronic fuels"
+    )
+    if not loc:
         return latex
-    lt_start = latex.find(r"\begin{longtable}", start)
-    if lt_start < 0:
-        return latex
-    lt_end = latex.find(r"\end{longtable}", lt_start)
-    if lt_end < 0:
-        return latex
-    lt_end += len(r"\end{longtable}")
-    wrap_start = _strip_heading_block_before(latex, lt_start, "Table 6")
-
+    wrap_start, lt_start, lt_end = loc
     block = latex[lt_start:lt_end]
     junk = re.compile(
         r"\\(?:midrule|toprule|bottomrule|endhead|endfirsthead|endfoot|"
@@ -880,15 +873,14 @@ def rebuild_table6_sister_fuels(latex: str) -> str:
     if len(rows) < 5:
         return latex
 
+    title = "Who pursues sister aneutronic fuels (executive, mid-2026)"
     new_table = (
         "\\clearpage\n"
         "\\begin{center}\n"
         "\\scriptsize\n"
         "\\setlength{\\tabcolsep}{3pt}\n"
         "\\renewcommand{\\arraystretch}{1.05}\n"
-        "\\surveycaptionof{Table 6}{Who pursues sister aneutronic fuels "
-        "(executive, mid-2026)}\n"
-        "\\label{tab:sister-fuels}\n"
+        f"\\surveycaptionof{{{title}}}\\label{{tab:sister-fuels}}\n"
         "\\begin{tabularx}{\\linewidth}{@{}"
         ">{\\bfseries\\raggedright\\arraybackslash}p{2.4cm}"
         ">{\\raggedright\\arraybackslash}p{3.0cm}"
@@ -907,58 +899,58 @@ def rebuild_table6_sister_fuels(latex: str) -> str:
 
 
 def promote_remaining_survey_tables(latex: str) -> str:
-    """Turn leftover ``\\subsection{Table …}`` + longtable into captioned longtables.
+    """Turn leftover ``\\label{tab:…}`` + longtable into captioned longtables.
 
     Pandoc puts the header in ``\\endhead`` only, so a caption there would re-enter
     the List of Tables on every page. Split into ``\\endfirsthead`` / ``\\endhead``.
     """
-    pattern = re.compile(
-        r"(?:\\hypertarget\{[^}]*\}\{%\s*)?"
-        r"\\(?:sub)*section\{(Table\s+[^:}]+):\s*([^}]+)\}\\label\{[^}]*\}\s*"
-        r"(?:\}\s*)?",
-        re.DOTALL,
-    )
-
-    def slugify(tab_id: str) -> str:
-        return re.sub(r"[^a-z0-9]+", "-", tab_id.lower()).strip("-")
-
-    matches = list(pattern.finditer(latex))
-    for m in reversed(matches):
-        tab_id = m.group(1).strip()
-        title = m.group(2).strip()
-        if tab_id in {
-            "Table 1",
-            "Table 3",
-            "Table 6",
-            "Table 8",
-            "Table 10a",
-            "Table 11",
-        }:
-            latex = latex[: m.start()] + latex[m.end() :]
+    labels = sorted(set(re.findall(r"\\label\{(tab:[^}]+)\}", latex)), reverse=True)
+    for label in labels:
+        if label in SPECIALIZED_TAB_LABELS:
             continue
-        lt_start = latex.find(r"\begin{longtable}", m.end())
-        if lt_start < 0 or lt_start - m.end() > 400:
-            latex = latex[: m.start()] + latex[m.end() :]
+        loc = _locate_labeled_longtable(latex, label)
+        if not loc:
             continue
+        wrap_start, lt_start, lt_end = loc
+        # Title: prefer subsection text immediately before the longtable.
+        pre = latex[wrap_start:lt_start]
+        title_m = re.search(
+            r"\\(?:sub)*section\{((?:[^{}]|\\[^{}]*)*)\}",
+            pre,
+        )
+        if title_m:
+            title = title_m.group(1).strip()
+            # Unwrap \texorpdfstring{a}{b} → a
+            title = re.sub(
+                r"\\texorpdfstring\{((?:[^{}]|\\[^{}]*)*)\}\{(?:[^{}]|\\[^{}]*)*\}",
+                r"\1",
+                title,
+            )
+        else:
+            title = label.removeprefix("tab:").replace("-", " ")
         top = latex.find(r"\toprule", lt_start)
-        if top < 0:
+        if top < 0 or top > lt_end:
             continue
         endhead = latex.find(r"\endhead", top)
         if endhead < 0 or endhead - top > 4000:
             continue
+        # Already promoted?
+        if r"\surveycaption{" in latex[wrap_start:top]:
+            continue
         header_block = latex[top:endhead]
-        label = f"tab:{slugify(tab_id)}"
         first = (
-            f"\\surveycaption{{{tab_id}}}{{{title}}}\\label{{{label}}}\\\\\n"
+            f"\\surveycaption{{{title}}}\\label{{{label}}}\\\\\n"
             f"{header_block}"
             f"\\endfirsthead\n"
-            f"\\surveycaptioncont{{{tab_id}: {title} (continued)}}\\\\\n"
+            f"\\surveycaptioncont{{{title} (continued)}}\\\\\n"
             f"{header_block}"
             f"\\endhead"
         )
+        # Drop the pandoc subsection stub, keep \\begin{longtable}…, inject
+        # caption *inside* the longtable (required by the caption package).
         latex = (
-            latex[: m.start()]
-            + latex[m.end() : top]
+            latex[:wrap_start]
+            + latex[lt_start:top]
             + first
             + latex[endhead + len(r"\endhead") :]
         )
@@ -988,27 +980,27 @@ def cleanup_pandoc_latex(latex: str) -> str:
         .replace("○", r"\gateW{}")
     )
     latex = rebuild_table1_matrix(latex)
-    # Start §1.2 on a fresh page so Table 1 caption is not orphaned at a page bottom.
+    # Fresh page before the matrix subsection so its caption is not orphaned.
     latex = re.sub(
-        r"(\\hypertarget\{a-tidy-mental-matrix-four-axes\}\{%\s*)"
+        r"(\\hypertarget\{sec:matrix\}\{%\s*)"
         r"(\\subsection\{A tidy mental matrix)",
         r"\\clearpage\n\1\2",
         latex,
         count=1,
     )
-    # Fresh page for §1.7 so Table 3 can stay on one page with its section lead-in.
+    # Fresh page for diligence-gates subsection so the gates table stays one page.
     latex = re.sub(
-        r"(\\hypertarget\{diligence-gates-scoring-checklist\}\{%\s*)"
+        r"(\\hypertarget\{sec:diligence-gates\}\{%\s*)"
         r"(\\subsection\{Diligence gates)",
         r"\\clearpage\n\1\2",
         latex,
         count=1,
     )
-    latex = rebuild_table3_gates(latex)
-    latex = rebuild_table6_sister_fuels(latex)
-    latex = rebuild_table8_scorecard(latex)
-    latex = rebuild_table10a_footprint(latex)
-    latex = rebuild_table11_rankings(latex)
+    latex = rebuild_table_diligence_gates(latex)
+    latex = rebuild_table_sister_fuels(latex)
+    latex = rebuild_table_scorecard(latex)
+    latex = rebuild_table_legal_footprint(latex)
+    latex = rebuild_table_plant_odds(latex)
     latex = promote_remaining_survey_tables(latex)
     latex = re.sub(r"\n{3,}", "\n\n", latex)
     return latex

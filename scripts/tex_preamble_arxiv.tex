@@ -14,18 +14,14 @@
 \usepackage{caption}
 \usepackage{authblk}
 
-% Survey tables keep editorial IDs (Table 1, 2a, …) inside the caption text so
-% in-prose cross-references stay stable; suppress the automatic "Table~N" prefix.
+% Survey tables use ordinary LaTeX numbering; prose refs use \autoref{tab:…} / \S\ref{sec:…}.
 \captionsetup{font=small,labelfont=bf,labelsep=space}
-\newcommand{\surveycaption}[2]{%
-  \captionsetup{labelformat=empty}%
-  \caption[#1: #2]{#1: #2}%
-}
-\newcommand{\surveycaptionof}[2]{%
-  \captionsetup{labelformat=empty}%
-  \captionof{table}[#1: #2]{#1: #2}%
-}
+\newcommand{\surveycaption}[1]{\caption{#1}}
+\newcommand{\surveycaptionof}[1]{\captionof{table}{#1}}
 \newcommand{\surveycaptioncont}[1]{\caption*{#1}}
+\newcommand{\secref}[1]{\S\ref{#1}}
+\newcommand{\secrefrange}[2]{\S\ref{#1}--\ref{#2}}
+\newcommand{\secrefranges}[2]{\S\S\ref{#1}--\ref{#2}}
 
 % Compact scorecard glyphs (● / ◐ / ○) — avoid wide text fallbacks like "(half)"
 \newcommand{\gateF}{\ensuremath{\bullet}}
