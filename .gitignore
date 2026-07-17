@@ -1,11 +1,12 @@
 # Generated from arxiv.md by scripts/build_arxiv_tex.sh (do not commit)
 arxiv.tex
+zenodo.tex
 listings/
 figures/
 dist/
 00README.json
 
-# LaTeX build artifacts (`arxiv.pdf` may be committed as a readable deliverable)
+# LaTeX build artifacts (`arxiv.pdf` / `zenodo.pdf` may be committed as readable deliverables)
 *.aux
 *.log
 *.out

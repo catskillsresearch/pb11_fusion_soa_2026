@@ -2,7 +2,7 @@
 
 An AI-generated survey article on the **state of the art in proton-boron (p–¹¹B) fusion in 2026**.
 
-Intended for distribution via [arXiv](https://arxiv.org/); if that is not available, via [Zenodo](https://zenodo.org/).
+Intended for distribution via [Zenodo](https://zenodo.org/) (citable DOI). The author is not endorsed for arXiv physics, so this deposit does **not** use arXiv subject classes; see [ZENODO.md](ZENODO.md).
 
 *Note on authorship: This article was generated using Large Language Model (LLM) AI tools. It is a synthesis of publicly available literature and may contain AI-generated artifacts, citation errors, or factual hallucinations. It must be rigorously verified by the reader before any scientific, engineering, or policy use.*
 
@@ -10,24 +10,34 @@ Intended for distribution via [arXiv](https://arxiv.org/); if that is not availa
 
 - `arxiv.md` — source narrative (edit this)
 - `research/` — archived PDFs and figure credits
-- `scripts/` — arXiv TeX/PDF/dist pipeline (ported from `scott_models` / `scott1982`, without Lean)
+- `scripts/` — TeX/PDF/Zenodo packaging (Zenodo path ported from `fusion_reactor_component_failures`)
+- `.zenodo.json` — authoritative Zenodo deposit metadata
+- `CITATION.cff` — GitHub “Cite this repository” only
 
-## Build (arXiv)
+## Build (Zenodo)
 
 ```bash
-bash scripts/build_arxiv_tex.sh      # arxiv.md → arxiv.tex + figures/
-bash scripts/build_arxiv_pdf.sh      # compile PDF + package dist/arxiv_submit.zip
-# or, if tex already built:
-bash scripts/package_arxiv_submit.sh --skip-tex-build
+./scripts/rebuild_zenodo.sh       # zenodo.pdf + dist/zenodo_submit.zip
+# or step-wise:
+./scripts/build_zenodo_tex.sh     # arxiv.md → zenodo.tex + figures/
+./scripts/package_zenodo.sh       # zip zenodo.pdf + .zenodo.json
+```
+
+Upload `dist/zenodo_submit.zip` at [zenodo.org/deposit/new](https://zenodo.org/deposit/new). Details: [ZENODO.md](ZENODO.md).
+
+## Build (optional local arXiv-shaped PDF)
+
+Same manuscript, no arXiv categories on the title page:
+
+```bash
+bash scripts/build_arxiv_pdf.sh   # arxiv.pdf + dist/arxiv_submit.zip
 ```
 
 Requires: `pandoc`, `mmdc` (mermaid-cli), ImageMagick `convert`, `latexmk` + LuaLaTeX (local), Chrome/Chromium for mermaid.
 
-Generated artifacts (`arxiv.tex`, `figures/`, `dist/`, …) are gitignored; upload `dist/arxiv_submit.zip` to arXiv (pdfLaTeX).
-
 ## License
 
-Apache License 2.0 (see `LICENSE` and `NOTICE`).
+Apache License 2.0 (see `LICENSE` and `NOTICE`). Zenodo publication metadata requests **CC-BY-4.0** for the deposited PDF (see `.zenodo.json`).
 
 ## Contributions and Collaboration
 

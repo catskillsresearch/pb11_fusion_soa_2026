@@ -1,0 +1,36 @@
+# Citation File Format — GitHub “Cite this repository” only.
+# Authoritative Zenodo metadata (subjects, resource type, relations): .zenodo.json
+
+cff-version: 1.2.0
+title: "State of the art on proton-boron fusion for electricity generation"
+message: "If you use this survey, please cite it as below."
+type: report
+authors:
+  - family-names: Ericson
+    given-names: Lars Warren
+    affiliation: Catskills Research Company
+    orcid: "https://orcid.org/0000-0001-8299-9361"
+abstract: >-
+  Survey of proton–boron-11 (p–¹¹B) fusion paths aimed at clean electricity
+  generation (mid-2026): confinement families, Rider/Bremsstrahlung limits,
+  company and lab programs, diligence scorecard, tooling, patents, and ranked
+  plant-odds.
+keywords:
+  - proton-boron fusion
+  - p-11B
+  - aneutronic fusion
+  - fusion engineering
+repository-code: "https://github.com/catskillsresearch/pb11_fusion_soa_2026"
+license: Apache-2.0
+version: 1.0.0
+date-released: 2026-07-16
+# Full keywords, LOC subjects, and Zenodo fields: .zenodo.json
+preferred-citation:
+  type: report
+  title: "State of the art on proton-boron fusion for electricity generation"
+  authors:
+    - family-names: Ericson
+      given-names: Lars Warren
+  year: 2026
+  version: 1.0.0
+  notes: "Deposit zenodo.pdf on Zenodo for a DOI; source lives on GitHub."

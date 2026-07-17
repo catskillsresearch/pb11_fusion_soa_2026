@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Convert arxiv.md to arxiv.tex (arXiv-ready).
+r"""Convert arxiv.md to arxiv.tex or zenodo.tex.
 
 Adapted from catskillsresearch/scott_models (and scott1982) without Lean/code-appendix
 machinery. Pipeline:
@@ -8,11 +8,12 @@ machinery. Pipeline:
   2. Convert ``research/figures/*`` assets to pdfLaTeX-safe copies under ``figures/assets/``.
   3. Render `` ```mermaid `` fences to ``figures/figure-NNN.pdf`` via mermaid-cli.
   4. Strip manual section numbers; pandoc → LaTeX; splice figure/code placeholders.
-  5. Emit a single ``arxiv.tex`` for one-shot latexmk / arXiv pdfLaTeX.
+  5. Emit ``arxiv.tex`` or ``zenodo.tex`` for latexmk / deposit packaging.
 """
 
 from __future__ import annotations
 
+import argparse
 import os
 import re
 import shutil
@@ -25,7 +26,6 @@ ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = Path(__file__).resolve().parent
 
 SRC = ROOT / "arxiv.md"
-OUT = ROOT / "arxiv.tex"
 PREAMBLE = SCRIPTS / "tex_preamble_arxiv.tex"
 LISTINGS_DIR = ROOT / "listings"
 FIGURES_DIR = ROOT / "figures"
@@ -40,6 +40,12 @@ COMPANY = "Catskills Research Company"
 GITHUB_URL = r"https://github.com/catskillsresearch/pb11_fusion_soa_2026"
 ORCID = "0000-0001-8299-9361"
 EMAIL = "lars.ericson@catskillsresearch.com"
+VERSION = "1.0.0"
+
+TARGETS = {
+    "arxiv": ROOT / "arxiv.tex",
+    "zenodo": ROOT / "zenodo.tex",
+}
 
 GITHUB_INLINE_MATH = re.compile(r"\$`([^`\n]+?)`\$")
 HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
@@ -1117,14 +1123,28 @@ def cleanup_abstract_latex(latex: str) -> str:
     return latex
 
 
-def build_title_page(abstract_latex: str) -> str:
+def build_title_page(abstract_latex: str, *, target: str = "arxiv") -> str:
+    """Title block. No arXiv subject classes (author not endorsed for physics)."""
+    if target == "zenodo":
+        meta = textwrap.dedent(
+            f"""\
+          \\textbf{{ORCID:}} {ORCID} \\\\
+          \\textbf{{Resource type:}} Technical report \\\\
+          \\textbf{{Version:}} {VERSION} \\\\[0.5em]
+          \\textbf{{Source repository:}} \\url{{{GITHUB_URL}}}"""
+        )
+    else:
+        meta = textwrap.dedent(
+            f"""\
+          \\textbf{{ORCID:}} {ORCID} \\\\[0.5em]
+          \\textbf{{Source repository:}} \\url{{{GITHUB_URL}}}"""
+        )
     return textwrap.dedent(
         f"""
         \\title{{\\textbf{{{TITLE}}}}}
 
         \\author[1]{{\\textbf{{{AUTHOR}}}}}
         \\affil[1]{{{COMPANY}}}
-        \\affil[1]{{\\url{{{GITHUB_URL}}}}}
         \\affil[1]{{\\texttt{{{EMAIL}}}}}
 
         \\date{{\\today}}
@@ -1135,9 +1155,7 @@ def build_title_page(abstract_latex: str) -> str:
 
         \\begin{{center}}
           \\small
-          \\textbf{{ORCID:}} {ORCID} \\\\
-          \\textbf{{Primary Category:}} physics.plasm-ph (Plasma Physics) \\\\
-          \\textbf{{Secondary Category:}} physics.app-ph (Applied Physics)
+{meta}
         \\end{{center}}
 
         \\begin{{abstract}}
@@ -1152,7 +1170,17 @@ def build_document(preamble: str, title_page: str, body: str) -> str:
     return head + preamble + "\n\n" + title_page + "\n\n" + body + "\n\n\\end{document}\n"
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--target",
+        choices=sorted(TARGETS),
+        default="arxiv",
+        help="output document variant (default: arxiv)",
+    )
+    args = parser.parse_args(argv)
+    out = TARGETS[args.target]
+
     if not SRC.is_file():
         print(f"error: missing {SRC}", file=sys.stderr)
         return 1
@@ -1188,10 +1216,10 @@ def main() -> int:
     abstract_latex = cleanup_abstract_latex(abstract_latex)
 
     preamble = PREAMBLE.read_text(encoding="utf-8")
-    title_page = build_title_page(abstract_latex)
+    title_page = build_title_page(abstract_latex, target=args.target)
     # LoT/LoF belong after the abstract on the title page, not in the pandoc body.
     document = build_document(preamble, insert_lists_of_floats(title_page), latex_body)
-    changed = write_if_changed(OUT, document)
+    changed = write_if_changed(out, document)
     n_listings = (
         sum(1 for p in LISTINGS_DIR.iterdir() if p.is_file()) if LISTINGS_DIR.is_dir() else 0
     )
@@ -1199,7 +1227,7 @@ def main() -> int:
     n_assets = sum(1 for p in ASSETS_DIR.iterdir() if p.is_file()) if ASSETS_DIR.is_dir() else 0
     note = "updated" if changed else "unchanged"
     print(
-        f"wrote {OUT.relative_to(ROOT)} ({OUT.stat().st_size:,} bytes, "
+        f"wrote {out.relative_to(ROOT)} ({out.stat().st_size:,} bytes, "
         f"from arxiv.md, {n_listings} snippet listings, "
         f"{n_mermaid} mermaid figures, {n_assets} raster/SVG assets, {note})"
     )

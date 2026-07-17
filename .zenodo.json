@@ -1,0 +1,64 @@
+{
+  "title": "State of the art on proton-boron fusion for electricity generation",
+  "upload_type": "publication",
+  "publication_type": "report",
+  "access_right": "open",
+  "language": "eng",
+  "version": "1.0.0",
+  "description": "Survey of proton–boron-11 (p–¹¹B) fusion paths aimed at clean electricity generation (mid-2026). Catalogues confinement families, Rider/Bremsstrahlung limits and proposed loopholes, company and lab programs, a zeroth-order diligence scorecard, digital-twin tooling, patents, and ranked plant-odds. Readable PDF: zenodo.pdf. Source manuscript and build scripts: https://github.com/catskillsresearch/pb11_fusion_soa_2026",
+  "creators": [
+    {
+      "name": "Ericson, Lars Warren",
+      "affiliation": "Catskills Research Company",
+      "orcid": "0000-0001-8299-9361"
+    }
+  ],
+  "keywords": [
+    "proton-boron fusion",
+    "p-11B",
+    "aneutronic fusion",
+    "plasma physics",
+    "fusion engineering",
+    "Rider limit",
+    "direct energy conversion",
+    "technical report",
+    "state of the art"
+  ],
+  "subjects": [
+    {
+      "term": "Nuclear fusion",
+      "identifier": "http://id.loc.gov/authorities/subjects/sh85092995",
+      "scheme": "url"
+    },
+    {
+      "term": "Fusion reactors",
+      "identifier": "http://id.loc.gov/authorities/subjects/sh85052597",
+      "scheme": "url"
+    },
+    {
+      "term": "Plasma (Ionized gases)",
+      "identifier": "http://id.loc.gov/authorities/subjects/sh85103050",
+      "scheme": "url"
+    },
+    {
+      "term": "Nuclear engineering",
+      "identifier": "http://id.loc.gov/authorities/subjects/sh85092991",
+      "scheme": "url"
+    },
+    {
+      "term": "Boron",
+      "identifier": "http://id.loc.gov/authorities/subjects/sh85015858",
+      "scheme": "url"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "notes": "Primary readable artifact is zenodo.pdf. Markdown source is arxiv.md in the linked GitHub repository. This work was prepared with LLM assistance; verify before scientific or policy use.",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/catskillsresearch/pb11_fusion_soa_2026",
+      "relation": "isSupplementedBy",
+      "scheme": "url",
+      "resource_type": "software"
+    }
+  ]
+}
