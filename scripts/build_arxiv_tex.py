@@ -100,7 +100,9 @@ def github_math_to_tex(text: str) -> str:
 def strip_html_comments(text: str) -> str:
     def repl(match: re.Match[str]) -> str:
         body = match.group(0)
-        if re.match(r"<!--\s*mermaid-(caption|landscape)\b", body, re.IGNORECASE):
+        if re.match(
+            r"<!--\s*mermaid-(caption|landscape|label)\b", body, re.IGNORECASE
+        ):
             return body
         return ""
 
@@ -280,9 +282,10 @@ def replace_markdown_images(text: str) -> tuple[str, dict[str, str]]:
         src_name = src_path[len("research/figures/") :]
         rel = convert_research_asset(src_name)
         caption_tex = caption_md_to_latex(github_math_to_tex(alt))
-        slug = re.sub(r"[^a-z0-9]+", "-", alt.lower()).strip("-")[:48] or str(idx + 1)
+        stem = Path(src_name).stem
+        slug = re.sub(r"[^a-z0-9]+", "-", stem.lower()).strip("-") or str(idx + 1)
         key = f"ASSETINCLUDE{idx:03d}"
-        placeholders[key] = figure_latex(rel, caption_tex, f"fig:asset-{slug}")
+        placeholders[key] = figure_latex(rel, caption_tex, f"fig:{slug}")
         parts.append(text[pos:start])
         parts.append(f"\n\n{key}\n\n")
         pos = path_end + 1
@@ -298,16 +301,20 @@ def prune_stale_assets() -> None:
             path.unlink()
 
 
-def extract_mermaid_meta(text: str) -> list[tuple[str, bool]]:
-    """Return ``(caption, landscape)`` for each mermaid fence in document order."""
-    meta: list[tuple[str, bool]] = []
+def extract_mermaid_meta(text: str) -> list[tuple[str, bool, str]]:
+    """Return ``(caption, landscape, label)`` for each mermaid fence in order."""
+    meta: list[tuple[str, bool, str]] = []
     caption_comment = re.compile(
         r"<!--\s*mermaid-caption:\s*(.+?)\s*-->", re.IGNORECASE
     )
+    label_comment = re.compile(
+        r"<!--\s*mermaid-label:\s*(fig:[^\s]+)\s*-->", re.IGNORECASE
+    )
     landscape_comment = re.compile(r"<!--\s*mermaid-landscape\s*-->", re.IGNORECASE)
     for m in re.finditer(r"^```mermaid\s*$", text, re.MULTILINE):
-        prefix_lines = text[: m.start()].splitlines()[-8:]
+        prefix_lines = text[: m.start()].splitlines()[-10:]
         explicit = None
+        label = None
         landscape = False
         for line in reversed(prefix_lines):
             stripped = line.strip()
@@ -316,10 +323,14 @@ def extract_mermaid_meta(text: str) -> list[tuple[str, bool]]:
             if landscape_comment.fullmatch(stripped):
                 landscape = True
                 continue
+            lm = label_comment.fullmatch(stripped)
+            if lm:
+                label = lm.group(1).strip()
+                continue
             cm = caption_comment.fullmatch(stripped)
             if cm:
                 explicit = cm.group(1).strip().rstrip(".")
-                break
+                continue
             # Stop scanning once we hit non-meta prose.
             if not stripped.startswith("<!--"):
                 break
@@ -338,7 +349,10 @@ def extract_mermaid_meta(text: str) -> list[tuple[str, bool]]:
                 caption = f"{heading}."
             else:
                 caption = f"Diagram {len(meta) + 1}."
-        meta.append((caption, landscape))
+        if not label:
+            slug = re.sub(r"[^a-z0-9]+", "-", caption.lower()).strip("-")[:48]
+            label = f"fig:mermaid-{slug or len(meta) + 1}"
+        meta.append((caption, landscape, label))
     return meta
 
 
@@ -412,10 +426,14 @@ def replace_fences(text: str) -> tuple[str, dict[str, str]]:
             return f"\n\n{key}\n\n"
         if lang == "mermaid":
             key = f"FIGINCLUDE{other_idx:03d}"
-            caption, landscape = (
+            caption, landscape, label = (
                 mermaid_meta[mermaid_idx]
                 if mermaid_idx < len(mermaid_meta)
-                else (f"Diagram {mermaid_idx + 1}.", False)
+                else (
+                    f"Diagram {mermaid_idx + 1}.",
+                    False,
+                    f"fig:mermaid-{mermaid_idx + 1}",
+                )
             )
             # Landscape charts get a higher raster/vector scale for sharper labels.
             scale = 2.0 if landscape else 1.25
@@ -428,10 +446,6 @@ def replace_fences(text: str) -> tuple[str, dict[str, str]]:
                 .replace("#", "\\#")
                 .replace("_", "\\_")
             )
-            slug = re.sub(r"[^a-z0-9]+", "-", caption.lower()).strip("-")[:48] or str(
-                mermaid_idx + 1
-            )
-            label = f"fig:mermaid-{slug}"
             mermaid_idx += 1
             other_idx += 1
             placeholders[key] = figure_latex(
