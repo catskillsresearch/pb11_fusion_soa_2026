@@ -517,6 +517,7 @@ SPECIALIZED_TAB_LABELS = {
     "tab:matrix-axes",
     "tab:diligence-gates",
     "tab:sister-fuels",
+    "tab:pppl-spinouts",
     "tab:scorecard",
     "tab:legal-footprint",
     "tab:plant-odds",
@@ -708,7 +709,9 @@ def rebuild_table_legal_footprint(latex: str) -> str:
 
     title = "Corporate / brand legal footprint (non-patent)"
     cont = f"{title} (continued)"
+    # Brace-group \footnotesize so it cannot leak into following body prose.
     new_table = (
+        "{\n"
         "\\footnotesize\n"
         "\\setlength{\\tabcolsep}{4pt}\n"
         "\\begin{longtable}{@{}\n"
@@ -733,12 +736,13 @@ def rebuild_table_legal_footprint(latex: str) -> str:
         "\\endlastfoot\n"
         + "\n".join(rows)
         + "\n\\end{longtable}\n"
+        "}\n"
     )
     return latex[:wrap_start] + new_table + latex[lt_end:]
 
 
 def rebuild_table_scorecard(latex: str) -> str:
-    """Zeroth-order scorecard as captioned landscape longtable."""
+    """Zeroth-order scorecard as a single-page landscape tabular."""
     loc = _locate_labeled_longtable(
         latex, "tab:scorecard", "Zeroth-order scorecard for key projects"
     )
@@ -764,37 +768,29 @@ def rebuild_table_scorecard(latex: str) -> str:
         return latex
 
     title = "Zeroth-order scorecard for key projects (State of the Art, 2026)"
-    cont = "Zeroth-order scorecard (continued)"
+    col = r">{\raggedright\arraybackslash}p"
     new_table = (
         "\\begin{landscape}\n"
-        "\\footnotesize\n"
-        "\\setlength{\\tabcolsep}{3pt}\n"
-        "\\renewcommand{\\arraystretch}{1.15}\n"
-        "\\begin{longtable}{@{}\n"
-        "  >{\\raggedright\\arraybackslash}p{2.55cm}\n"
-        "  >{\\raggedright\\arraybackslash}p{1.55cm}\n"
+        "\\centering\n"
+        "\\scriptsize\n"
+        "\\setlength{\\tabcolsep}{2pt}\n"
+        "\\renewcommand{\\arraystretch}{1.0}\n"
+        f"\\surveycaptionof{{{title}}}\\label{{tab:scorecard}}\n"
+        "\\begin{tabular}{@{}\n"
+        f"  {col}{{2.3cm}}\n"
+        f"  {col}{{1.35cm}}\n"
         "  *{9}{c}\n"
-        "  >{\\raggedright\\arraybackslash}p{8.8cm}@{}}\n"
-        f"\\surveycaption{{{title}}}\\label{{tab:scorecard}}\\\\\n"
+        f"  {col}{{9.2cm}}@{{}}}}\n"
         "\\toprule\n"
         "\\textbf{Project} & \\textbf{C} & "
         "\\textbf{F} & \\textbf{K} & \\textbf{R} & \\textbf{A} & "
         "\\textbf{L} & \\textbf{M} & \\textbf{T} & \\textbf{S} & \\textbf{H} & "
         "\\textbf{Notes (2025--2026)} \\\\\n"
         "\\midrule\n"
-        "\\endfirsthead\n"
-        f"\\surveycaptioncont{{{cont}}}\\\\\n"
-        "\\toprule\n"
-        "\\textbf{Project} & \\textbf{C} & "
-        "\\textbf{F} & \\textbf{K} & \\textbf{R} & \\textbf{A} & "
-        "\\textbf{L} & \\textbf{M} & \\textbf{T} & \\textbf{S} & \\textbf{H} & "
-        "\\textbf{Notes (2025--2026)} \\\\\n"
-        "\\midrule\n"
-        "\\endhead\n"
-        "\\bottomrule\n"
-        "\\endlastfoot\n"
         + "\n".join(rows)
-        + "\n\\end{longtable}\n"
+        + "\n"
+        "\\bottomrule\n"
+        "\\end{tabular}\n"
         "\\end{landscape}\n"
     )
     return latex[:wrap_start] + new_table + latex[lt_end:]
@@ -845,6 +841,77 @@ def rebuild_table_diligence_gates(latex: str) -> str:
         ">{\\raggedright\\arraybackslash}X@{}}\n"
         "\\toprule\n"
         "Gate & Question for a $p\\text{-}^{11}\\text{B}$ plant \\\\\n"
+        "\\midrule\n"
+        + "\n".join(rows)
+        + "\n"
+        "\\bottomrule\n"
+        "\\end{tabularx}\n"
+        "\\end{center}\n"
+    )
+    return latex[:wrap_start] + new_table + latex[lt_end:]
+
+
+def rebuild_table_pppl_spinouts(latex: str) -> str:
+    """Princeton spinout prognosis as a single-page tabularx (no colliding wraps)."""
+    loc = _locate_labeled_longtable(
+        latex, "tab:pppl-spinouts", "Princeton / PPPL spinout comparative"
+    )
+    if not loc:
+        return latex
+    wrap_start, lt_start, lt_end = loc
+    block = latex[lt_start:lt_end]
+    junk = re.compile(
+        r"\\(?:midrule|toprule|bottomrule|endhead|endfirsthead|endfoot|"
+        r"endlastfoot|noalign\{\}|begin\{minipage\}.*?\\end\{minipage\})+"
+    )
+    rows: list[str] = []
+    buf: list[str] = []
+    for line in block.splitlines():
+        s = line.strip()
+        if not s:
+            continue
+        buf.append(s)
+        if not s.endswith(r"\\"):
+            continue
+        row = junk.sub("", " ".join(buf)).strip()
+        buf = []
+        if "Entity" in row and "Fuel" in row:
+            continue
+        if r"\begin{longtable}" in row or r"\end{longtable}" in row:
+            continue
+        if not row.startswith(r"\textbf{"):
+            continue
+        if len(re.findall(r"(?<!\\)&", row)) != 5:
+            continue
+        # Drop pandoc minipage wrappers left in cells.
+        row = re.sub(
+            r"\\begin\{minipage\}\[[^\]]*\]\{[^}]*\}|\\end\{minipage\}",
+            "",
+            row,
+        )
+        rows.append(row)
+    if len(rows) < 3:
+        return latex
+
+    title = "Princeton / PPPL spinout comparative prognosis (mid-2026)"
+    col = r">{\raggedright\arraybackslash}p"
+    new_table = (
+        "\\begin{center}\n"
+        "\\scriptsize\n"
+        "\\setlength{\\tabcolsep}{3pt}\n"
+        "\\renewcommand{\\arraystretch}{1.15}\n"
+        f"\\surveycaptionof{{{title}}}\\label{{tab:pppl-spinouts}}\n"
+        "\\begin{tabularx}{\\linewidth}{@{}"
+        f"{col}{{2.15cm}}"
+        f"{col}{{2.05cm}}"
+        f"{col}{{2.35cm}}"
+        f"{col}{{2.55cm}}"
+        f"{col}{{2.0cm}}"
+        ">{\\raggedright\\arraybackslash}X@{}}\n"
+        "\\toprule\n"
+        "Entity & Fuel / machine & Capital signal & "
+        "Federal milestone signal & Public web / brand & "
+        "2026--2030 outlook \\\\\n"
         "\\midrule\n"
         + "\n".join(rows)
         + "\n"
@@ -1012,6 +1079,7 @@ def cleanup_pandoc_latex(latex: str) -> str:
     )
     latex = rebuild_table_diligence_gates(latex)
     latex = rebuild_table_sister_fuels(latex)
+    latex = rebuild_table_pppl_spinouts(latex)
     latex = rebuild_table_scorecard(latex)
     latex = rebuild_table_legal_footprint(latex)
     latex = rebuild_table_plant_odds(latex)

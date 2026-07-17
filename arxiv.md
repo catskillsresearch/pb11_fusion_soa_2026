@@ -519,7 +519,7 @@ Princeton University and PPPL do not commercialize through a single exclusive ve
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Thea Energy** | D–T stellarator (Eos/Helios) | $\sim\$130\,\mathrm{M}$ private | DOE Milestone Helios design certified (2026) | Live (`thea.energy`) | Build Eos; top-tier U.S. pilot-plant contender |
 | **Pale Blue Fusion** | $p\text{-}^{11}\text{B}$ CHARM mirror | ARPA-E $\sim\$1.5\,\mathrm{M}$ academic | OPEN 2021 complete; no Milestone award under brand | No public site (mid-2026) | Incorporate + seed; theory→experiment risk |
-| **Princeton Fusion Systems** | D–$^3$He PFRC | Mostly ARPA-E/NASA/INFUSE | OPEN/GAMOW/INFUSE awards | Live (company site) | Upgrade PFRC-2; seek PFRC-3 funding |
+| **Princeton Fusion Systems** | D–$^3$He PFRC | Mostly non-dilutive (ARPA-E, NASA) | OPEN, GAMOW, INFUSE | Live (company site) | Upgrade PFRC-2; seek PFRC-3 funding |
 
 Thea does not need a “piece” of Pale Blue to succeed, nor does Pale Blue’s delay imply Thea blockage: the IP, fuels, and machines do not overlap. What the comparison *does* show is that missing brand infrastructure is a **Pale Blue–specific T2M lag**, not a general Princeton inability to commercialize fusion.
 
@@ -535,7 +535,7 @@ Thea does not need a “piece” of Pale Blue to succeed, nor does Pale Blue’s
 *   **K — Kinetics / Rider:** Nonthermal orbiting ions in a magneto-electrostatic well—not a Maxwellian ST soup. Rider’s steady mixed-plasma assumptions are not the intended operating point; published Orbitron confinement papers are the physics anchor [66,87].
 *   **R — Radiation:** Compact volume and staged fuel path; Bremsstrahlung / X-ray handling for a $p\text{-}^{11}\text{B}$ pack remains a plant-level open (gate **R** not closed in public $p\text{-}^{11}\text{B}$ power-balance papers).
 *   **A — Ash & impurities:** High-voltage electrodes and walls are the impurity risk; helium ash at three alphas per reaction is still a design requirement if/when $p\text{-}^{11}\text{B}$ is burned.
-*   **L — Lawson / $Q$:** Public narrative emphasizes compact modular kWe-class cells and a Q$>$1 D–T path; engineering $Q$ for $p\text{-}^{11}\text{B}$ electricity is not yet a demonstrated plant metric [66,87].
+*   **L — Lawson / $Q$:** Public narrative emphasizes compact modular kWe-class cells and a $Q>1$ D–T path; engineering $Q$ for $p\text{-}^{11}\text{B}$ electricity is not yet a demonstrated plant metric [66,87].
 *   **C — Confinement:** **Orbitron**—ions confined electrostatically on orbits; electrons magnetically. Distinct from both tokamak MCF and laser ICF [66].
 *   **M — Materials & capture:** High-voltage vacuum integrity, electrode lifetime, and (for neutron learning) shielding / tritium handling. Direct-conversion themes fit charged products but are not a scored closed **M** for a utility plant.
 *   **T / H / S — T2M:** Live brand and site (`avalanchefusion.com`); FusionWERX test infrastructure (Richland); disclosed raise / peer-reviewed Orbitron milestones; high **H** cadence and serious open **S** (WarpX, OpenMC) [66,67,87]. Strongest compact-MEC commercial signal in \autoref{tab:scorecard}; USPTO assignee crawl still thin relative to hardware—treat IP as under-indexed, not absent (\secref{sec:patents}).
@@ -574,16 +574,17 @@ Traditional muon-catalyzed fusion relies on thermal equilibrium to form muonic m
 However, applying this traditional thermal scheme to $p\text{-}^{11}\text{B}$ has historically been considered impossible. Because boron has a high nuclear charge ($Z = 5$), it acts as a severe **"muon trap."** In a thermal mixture, the muon is rapidly and tightly bound to the boron nucleus, reducing its orbital radius to the point where it can no longer screen a second incoming nucleus, effectively halting the catalytic cycle.
 
 To bypass this trap, the proposed kinetic scenario pre-empts thermal equilibrium:
-1. A muon and a proton are first brought together to form a neutral **muonic hydrogen atom ($p\mu$)**.
-2. This stationary $p\mu$ target is then bombarded with an accelerated beam of $^{11}\text{B}$ nuclei (or vice versa). 
-3. The fusion reaction occurs dynamically during the collision before the muon has the opportunity to transfer to the boron nucleus and become trapped.
+
+1.  A muon and a proton are first brought together to form a neutral **muonic hydrogen atom ($p\mu$)**.
+2.  This stationary $p\mu$ target is then bombarded with an accelerated beam of $^{11}\text{B}$ nuclei (or vice versa).
+3.  The fusion reaction occurs dynamically during the collision before the muon has the opportunity to transfer to the boron nucleus and become trapped.
 
 ### 7.2 The Physics of Dynamic Charge Screening {#sec:screening}
 In this kinetic collision, the muon is assumed to remain in its tightly bound $1s$ ground-state wavefunction around the proton:
 
 $$\psi(r) = \frac{1}{\sqrt{\pi a_\mu^3}} e^{-r/a_\mu}$$
 
-where the muonic Bohr radius $a_\mu \approx 284.6\text{ fm}$ is approximately 207 times smaller than the electronic Bohr radius. As the $^{11}\text{B}$ nucleus approaches the neutral $p\mu$ atom, it experiences a dynamically screened proton charge. The total effective charge $q_{\text{eff}}$ felt by the incoming boron nucleus at a separation distance $r_{pB}$ is derived as:
+\noindent where the muonic Bohr radius $a_\mu \approx 284.6\text{ fm}$ is approximately 207 times smaller than the electronic Bohr radius. As the $^{11}\text{B}$ nucleus approaches the neutral $p\mu$ atom, it experiences a dynamically screened proton charge. The total effective charge $q_{\text{eff}}$ felt by the incoming boron nucleus at a separation distance $r_{pB}$ is derived as:
 
 $$q_{\text{eff}} = -q_\mu \left( 1 + \frac{2r_{pB}}{a_\mu} + \frac{2r_{pB}^2}{a_\mu^2} \right) \exp\left( -\frac{2r_{pB}}{a_\mu} \right)$$
 
@@ -597,6 +598,7 @@ As a result, the classical minimum approach distance ($r_{\text{min}}$) is signi
 Wang et al. evaluated the penetrability $P(E)$ of the screened potential barrier using a hybrid semiclassical model. At low incident energies where the action $S \ge 10$ ($E \le 33.50\text{ keV}$), the standard Wentzel–Kramers–Brillouin (WKB) approximation is highly reliable. For the intermediate energy region ($33.50\text{ keV} < E < 107.43\text{ keV}$), they utilized a linearized Airy function matching procedure to maintain continuity at the classical turning point.
 
 The model yields several critical insights:
+
 *   **Sub-100 keV Enhancement:** At incident energies below $100\text{ keV}$, the tunneling probability is enhanced by **several orders of magnitude** compared to the bare-nuclei case.
 *   **The Upper Energy Boundary:** At $E = 107.43\text{ keV}$, the Airy tunneling probability curve intersects with the bare-nuclei penetrability curve. Beyond this point, the incident kinetic energy is high enough to penetrate the region where muon screening is negligible, meaning the muon provides no further catalytic benefit.
 *   **Cross-Section and Rate Boost:** The corresponding astrophysical $S$-factor calculations indicate a substantial increase in both the reaction cross-section ($\sigma$) and the thermonuclear reaction rate ($\langle\sigma v\rangle$) below $10\text{ keV}$. 
@@ -610,9 +612,10 @@ Because muons have a short lifetime ($\tau_\mu \approx 2.2\ \mu\text{s}$), the e
 The kinetic $p\mu\text{-}^{11}\text{B}$ scheme of \secref{sec:muon} is not a drop-in upgrade for every confinement approach in \secref{sec:companies} and \autoref{tab:scorecard}. It requires a **directed, non-thermal collision** in which neutral muonic hydrogen is formed *before* the muon can contact boron, followed by a beam-target encounter at incident energies preferably below $\sim 100\text{ keV}$ (where screening still enhances tunneling; \secref{sec:tunneling}). Architectures that already organize fuel as beams or laser-driven blocks can, in principle, host this sequence; architectures that rely on thermal mixing of protons and boron generally cannot without a dedicated kinetic stage.
 
 **Shared requirements (all applicable architectures).** For every scheme below, the engineering add-ons are the same in substance:
-1. **Muon source and $p\mu$ formation** — a pulsed muon beam (or in-situ production) timed so that $\mu^-$ bind preferentially to protons, yielding a neutral $p\mu$ population that has not yet mixed with boron.
-2. **Controlled beam-target kinematics** — relative collision energies held in the sub-$100\text{ keV}$ window where muon screening matters, with encounter timescales short compared with muon transfer to $^{11}\text{B}$ (the “muon trap” of \secref{sec:muon-trap}).
-3. **Yield versus muon cost** — fusion yield per muon large enough to repay production energy within $\tau_\mu \approx 2.2\ \mu\text{s}$, independent of the host confinement technology.
+
+1.  **Muon source and $p\mu$ formation** — a pulsed muon beam (or in-situ production) timed so that $\mu^-$ bind preferentially to protons, yielding a neutral $p\mu$ population that has not yet mixed with boron.
+2.  **Controlled beam-target kinematics** — relative collision energies held in the sub-$100\text{ keV}$ window where muon screening matters, with encounter timescales short compared with muon transfer to $^{11}\text{B}$ (the “muon trap” of \secref{sec:muon-trap}).
+3.  **Yield versus muon cost** — fusion yield per muon large enough to repay production energy within $\tau_\mu \approx 2.2\ \mu\text{s}$, independent of the host confinement technology.
 
 **Where this maps cleanly.** The laser-driven and other inertial beam-target programs already operate in the non-Maxwellian, short-timescale regime that \secref{sec:muon} exploits. That includes **HB11 Energy** (laser block ignition) [2], **Marvel Fusion** (nanostructured ICF) [8], **Blue Laser Fusion** and **Anubal Fusion** (high-repetition / laser-target ICF), and the **FUSION Project** (laser-plasma targets) [10]. In each case the same accomplishment path applies: prepare a $p\mu$-bearing target (or inject $p\mu$ into the interaction volume), then deliver a directed $^{11}\text{B}$ block or beam—via CPA laser acceleration or equivalent—at the screened sub-$100\text{ keV}$ energy, rather than the higher thermal or multi-MeV drive energies those platforms often emphasize today. The PROBONO consortium [9], which coordinates multi-platform laser and plasma experiments, is a natural venue for cross-facility tests of that sequence.
 
@@ -627,29 +630,40 @@ In short: \secref{sec:muon} is a candidate enhancement for **beam-target and las
 ## 8. Active Global Initiatives {#sec:initiatives}
 **Plain-language lead-in.** One scorecard for the whole landscape. Rows are projects; columns are the \autoref{tab:diligence-gates} gates. Compare cells, don’t treat filled circles as “approved by DOE.”
 
-\autoref{tab:scorecard} scores principal $p\text{-}^{11}\text{B}$ (and closely related) paths on the \autoref{tab:diligence-gates} zeroth-order gates. Sister advanced-fuel rows (Helion, PFS) and compact MEC/IEC rows (Avalanche Orbitron; JIHT Kurilenkov NVD) are included for contrast after \secref{sec:confinement} / \secref{sec:sister-fuels}. Legend: **●** = publicly articulated strategy with supporting hardware, peer-reviewed analysis, or formal design review; **◐** = partial / roadmap-level / component-only; **○** = weak, absent, or not yet public; **—** = not applicable. Scores are editorial judgments for comparison, not certifications. \secref{sec:plant-odds} folds these cells into a weighted **Plant Odds Score (POS★)**—with a $\kappa$ haircut for staged-fuel and imputed theory plants—and sorts each path on its own rank with indicative timelines.
+\autoref{tab:scorecard} scores principal $p\text{-}^{11}\text{B}$ (and closely related) paths on the \autoref{tab:diligence-gates} zeroth-order gates. Sister advanced-fuel rows (Helion, PFS) and compact MEC/IEC rows (Avalanche Orbitron; JIHT Kurilenkov NVD) are included for contrast after \secref{sec:confinement} / \secref{sec:sister-fuels}.
+
+**Legend:**
+
+\begin{itemize}
+\item[\gateF{}] publicly articulated strategy with supporting hardware, peer-reviewed analysis, or formal design review
+\item[\gateP{}] partial / roadmap-level / component-only
+\item[\gateW{}] weak, absent, or not yet public
+\item[\gateNA{}] not applicable
+\end{itemize}
+
+Scores are editorial judgments for comparison, not certifications. \secref{sec:plant-odds} folds these cells into a weighted **Plant Odds Score (POS★)**—with a $\kappa$ haircut for staged-fuel and imputed theory plants—and sorts each path on its own rank with indicative timelines.
 
 ### Zeroth-order scorecard for key projects (State of the Art, 2026) {#tab:scorecard}
 
 | Project / Entity | C | F | K | R | A | L | M | T | S | H | Notes (2025–2026) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **ENN** [6,12,22,38,39] | ST (MCF) | ● | ◐ | ◐ | ◐ | ◐ | ◐ | ● | ◐ | ● | Nuclear-data + EXL-50U/EHL-2; hot-ion **K** debated [38,39]; $Q>10$ $\sim 2035$ roadmap. |
-| **TAE** [5,35–37,89] | FRC | ● | ● | ● | ◐ | ◐ | ◐ | ● | ◐ | ● | LHD alphas; Norm NBI-only; ICC/**M** and plant **L** still open; Rostoker-era origin in [89]. |
-| **LHD / NIFS** [15] | Helical | ● | ◐ | — | — | ○ | — | ● | ◐ | ● | Facility demo of magnetic $p\text{-}^{11}\text{B}$ alphas; not a plant design. |
-| **HB11** [2,7,81–84,90,91] | Laser ICF | ● | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | Block ignition real R&D; $\sim 4$ orders below driver breakeven [90]; avalanche + spherical DEC contested; \secref{sec:degeneracy} [91] possible hybrid/target upgrade (\secref{sec:hb11}). |
-| **Marvel Fusion** [8,91] | Nano-ICF | ● | ● | ◐ | ◐ | ○ | ◐ | ◐ | ◐ | ◐ | CSU laser facility under construction; plant **L** early; \secref{sec:degeneracy} [91] target upgrade candidate. |
-| **XJTU / CN HEDP** [12,27,91] | Beam-target | ● | ● | ● | — | ○ | ○ | ◐ | ◐ | ● | Record foam yields; compressed-degenerate beam-target theory [91]; component path, not full plant. |
-| **Blue Laser Fusion** [91] | Laser ICF | ● | ◐ | ◐ | ◐ | ○ | ◐ | ◐ | ◐ | ○ | Nakamura lasers + INFUSE; boron fuel option; \secref{sec:degeneracy} [91] applicable in principle. |
-| **Anubal Fusion** [91] | Laser ICF | ◐ | ◐ | ○ | ○ | ○ | ○ | ○ | ○ | ○ | Early (2024) academic collaborations; \secref{sec:degeneracy} [91] applicable in principle. |
-| **PROBONO** [9,41,42] | Consortium | ● | ● | ◐ | ◐ | — | — | ● | ◐ | ● | Coordinates EU laser/plasma $p\text{-}^{11}\text{B}$ (not one reactor). |
+| **ENN** [6,12,22,38,39] | ST (MCF) | ● | ◐ | ◐ | ◐ | ◐ | ◐ | ● | ◐ | ● | EXL-50U/EHL-2 + nuclear data; hot-ion **K** debated [38,39]; $Q>10$ $\sim 2035$. |
+| **TAE** [5,35–37,89] | FRC | ● | ● | ● | ◐ | ◐ | ◐ | ● | ◐ | ● | LHD alphas; Norm NBI-only; ICC/**M** and plant **L** open [89]. |
+| **LHD / NIFS** [15] | Helical | ● | ◐ | — | — | ○ | — | ● | ◐ | ● | Magnetic $p\text{-}^{11}\text{B}$ alpha demo; not a plant design. |
+| **HB11** [2,7,81–84,90,91] | Laser ICF | ● | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | Block ignition; $\sim 4$ orders below breakeven [90]; avalanche/DEC contested; degeneracy hybrid possible [91]. |
+| **Marvel Fusion** [8,91] | Nano-ICF | ● | ● | ◐ | ◐ | ○ | ◐ | ◐ | ◐ | ◐ | CSU laser under construction; plant **L** early; degeneracy target upgrade [91]. |
+| **XJTU / CN HEDP** [12,27,91] | Beam-target | ● | ● | ● | — | ○ | ○ | ◐ | ◐ | ● | Record foam yields; degenerate beam-target theory [91]; component path. |
+| **Blue Laser Fusion** [91] | Laser ICF | ● | ◐ | ◐ | ◐ | ○ | ◐ | ◐ | ◐ | ○ | Nakamura lasers + INFUSE; boron option; degeneracy applicable [91]. |
+| **Anubal Fusion** [91] | Laser ICF | ◐ | ◐ | ○ | ○ | ○ | ○ | ○ | ○ | ○ | Early (2024) academic collaborations; degeneracy applicable [91]. |
+| **PROBONO** [9,41,42] | Consortium | ● | ● | ◐ | ◐ | — | — | ● | ◐ | ● | EU laser/plasma $p\text{-}^{11}\text{B}$ coordination (not one reactor). |
 | **FUSION Project** [10] | Laser targets | ● | ● | ◐ | — | ○ | ○ | ◐ | ◐ | ● | PALS diagnostics/targetry. |
-| **Pale Blue / CHARM** [29–33] | Rot. mirror | ● | ● | ● | ● | ◐ | ◐ | ○ | ● | ○ | Strong **A**/**K** theory+IP; **S**-first (in-silico plant); **T**/**H** lag (\secref{sec:pppl-spinouts}). |
+| **Pale Blue / CHARM** [29–33] | Rot. mirror | ● | ● | ● | ● | ◐ | ◐ | ○ | ● | ○ | Strong **A**/**K** theory+IP; **S**-first; **T**/**H** lag (\secref{sec:pppl-spinouts}). |
 | **Nanjing $\mu$CF** [11] | Kinetic theory | ● | ● | — | — | ○ | ○ | ○ | ● | ○ | Muon screening proposal; speculative **L**. |
-| **Thea Energy** [46–50] | Planar stellarator | — | — | — | — | ● | ◐ | ● | ● | ◐ | D–T path; DOE Helios design certified; digital-twin / Omniverse ecosystem (\secref{sec:software}). |
-| **PFS / PFRC** [54–57] | PFRC | — | — | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ● | D–$^3$He microreactor; ARPA-E/INFUSE; neutron-*poor*, not $p\text{-}^{11}\text{B}$-clean (\secref{sec:sister-fuels}). |
-| **Helion Energy** [77,78] | Pulsed FRC | — | — | ◐ | ◐ | ◐ | ◐ | ● | ◐ | ● | D–$^3$He + in-house $^3\mathrm{He}$ breeding; largest capitalized sister-fuel path; **not** fully aneutronic (\secref{sec:sister-fuels}). |
-| **Avalanche Energy** [66,67,87] | Orbitron (MEC) | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ● | ● | ● | Compact magneto-electrostatic; D–T / neutron-source near term; **$p\text{-}^{11}\text{B}$-capable** per design claim; FusionWERX + high **H**/**S** (\secref{sec:confinement}, \secref{sec:software}). |
-| **JIHT / Kurilenkov NVD** [85,86,88] | NVD–IEC (virtual cathode) | ● | ● | ◐ | ◐ | ○ | ◐ | ○ | ● | ● | Russian lab miniature vacuum discharge; experimental $p\text{-}^{11}\text{B}$ alphas + KARAT scaling; sits with Avalanche in compact electrostatic family (\secref{sec:confinement}). |
+| **Thea Energy** [46–50] | Planar stellarator | — | — | — | — | ● | ◐ | ● | ● | ◐ | D–T; DOE Helios certified; Omniverse digital twin (\secref{sec:software}). |
+| **PFS / PFRC** [54–57] | PFRC | — | — | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ● | D–$^3$He microreactor; neutron-*poor*, not $p\text{-}^{11}\text{B}$-clean (\secref{sec:sister-fuels}). |
+| **Helion Energy** [77,78] | Pulsed FRC | — | — | ◐ | ◐ | ◐ | ◐ | ● | ◐ | ● | D–$^3$He + $^3\mathrm{He}$ breeding; largest sister-fuel path; not fully aneutronic (\secref{sec:sister-fuels}). |
+| **Avalanche Energy** [66,67,87] | Orbitron (MEC) | ◐ | ◐ | ◐ | ◐ | ◐ | ◐ | ● | ● | ● | Compact MEC; D–T near term; $p\text{-}^{11}\text{B}$-capable claim; FusionWERX + high **H**/**S**. |
+| **JIHT / Kurilenkov NVD** [85,86,88] | NVD–IEC | ● | ● | ◐ | ◐ | ○ | ◐ | ○ | ● | ● | Lab NVD–IEC; $p\text{-}^{11}\text{B}$ alphas + KARAT scaling; compact electrostatic family (\secref{sec:confinement}). |
 
 Gate letters: **C** confinement class (named in cell); **F** fuel/nuclear; **K** kinetics/Rider; **R** radiation; **A** ash/impurities; **L** Lawson/engineering $Q$; **M** materials & energy capture; **T** technology-to-market; **S** in-silico / digital-twin iteration; **H** hardware iteration (\autoref{tab:diligence-gates}, \secref{sec:software}).
 
@@ -969,7 +983,7 @@ However, the field remains constrained by severe materials science and engineeri
 84. **Eliezer, S., Hora, H., Korn, G., Nissim, N., & Martínez Val, J. M.** (2016). Response to “Comment on ‘Avalanche proton-boron fusion based on elastic nuclear collisions’” [*Phys. Plasmas* **23**, 094703 (2016)]. *Physics of Plasmas*, 23, 094704. https://doi.org/10.1063/1.4963007
 85. **Andreev, S. N., Kurilenkov, Yu. K., & Oginov, A. V.** (2023). Fully electromagnetic code KARAT applied to the problem of aneutronic proton–boron fusion. *Mathematics*, 11, 4009. https://doi.org/10.3390/math11184009
 86. **Kurilenkov, Yu. K., & Andreev, S. N.** (2024). On scaling of proton-boron fusion power in a nanosecond vacuum discharge. *Frontiers in Physics*, 12, 1440040. https://doi.org/10.3389/fphy.2024.1440040 PDF archived in-repo: `research/fphy-12-1440040.pdf`.
-87. **Avalanche Energy.** (2025–2026). FusionWERX test facility announcements; $29M raise and 300 kV / Orbitron peer-reviewed paper milestones (Q$>$1 D–T compact path; tritium-capable licensing targeted ~2027). https://www.avalanchefusion.com/news-release/avalanche-energy-announces-new-fusionwerx-test-facility-to-accelerate-commercial-fusion-development ; https://www.avalanchefusion.com/news-release/avalanche-energy-raises-29-million-following-plasma-physics-breakthroughs
+87. **Avalanche Energy.** (2025–2026). FusionWERX test facility announcements; \$29M raise and 300 kV / Orbitron peer-reviewed paper milestones ($Q>1$ D–T compact path; tritium-capable licensing targeted ~2027). https://www.avalanchefusion.com/news-release/avalanche-energy-announces-new-fusionwerx-test-facility-to-accelerate-commercial-fusion-development ; https://www.avalanchefusion.com/news-release/avalanche-energy-raises-29-million-following-plasma-physics-breakthroughs
 88. **Kurilenkov, Yu. K., Oginov, A. V., Tarakanov, V. P., Gus’kov, S. Yu., & Samoylov, I. S.** (2021). Proton-boron fusion in a compact scheme of plasma oscillatory confinement. *Physical Review E*, 103, 043208. https://doi.org/10.1103/PhysRevE.103.043208
 89. **Powell, C. S.** (2020). The road less traveled to fusion energy. *Nautilus*, 3 June 2020; curated republication at Imagine5: https://imagine5.com/curated/the-road-less-traveled-to-fusion-energy/ Used in \secref{sec:tae} for TAE origin (Rostoker/Binderbauer/Monkhorst; *Science* 1997; private pivot), C-2→Norman device lineage, Google control software, and the 2020 Copernicus→Da Vinci roadmap snapshot (later compressed by company announcements [36,37]).
 90. **McKenzie, W., Batani, D., Mehlhorn, T. A., Margarone, D., Belloni, F., Campbell, E. M., Woodruff, S., Kirchhoff, J., Paterson, A., Pikuz, S., & Hora, H.** (2023). HB11—Understanding hydrogen-boron fusion as a new clean energy source. *Journal of Fusion Energy*, 42, 17. https://doi.org/10.1007/s10894-023-00349-9 PDF mirrored by HB11: https://hb11.energy/wp-content/uploads/2024/09/UnderstandingHydrogen-BoronFusionNewCleanEnergySource_s10894-023-00349-9.pdf ; archived in-repo: `research/UnderstandingHydrogen-BoronFusionNewCleanEnergySource_s10894-023-00349-9.pdf`. Used in \secref{sec:hb11} for pitcher–catcher vs in-target yields, LFEX/PALS $\sim 10^{11}\,\alpha$ records and $\sim 4$-order breakeven gap, dual-laser capacitor-coil cylinder design point, H-rich/2D targets, hybrid burn, and amplifier technoeconomics.
